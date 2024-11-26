@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hello World</title>
+    <url>/2024/11/23/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>港股打新网</title>
+    <url>/2021/10/20/spider-01/</url>
+    <content><![CDATA[<p> 网址：aHR0cHM6Ly93d3cubGlhbmdodWFpcG8uY29tLyMvbGlzdGVkX3N0b2NrX2xpc3Q&#x3D;</p>
+<p>1、网站进行简要分析</p>
+<p>打开开发者工具，抓包</p>
+<span id="more"></span>
+
+<p><img src="/blog/spider/spider-01/1.png" alt="图片标题"></p>
+<p> 请求成功后，返回一长段的数据data，需要的数据应该就是对data进行解密了，现在开始找解密点</p>
+<p>2、寻找解密点</p>
+<p>网页打上XHR断点，点击翻页</p>
+<p><img src="/blog/spider/spider-01/2.png" alt="图片标题"></p>
+<p> 网页被断住，向上找堆栈，到pagechange发现有个JSON.parse这不就是解密点？打个断点，放开xhr断点，在进行一次翻页</p>
+<p><img src="/blog/spider/spider-01/3.png" alt="图片标题"></p>
+<p>判断加密点没错</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">var s = JSON.parse(Object(o.a)(a.data));</span><br></pre></td></tr></table></figure>
+
+<p>主要函数为Object(o.a)，断点进入</p>
+<p><img src="/blog/spider/spider-01/4.png" alt="图片标题"></p>
+<p> 这不就是一个AES解密函数吗，废话不多说，码代码吧</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const CryptoJS = require(&#x27;crypto-js&#x27;);</span><br><span class="line"></span><br><span class="line">function get_data(t)&#123;</span><br><span class="line">    var c = CryptoJS.enc.Utf8.parse(&quot;eFgabcda1bcda12bc2bcdePgefgadefg&quot;);</span><br><span class="line">    var n = CryptoJS.enc.Utf8.parse();</span><br><span class="line">    var e = c,</span><br><span class="line">        s = n,</span><br><span class="line">        i = CryptoJS.enc.Base64.parse(t),</span><br><span class="line">        a = CryptoJS.enc.Base64.stringify(i);</span><br><span class="line">    return CryptoJS.AES.decrypt(a, e, &#123;</span><br><span class="line">                iv: s,</span><br><span class="line">                mode: CryptoJS.mode.ECB,</span><br><span class="line">                padding: CryptoJS.pad.Pkcs7</span><br><span class="line">            &#125;).toString(CryptoJS.enc.Utf8).toString()</span><br><span class="line">    &#125;  </span><br></pre></td></tr></table></figure>
+
+<p>　结果：</p>
+<p> <img src="/blog/spider/spider-01/5.png" alt="图片标题"></p>
+<p> <img src="/blog/spider/spider-01/6.png" alt="图片标题"></p>
+<p> 全部代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line">import execjs</span><br><span class="line"></span><br><span class="line">def get_data():</span><br><span class="line">    url = &#x27;https://api.lianghuaipo.com/hk_ipo/get_paged_listed_stock_list&#x27;</span><br><span class="line">    headers = &#123;</span><br><span class="line">        &#x27;user-agent&#x27;:&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36&#x27;,</span><br><span class="line">    &#125;</span><br><span class="line">    data = &#123;</span><br><span class="line">        &#x27;now_page&#x27;: 1,</span><br><span class="line">        &#x27;page_cnt&#x27;: 30</span><br><span class="line">    &#125;</span><br><span class="line">    res = requests.post(url=url,headers=headers,data=data).json()</span><br><span class="line">    return res[&#x27;data&#x27;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">js = &#x27;&#x27;&#x27;</span><br><span class="line">const CryptoJS = require(&#x27;crypto-js&#x27;);</span><br><span class="line">function get_data(t)&#123;</span><br><span class="line">    var c = CryptoJS.enc.Utf8.parse(&quot;eFgabcda1bcda12bc2bcdePgefgadefg&quot;);</span><br><span class="line">    var n = CryptoJS.enc.Utf8.parse();</span><br><span class="line">    var e = c;</span><br><span class="line">    var s = n;</span><br><span class="line">    var i = CryptoJS.enc.Base64.parse(t);</span><br><span class="line">    var a = CryptoJS.enc.Base64.stringify(i);</span><br><span class="line">    return CryptoJS.AES.decrypt(a, e, &#123;</span><br><span class="line">        iv: s,</span><br><span class="line">        mode: CryptoJS.mode.ECB,</span><br><span class="line">        padding: CryptoJS.pad.Pkcs7</span><br><span class="line">    &#125;).toString(CryptoJS.enc.Utf8).toString()</span><br><span class="line">&#125;</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    data = get_data()</span><br><span class="line">    response = execjs.compile(js).call(&#x27;get_data&#x27;,data)</span><br><span class="line">    print(response)</span><br></pre></td></tr></table></figure>
+
+<p>　　</p>
+]]></content>
+      <categories>
+        <category>逆向</category>
+      </categories>
+      <tags>
+        <tag>爬虫</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo搭建</title>
+    <url>/2024/11/26/hexo01/</url>
+    <content><![CDATA[<p> 网址：aHR0cHM6Ly93d3cubGlhbmdodWFpcG8uY29tLyMvbGlzdGVkX3N0b2NrX2xpc3Q&#x3D;</p>
+<p>1、网站进行简要分析</p>
+<p>打开开发者工具，抓包</p>
+<span id="more"></span>]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+</search>
