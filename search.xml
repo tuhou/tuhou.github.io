@@ -1,95 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>postgresql02</title>
-      <link href="/2024/12/05/postgresql02/"/>
-      <url>/2024/12/05/postgresql02/</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>postgresql安装</title>
-      <link href="/2024/12/04/postgresql01/"/>
-      <url>/2024/12/04/postgresql01/</url>
-      
-        <content type="html"><![CDATA[<h4 id="沉浸式安装postgresql-windows版"><a href="#沉浸式安装postgresql-windows版" class="headerlink" title="沉浸式安装postgresql-windows版"></a>沉浸式安装postgresql-windows版</h4><h5 id="注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错"><a href="#注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错" class="headerlink" title="注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错"></a>注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错</h5><span id="more"></span><h5 id="1、下载安装包"><a href="#1、下载安装包" class="headerlink" title="1、下载安装包"></a>1、下载安装包</h5><p><code>https://www.enterprisedb.com/downloads/postgres-postgresql-downloads</code></p><p>在下载页面下载你需要版本的pgsql安装包</p><h5 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h5><p><img src="/images/postgresql01/image-20241204155029168.png" alt="image-20241204155029168"></p><p><img src="/images/postgresql01/image-20241204155126233.png" alt="image-20241204155126233"></p><p><img src="/images/postgresql01/image-20241204155203948.png" alt="image-20241204155203948"></p><p><img src="/images/postgresql01/image-20241204155219197.png" alt="image-20241204155219197"></p><p><img src="/images/postgresql01/image-20241204155403455.png" alt="image-20241204155403455"></p><p><img src="/images/postgresql01/image-20241204155333693.png" alt="image-20241204155333693"></p><p><img src="/images/postgresql01/image-20241204155419481.png" alt="image-20241204155419481"></p><p><img src="/images/postgresql01/image-20241204155434572.png" alt="image-20241204155434572"></p><p><img src="/images/postgresql01/image-20241204155447005.png" alt="image-20241204155447005"></p><p>next之后就开始等待吧，结束后直接finish，然后取消Stack Builder就好</p><p><img src="/images/postgresql01/image-20241204161353769.png" alt="image-20241204161353769"></p><p>到此，windows的pgsql安装已经完成。简单测试下</p><p><img src="/images/postgresql01/image-20241204164335658.png" alt="image-20241204164335658"></p><h5 id="3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。"><a href="#3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。" class="headerlink" title="3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。"></a>3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。</h5>]]></content>
-      
-      
+<search>
+  <entry>
+    <title>hexo搭建</title>
+    <url>/2024/11/26/hexo01/</url>
+    <content><![CDATA[<p> 网址：tuhou.github.io</p>
+<p>从搭建hexo到发布到github，以及简单的优化</p>
+<p>简单介绍hexo：Hexo 是一个快速、简洁且高效的博客框架。 Hexo 使用 <a href="http://daringfireball.net/projects/markdown/">Markdown</a>（或其他标记语言）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
+<span id="more"></span>
+
+<p>依赖：本文以ubuntu为例，需要安装node和git</p>
+<h5 id="1、node安装："><a href="#1、node安装：" class="headerlink" title="1、node安装："></a>1、node安装：</h5><p>下载地址：<code>https://nodejs.cn/download/</code></p>
+<p><img src="/images/hexo01/image-20241126214015683.png" alt="image-20241126214015683"></p>
+<p>下载对应的版本双击安装</p>
+<p>安装完成后：创建对应的软链接</p>
+<p><code>ln -s /home/node/（你的安装目录） /usr/local/bin</code></p>
+<p><code>ln -s /home/npm/（你的安装目录） /usr/local/bin</code></p>
+<h5 id="2、安装git"><a href="#2、安装git" class="headerlink" title="2、安装git"></a>2、安装git</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install git</span><br></pre></td></tr></table></figure>
+
+<p>此时需注意：使用npm的时候可能会报错，此处需要设置npm的源，因为淘宝源已经过期，那么当前将其设置为新的。</p>
+<p><code>npm config set registry https://registry.npmmirror.com/</code></p>
+<h5 id="3、安装hexo"><a href="#3、安装hexo" class="headerlink" title="3、安装hexo"></a>3、安装hexo</h5><p><code>npm install -g hexo-cli</code></p>
+<p>此文章以我的目录为例，创建</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir /home/blog</span><br><span class="line">cd /home/blog</span><br></pre></td></tr></table></figure>
+
+<p>hexo初始化</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init</span><br><span class="line">hexo g</span><br><span class="line">hexo s --debug</span><br></pre></td></tr></table></figure>
+
+<p>此时，你可以看到本地<code>http://localhost:4000</code>就能看到对应的网站了</p>
+<p><img src="/images/hexo01/image-20241126222900783.png" alt="image-20241126222900783"></p>
+<p>当然安装hexo并不是我们的最终目的，我们要将hexo上传到github，并生成一个github的网站</p>
+<h5 id="4、github端设置"><a href="#4、github端设置" class="headerlink" title="4、github端设置"></a>4、github端设置</h5><p>1、github端创建一个公共的仓库，注意名称命名为 xxx.github.io必须的（xxx设置为你自己想设置的），确认就好</p>
+<p><img src="/images/hexo01/image-20241126230358114.png" alt="image-20241126230358114"></p>
+<p>2、在服务器上，配置本地用户信息</p>
+<ul>
+<li>使用 <code>git config --global user.name &quot;name&quot; </code>配置本地用户信息，name为你的git账户名</li>
+<li>使用 <code>git config --global user.email &quot;xxx@xx.com&quot;</code>配置本地邮箱，email为你git账户邮箱</li>
+<li>使用  <code>ssh-keygen -t rsa -C&quot;xxx@xx.com&quot;</code> 命令生成本地私钥和密钥信息，需要输入yes是输入y<ul>
+<li>秘钥生成后，在本地<code>~/.ssh</code>，在此路径上找到git的密码文件 id_rsa.pub</li>
+</ul>
+</li>
+</ul>
+<p>3、进行git与github的授权认证</p>
+<ul>
+<li>在github设置页面，选择左侧<code>ssh and GPG keys</code> 名称随意，key为id_rsa.pub添加</li>
+</ul>
+<p><img src="/images/hexo01/image-20241127002414324.png" alt="image-20241127002414324"></p>
+<p><img src="/images/hexo01/image-20241127002456565.png" alt="image-20241127002456565"></p>
+<p>此时回到服务器，命令行输入<code>ssh -T git@github.com</code>检查可以与远程进行统信，会出现Hi …说明授权成功</p>
+<p>4、以为目前github已经不支持密码授权，所以下载需要搞一个token： settings -&gt; Developer settings</p>
+<p><img src="/images/hexo01/image-20241127003406845.png" alt="image-20241127003406845"></p>
+<p>创建后记得记住，因为只展示一次</p>
+<p>5、在hexo的主配置文件_config.yml中配置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: https://github.com/tuhou/tuhou.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/hexo01/image-20241127003603610.png" alt="image-20241127003603610"></p>
+<h5 id="5、文章上线到github"><a href="#5、文章上线到github" class="headerlink" title="5、文章上线到github"></a>5、文章上线到github</h5><p>会让你输入名称和token，可以看到已经有了</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/hexo01/image-20241127003823703.png" alt="image-20241127003823703"></p>
+<p><img src="/images/hexo01/image-20241127004215902.png" alt="image-20241127004215902"></p>
+<p>后续的美化暂时停下，等后续再聊</p>
+]]></content>
       <categories>
-          
-          <category> postgresql </category>
-          
+        <category>hexo</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> postgresql </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>hexo搭建</title>
-      <link href="/2024/11/26/hexo01/"/>
-      <url>/2024/11/26/hexo01/</url>
-      
-        <content type="html"><![CDATA[<p> 网址：tuhou.github.io</p><p>从搭建hexo到发布到github，以及简单的优化</p><p>简单介绍hexo：Hexo 是一个快速、简洁且高效的博客框架。 Hexo 使用 <a href="http://daringfireball.net/projects/markdown/">Markdown</a>（或其他标记语言）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p><span id="more"></span><p>依赖：本文以ubuntu为例，需要安装node和git</p><h5 id="1、node安装："><a href="#1、node安装：" class="headerlink" title="1、node安装："></a>1、node安装：</h5><p>下载地址：<code>https://nodejs.cn/download/</code></p><p><img src="/images/hexo01/image-20241126214015683.png" alt="image-20241126214015683"></p><p>下载对应的版本双击安装</p><p>安装完成后：创建对应的软链接</p><p><code>ln -s /home/node/（你的安装目录） /usr/local/bin</code></p><p><code>ln -s /home/npm/（你的安装目录） /usr/local/bin</code></p><h5 id="2、安装git"><a href="#2、安装git" class="headerlink" title="2、安装git"></a>2、安装git</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install git</span><br></pre></td></tr></table></figure><p>此时需注意：使用npm的时候可能会报错，此处需要设置npm的源，因为淘宝源已经过期，那么当前将其设置为新的。</p><p><code>npm config set registry https://registry.npmmirror.com/</code></p><h5 id="3、安装hexo"><a href="#3、安装hexo" class="headerlink" title="3、安装hexo"></a>3、安装hexo</h5><p><code>npm install -g hexo-cli</code></p><p>此文章以我的目录为例，创建</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /home/blog</span><br><span class="line">cd /home/blog</span><br></pre></td></tr></table></figure><p>hexo初始化</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br><span class="line">hexo g</span><br><span class="line">hexo s --debug</span><br></pre></td></tr></table></figure><p>此时，你可以看到本地<code>http://localhost:4000</code>就能看到对应的网站了</p><p><img src="/images/hexo01/image-20241126222900783.png" alt="image-20241126222900783"></p><p>当然安装hexo并不是我们的最终目的，我们要将hexo上传到github，并生成一个github的网站</p><h5 id="4、github端设置"><a href="#4、github端设置" class="headerlink" title="4、github端设置"></a>4、github端设置</h5><p>1、github端创建一个公共的仓库，注意名称命名为 xxx.github.io必须的（xxx设置为你自己想设置的），确认就好</p><p><img src="/images/hexo01/image-20241126230358114.png" alt="image-20241126230358114"></p><p>2、在服务器上，配置本地用户信息</p><ul><li>使用 <code>git config --global user.name &quot;name&quot; </code>配置本地用户信息，name为你的git账户名</li><li>使用 <code>git config --global user.email &quot;xxx@xx.com&quot;</code>配置本地邮箱，email为你git账户邮箱</li><li>使用  <code>ssh-keygen -t rsa -C&quot;xxx@xx.com&quot;</code> 命令生成本地私钥和密钥信息，需要输入yes是输入y<ul><li>秘钥生成后，在本地<code>~/.ssh</code>，在此路径上找到git的密码文件 id_rsa.pub</li></ul></li></ul><p>3、进行git与github的授权认证</p><ul><li>在github设置页面，选择左侧<code>ssh and GPG keys</code> 名称随意，key为id_rsa.pub添加</li></ul><p><img src="/images/hexo01/image-20241127002414324.png" alt="image-20241127002414324"></p><p><img src="/images/hexo01/image-20241127002456565.png" alt="image-20241127002456565"></p><p>此时回到服务器，命令行输入<code>ssh -T git@github.com</code>检查可以与远程进行统信，会出现Hi …说明授权成功</p><p>4、以为目前github已经不支持密码授权，所以下载需要搞一个token： settings -&gt; Developer settings</p><p><img src="/images/hexo01/image-20241127003406845.png" alt="image-20241127003406845"></p><p>创建后记得记住，因为只展示一次</p><p>5、在hexo的主配置文件_config.yml中配置</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: https://github.com/tuhou/tuhou.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure><p><img src="/images/hexo01/image-20241127003603610.png" alt="image-20241127003603610"></p><h5 id="5、文章上线到github"><a href="#5、文章上线到github" class="headerlink" title="5、文章上线到github"></a>5、文章上线到github</h5><p>会让你输入名称和token，可以看到已经有了</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure><p><img src="/images/hexo01/image-20241127003823703.png" alt="image-20241127003823703"></p><p><img src="/images/hexo01/image-20241127004215902.png" alt="image-20241127004215902"></p><p>后续的美化暂时停下，等后续再聊</p>]]></content>
-      
-      
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>postgresql安装</title>
+    <url>/2024/12/04/postgresql01/</url>
+    <content><![CDATA[<h4 id="沉浸式安装postgresql-windows版"><a href="#沉浸式安装postgresql-windows版" class="headerlink" title="沉浸式安装postgresql-windows版"></a>沉浸式安装postgresql-windows版</h4><h5 id="注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错"><a href="#注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错" class="headerlink" title="注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错"></a>注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错</h5><span id="more"></span>
+
+<h5 id="1、下载安装包"><a href="#1、下载安装包" class="headerlink" title="1、下载安装包"></a>1、下载安装包</h5><p><code>https://www.enterprisedb.com/downloads/postgres-postgresql-downloads</code></p>
+<p>在下载页面下载你需要版本的pgsql安装包</p>
+<h5 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h5><p><img src="/images/postgresql01/image-20241204155029168.png" alt="image-20241204155029168"></p>
+<p><img src="/images/postgresql01/image-20241204155126233.png" alt="image-20241204155126233"></p>
+<p><img src="/images/postgresql01/image-20241204155203948.png" alt="image-20241204155203948"></p>
+<p><img src="/images/postgresql01/image-20241204155219197.png" alt="image-20241204155219197"></p>
+<p><img src="/images/postgresql01/image-20241204155403455.png" alt="image-20241204155403455"></p>
+<p><img src="/images/postgresql01/image-20241204155333693.png" alt="image-20241204155333693"></p>
+<p><img src="/images/postgresql01/image-20241204155419481.png" alt="image-20241204155419481"></p>
+<p><img src="/images/postgresql01/image-20241204155434572.png" alt="image-20241204155434572"></p>
+<p><img src="/images/postgresql01/image-20241204155447005.png" alt="image-20241204155447005"></p>
+<p>next之后就开始等待吧，结束后直接finish，然后取消Stack Builder就好</p>
+<p><img src="/images/postgresql01/image-20241204161353769.png" alt="image-20241204161353769"></p>
+<p>到此，windows的pgsql安装已经完成。简单测试下</p>
+<p><img src="/images/postgresql01/image-20241204164335658.png" alt="image-20241204164335658"></p>
+<h5 id="3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。"><a href="#3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。" class="headerlink" title="3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。"></a>3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。</h5>]]></content>
       <categories>
-          
-          <category> hexo </category>
-          
+        <category>postgresql</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> hexo </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>港股打新网</title>
-      <link href="/2021/10/20/spider-01/"/>
-      <url>/2021/10/20/spider-01/</url>
-      
-        <content type="html"><![CDATA[<p> 网址：aHR0cHM6Ly93d3cubGlhbmdodWFpcG8uY29tLyMvbGlzdGVkX3N0b2NrX2xpc3Q&#x3D;</p><p>1、网站进行简要分析</p><p>打开开发者工具，抓包</p><span id="more"></span><p><img src="/images/spider01/1.png" alt="图片标题"></p><p> 请求成功后，返回一长段的数据data，需要的数据应该就是对data进行解密了，现在开始找解密点</p><p>2、寻找解密点</p><p>网页打上XHR断点，点击翻页</p><p><img src="/images/spider01/2.png" alt="图片标题"></p><p> 网页被断住，向上找堆栈，到pagechange发现有个JSON.parse这不就是解密点？打个断点，放开xhr断点，在进行一次翻页</p><p><img src="/blog/spider/spider-01/3.png" alt="图片标题"></p><p>判断加密点没错</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var s = JSON.parse(Object(o.a)(a.data));</span><br></pre></td></tr></table></figure><p>主要函数为Object(o.a)，断点进入</p><p><img src="/images/spider01/4.png" alt="图片标题"></p><p> 这不就是一个AES解密函数吗，废话不多说，码代码吧</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const CryptoJS = require(&#x27;crypto-js&#x27;);</span><br><span class="line"></span><br><span class="line">function get_data(t)&#123;</span><br><span class="line">    var c = CryptoJS.enc.Utf8.parse(&quot;eFgabcda1bcda12bc2bcdePgefgadefg&quot;);</span><br><span class="line">    var n = CryptoJS.enc.Utf8.parse();</span><br><span class="line">    var e = c,</span><br><span class="line">        s = n,</span><br><span class="line">        i = CryptoJS.enc.Base64.parse(t),</span><br><span class="line">        a = CryptoJS.enc.Base64.stringify(i);</span><br><span class="line">    return CryptoJS.AES.decrypt(a, e, &#123;</span><br><span class="line">                iv: s,</span><br><span class="line">                mode: CryptoJS.mode.ECB,</span><br><span class="line">                padding: CryptoJS.pad.Pkcs7</span><br><span class="line">            &#125;).toString(CryptoJS.enc.Utf8).toString()</span><br><span class="line">    &#125;  </span><br></pre></td></tr></table></figure><p>　结果：</p><p> <img src="/images/spider01/5.png" alt="图片标题"></p><p> <img src="/images/spider01/6.png" alt="图片标题"></p><p> 全部代码：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">import execjs</span><br><span class="line"></span><br><span class="line">def get_data():</span><br><span class="line">    url = &#x27;https://api.lianghuaipo.com/hk_ipo/get_paged_listed_stock_list&#x27;</span><br><span class="line">    headers = &#123;</span><br><span class="line">        &#x27;user-agent&#x27;:&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36&#x27;,</span><br><span class="line">    &#125;</span><br><span class="line">    data = &#123;</span><br><span class="line">        &#x27;now_page&#x27;: 1,</span><br><span class="line">        &#x27;page_cnt&#x27;: 30</span><br><span class="line">    &#125;</span><br><span class="line">    res = requests.post(url=url,headers=headers,data=data).json()</span><br><span class="line">    return res[&#x27;data&#x27;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">js = &#x27;&#x27;&#x27;</span><br><span class="line">const CryptoJS = require(&#x27;crypto-js&#x27;);</span><br><span class="line">function get_data(t)&#123;</span><br><span class="line">    var c = CryptoJS.enc.Utf8.parse(&quot;eFgabcda1bcda12bc2bcdePgefgadefg&quot;);</span><br><span class="line">    var n = CryptoJS.enc.Utf8.parse();</span><br><span class="line">    var e = c;</span><br><span class="line">    var s = n;</span><br><span class="line">    var i = CryptoJS.enc.Base64.parse(t);</span><br><span class="line">    var a = CryptoJS.enc.Base64.stringify(i);</span><br><span class="line">    return CryptoJS.AES.decrypt(a, e, &#123;</span><br><span class="line">        iv: s,</span><br><span class="line">        mode: CryptoJS.mode.ECB,</span><br><span class="line">        padding: CryptoJS.pad.Pkcs7</span><br><span class="line">    &#125;).toString(CryptoJS.enc.Utf8).toString()</span><br><span class="line">&#125;</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    data = get_data()</span><br><span class="line">    response = execjs.compile(js).call(&#x27;get_data&#x27;,data)</span><br><span class="line">    print(response)</span><br></pre></td></tr></table></figure><p>　　</p>]]></content>
-      
-      
+      <tags>
+        <tag>postgresql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>postgresql02</title>
+    <url>/2024/12/05/postgresql02/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>港股打新网</title>
+    <url>/2021/10/20/spider-01/</url>
+    <content><![CDATA[<p> 网址：aHR0cHM6Ly93d3cubGlhbmdodWFpcG8uY29tLyMvbGlzdGVkX3N0b2NrX2xpc3Q&#x3D;</p>
+<p>1、网站进行简要分析</p>
+<p>打开开发者工具，抓包</p>
+<span id="more"></span>
+
+<p><img src="/images/spider01/1.png" alt="图片标题"></p>
+<p> 请求成功后，返回一长段的数据data，需要的数据应该就是对data进行解密了，现在开始找解密点</p>
+<p>2、寻找解密点</p>
+<p>网页打上XHR断点，点击翻页</p>
+<p><img src="/images/spider01/2.png" alt="图片标题"></p>
+<p> 网页被断住，向上找堆栈，到pagechange发现有个JSON.parse这不就是解密点？打个断点，放开xhr断点，在进行一次翻页</p>
+<p><img src="/blog/spider/spider-01/3.png" alt="图片标题"></p>
+<p>判断加密点没错</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">var s = JSON.parse(Object(o.a)(a.data));</span><br></pre></td></tr></table></figure>
+
+<p>主要函数为Object(o.a)，断点进入</p>
+<p><img src="/images/spider01/4.png" alt="图片标题"></p>
+<p> 这不就是一个AES解密函数吗，废话不多说，码代码吧</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const CryptoJS = require(&#x27;crypto-js&#x27;);</span><br><span class="line"></span><br><span class="line">function get_data(t)&#123;</span><br><span class="line">    var c = CryptoJS.enc.Utf8.parse(&quot;eFgabcda1bcda12bc2bcdePgefgadefg&quot;);</span><br><span class="line">    var n = CryptoJS.enc.Utf8.parse();</span><br><span class="line">    var e = c,</span><br><span class="line">        s = n,</span><br><span class="line">        i = CryptoJS.enc.Base64.parse(t),</span><br><span class="line">        a = CryptoJS.enc.Base64.stringify(i);</span><br><span class="line">    return CryptoJS.AES.decrypt(a, e, &#123;</span><br><span class="line">                iv: s,</span><br><span class="line">                mode: CryptoJS.mode.ECB,</span><br><span class="line">                padding: CryptoJS.pad.Pkcs7</span><br><span class="line">            &#125;).toString(CryptoJS.enc.Utf8).toString()</span><br><span class="line">    &#125;  </span><br></pre></td></tr></table></figure>
+
+<p>　结果：</p>
+<p> <img src="/images/spider01/5.png" alt="图片标题"></p>
+<p> <img src="/images/spider01/6.png" alt="图片标题"></p>
+<p> 全部代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line">import execjs</span><br><span class="line"></span><br><span class="line">def get_data():</span><br><span class="line">    url = &#x27;https://api.lianghuaipo.com/hk_ipo/get_paged_listed_stock_list&#x27;</span><br><span class="line">    headers = &#123;</span><br><span class="line">        &#x27;user-agent&#x27;:&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36&#x27;,</span><br><span class="line">    &#125;</span><br><span class="line">    data = &#123;</span><br><span class="line">        &#x27;now_page&#x27;: 1,</span><br><span class="line">        &#x27;page_cnt&#x27;: 30</span><br><span class="line">    &#125;</span><br><span class="line">    res = requests.post(url=url,headers=headers,data=data).json()</span><br><span class="line">    return res[&#x27;data&#x27;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">js = &#x27;&#x27;&#x27;</span><br><span class="line">const CryptoJS = require(&#x27;crypto-js&#x27;);</span><br><span class="line">function get_data(t)&#123;</span><br><span class="line">    var c = CryptoJS.enc.Utf8.parse(&quot;eFgabcda1bcda12bc2bcdePgefgadefg&quot;);</span><br><span class="line">    var n = CryptoJS.enc.Utf8.parse();</span><br><span class="line">    var e = c;</span><br><span class="line">    var s = n;</span><br><span class="line">    var i = CryptoJS.enc.Base64.parse(t);</span><br><span class="line">    var a = CryptoJS.enc.Base64.stringify(i);</span><br><span class="line">    return CryptoJS.AES.decrypt(a, e, &#123;</span><br><span class="line">        iv: s,</span><br><span class="line">        mode: CryptoJS.mode.ECB,</span><br><span class="line">        padding: CryptoJS.pad.Pkcs7</span><br><span class="line">    &#125;).toString(CryptoJS.enc.Utf8).toString()</span><br><span class="line">&#125;</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    data = get_data()</span><br><span class="line">    response = execjs.compile(js).call(&#x27;get_data&#x27;,data)</span><br><span class="line">    print(response)</span><br></pre></td></tr></table></figure>
+
+<p>　　</p>
+]]></content>
       <categories>
-          
-          <category> 逆向 </category>
-          
+        <category>逆向</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 爬虫 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-  
-  
+      <tags>
+        <tag>爬虫</tag>
+      </tags>
+  </entry>
 </search>
