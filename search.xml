@@ -97,9 +97,52 @@
       </tags>
   </entry>
   <entry>
-    <title>postgresql02</title>
+    <title>mimiciv医疗数据库安装（icu+hosp）</title>
     <url>/2024/12/05/postgresql02/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h4 id="windows安装mimic医疗数据库"><a href="#windows安装mimic医疗数据库" class="headerlink" title="windows安装mimic医疗数据库"></a>windows安装mimic医疗数据库</h4><h5 id="注意：mimic需要硬盘空间120G左右，请预留足够的空间"><a href="#注意：mimic需要硬盘空间120G左右，请预留足够的空间" class="headerlink" title="注意：mimic需要硬盘空间120G左右，请预留足够的空间"></a>注意：mimic需要硬盘空间120G左右，请预留足够的空间</h5><p>前置条件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1、安装7z</span><br><span class="line">2、安装postgresql</span><br><span class="line">3、mimic数据包 https://physionet.org/content/mimiciv/2.2/</span><br><span class="line">4、mimic数据生成包：https://github.com/MIT-LCP/mimic-code</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h5 id="1、安装"><a href="#1、安装" class="headerlink" title="1、安装"></a>1、安装</h5><p>以mimiciv2.2为例，请确保前置条件已经搞好。</p>
+<p>在D盘创建一个数据根目录MIMIC，用于后续的设置，我是直接将相关的数据都放入了MIMIC</p>
+<p><img src="/images/postgresql02/image-20241205200313591.png" alt="image-20241205200313591"></p>
+<p>登录到pgsql的shell中</p>
+<p><img src="/images/postgresql02/image-20241205153150243.png" alt="image-20241205153150243"></p>
+<p><img src="/images/postgresql02/image-20241205153223718.png" alt="image-20241205153223718"></p>
+<h5 id="2、安装命令"><a href="#2、安装命令" class="headerlink" title="2、安装命令"></a>2、安装命令</h5><ul>
+<li>1、创建数据库</li>
+</ul>
+<p>Drop database if exists mimiciv;</p>
+<p>create database mimiciv owner postgres;</p>
+<p><img src="/images/postgresql02/image-20241205154720915.png" alt="image-20241205154720915"></p>
+<ul>
+<li>设置默认目录与编码</li>
+</ul>
+<p><img src="/images/postgresql02/image-20241205154907509.png" alt="image-20241205154907509"></p>
+<p>在命令行依次执行create、load_7z、constraint、index.sql文件</p>
+<p><img src="/images/postgresql02/image-20241205170955572.png" alt="image-20241205170955572"></p>
+<p>若出现permission deny，将所有的”&quot;替换成 “&#x2F;“</p>
+<p><img src="/images/postgresql02/image-20241205171222144.png" alt="image-20241205171222144"></p>
+<p>执行到load_7z.sql导入数据、根据电脑性能，会等待1-2个小时 <code>\i D:/MIMIC/load_7z.sql</code></p>
+<p><img src="/images/postgresql02/image-20241205200140882.png" alt="image-20241205200140882"></p>
+<p>执行<code>\i D:/MIMIC/constraint.sql</code>创建主键</p>
+<p><img src="/images/postgresql02/image-20241206142203677.png" alt="image-20241206142203677"></p>
+<p>执行<code>\i D:/MIMIC/index.sql</code>创建索引</p>
+<p><img src="/images/postgresql02/image-20241206151808889.png" alt="image-20241206151808889"></p>
+<h5 id="3、查看"><a href="#3、查看" class="headerlink" title="3、查看"></a>3、查看</h5><p>hosp</p>
+<p><img src="/images/postgresql02/image-20241206181931467.png" alt="image-20241206181931467"></p>
+<p>icu</p>
+<p><img src="/images/postgresql02/image-20241206181948265.png" alt="image-20241206181948265"></p>
+<p>小店提供安装服务，有需要可以淘宝扫码查看</p>
+<p><img src="/images/pgsql.png" alt="pgsql"></p>
+]]></content>
+      <categories>
+        <category>postgresql</category>
+      </categories>
+      <tags>
+        <tag>postgresql</tag>
+      </tags>
   </entry>
   <entry>
     <title>港股打新网</title>
