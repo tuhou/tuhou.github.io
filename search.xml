@@ -1,6 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>搭建私有的个人远程RustDesk</title>
+    <url>/2024/12/07/RustDesk/</url>
+    <content><![CDATA[<h4 id="在Linux服务器搭建RustDesk远程"><a href="#在Linux服务器搭建RustDesk远程" class="headerlink" title="在Linux服务器搭建RustDesk远程"></a>在Linux服务器搭建RustDesk远程</h4><blockquote>
+<p>为什么搭建RustDesk，市面上的Todesk、向日葵不能使用吗？</p>
+<p>PC端自用，使用Todesk和向日葵确实能满足需求，但是涉及到移动设备的远控时，免费的Todesk、向日葵不支持移动设备远控，同时在PC远控也有诸多限制，而今天介绍到的RustDesk完全没有这些限制，支持多平台（Linux、Windows、macOS、Android）</p>
+</blockquote>
+<span id="more"></span>
+
+<blockquote>
+<p>前置条件：一台公网ip的Linux云服务器</p>
+</blockquote>
+<p><img src="/images/RustDesk/image-20241207144634301.png" alt="image-20241207144634301"></p>
+<p><img src="/images/RustDesk/image-20241207144712331.png" alt="image-20241207144712331"></p>
+<h5 id="1、搭建"><a href="#1、搭建" class="headerlink" title="1、搭建"></a>1、搭建</h5><blockquote>
+<p>本教程基于Linux（centos）、在宝塔上安装RustDesk服务</p>
+<p>项目地址：<code>https://github.com/rustdesk/rustdesk-server/releases/</code></p>
+</blockquote>
+<p>根据服务器版本下载对应的源码版本，因为我的是x86的，下载linux-amd64就好</p>
+<p><img src="/images/RustDesk/image-20241207145705493.png" alt="image-20241207145705493"></p>
+<p><img src="/images/RustDesk/image-20241207145608431.png" alt="image-20241207145608431"></p>
+<ul>
+<li>1、安装宝塔：<code>https://www.bt.cn/new/download.html</code></li>
+</ul>
+<p>CentOS安装宝塔</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url=https://download.bt.cn/install/install_lts.sh;if [ -f /usr/bin/curl ];then curl -sSO $url;else wget -O install_lts.sh $url;fi;bash install_lts.sh ed8484bec</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/RustDesk/image-20241207150305917.png" alt="image-20241207150305917"></p>
+<p>安装完成根据生成的外网地址或者内网地址登录宝塔，此时如果登录不了，请在服务器防火墙放通对应的端口，本例为：35011</p>
+<p>第一次登录需要注册一个宝塔账号，注册后登录，如下图所示：</p>
+<p><img src="/images/RustDesk/image-20241207150559196.png" alt="image-20241207150559196"></p>
+<ul>
+<li>2、配置RustDesk服务</li>
+</ul>
+<p><img src="/images/RustDesk/image-20241207150749818.png" alt="image-20241207150749818"></p>
+<p>点击文件，选择你喜欢的文件夹创建rustdesk文件，本例为www下</p>
+<p><img src="/images/RustDesk/image-20241207151238636.png" alt="image-20241207151238636"></p>
+<p><img src="/images/RustDesk/image-20241207151306473.png" alt="image-20241207151306473"></p>
+<p>解压文件，可以看到最后就三个文件</p>
+<p><img src="/images/RustDesk/image-20241207151401238.png" alt="image-20241207151401238"></p>
+<p>因为我们需要rustdesk服务时刻运行，并能自动重启，那么需要搞一个守护程序。软件商店搜索：进程守护 安装</p>
+<p><img src="/images/RustDesk/image-20241207151620540.png" alt="image-20241207151620540"></p>
+<p>添加守护程序，点击设置-&gt; 添加守护程序 -&gt; 确认</p>
+<p><img src="/images/RustDesk/image-20241207151734249.png" alt="image-20241207151734249"></p>
+<p>目录和启动命令以我的为例：</p>
+<p><img src="/images/RustDesk/image-20241207152041447.png" alt="image-20241207152041447"></p>
+<p><img src="/images/RustDesk/image-20241207152057817.png" alt="image-20241207152057817"></p>
+<p>守护程序设置好后，状态为Running时为正常</p>
+<p><img src="/images/RustDesk/image-20241207152314070.png" alt="image-20241207152314070"></p>
+<p>在文件列表中会生成一些文件，记住id_xx.pub里面为中继器的key，保存好后续使用</p>
+<p><img src="/images/RustDesk/image-20241207161233449.png" alt="image-20241207161233449"></p>
+<p>端口放通：你需要放通21116 - TCP&#x2F;UDP、21117 - TCP</p>
+<p>如图在安全中添加，当然在你的服务器安全组也需要放通</p>
+<p><img src="/images/RustDesk/image-20241207161445650.png" alt="image-20241207161445650"></p>
+<ul>
+<li>3、测试</li>
+</ul>
+<p>在软件中输入刚才对应的id和中继服务器以及key，主页状态为就绪说明已经成功，之后找两台设备使用即可</p>
+<p><img src="/images/RustDesk/image-20241207161726741.png" alt="image-20241207161726741"></p>
+<p><img src="/images/RustDesk/image-20241207161830887.png" alt="image-20241207161830887"></p>
+<h5 id="附：小店提供安装和中继器租用服务，有需要可以淘宝扫码查看"><a href="#附：小店提供安装和中继器租用服务，有需要可以淘宝扫码查看" class="headerlink" title="附：小店提供安装和中继器租用服务，有需要可以淘宝扫码查看"></a>附：小店提供安装和中继器租用服务，有需要可以淘宝扫码查看</h5><p><img src="/images/rustdesk.png" alt="pgsql"></p>
+]]></content>
+      <categories>
+        <category>瞎折腾</category>
+      </categories>
+      <tags>
+        <tag>RustDesk</tag>
+        <tag>远程协助</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo搭建</title>
     <url>/2024/11/26/hexo01/</url>
     <content><![CDATA[<p> 网址：tuhou.github.io</p>
@@ -143,76 +213,6 @@
       <tags>
         <tag>postgresql</tag>
         <tag>MIMIC</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>搭建私有的个人远程RustDesk</title>
-    <url>/2024/12/07/RustDesk/</url>
-    <content><![CDATA[<h4 id="在Linux服务器搭建RustDesk远程"><a href="#在Linux服务器搭建RustDesk远程" class="headerlink" title="在Linux服务器搭建RustDesk远程"></a>在Linux服务器搭建RustDesk远程</h4><blockquote>
-<p>为什么搭建RustDesk，市面上的Todesk、向日葵不能使用吗？</p>
-<p>PC端自用，使用Todesk和向日葵确实能满足需求，但是涉及到移动设备的远控时，免费的Todesk、向日葵不支持移动设备远控，同时在PC远控也有诸多限制，而今天介绍到的RustDesk完全没有这些限制，支持多平台（Linux、Windows、macOS、Android）</p>
-</blockquote>
-<span id="more"></span>
-
-<blockquote>
-<p>前置条件：一台公网ip的Linux云服务器</p>
-</blockquote>
-<p><img src="/images/RustDesk/image-20241207144634301.png" alt="image-20241207144634301"></p>
-<p><img src="/images/RustDesk/image-20241207144712331.png" alt="image-20241207144712331"></p>
-<h5 id="1、搭建"><a href="#1、搭建" class="headerlink" title="1、搭建"></a>1、搭建</h5><blockquote>
-<p>本教程基于Linux（centos）、在宝塔上安装RustDesk服务</p>
-<p>项目地址：<code>https://github.com/rustdesk/rustdesk-server/releases/</code></p>
-</blockquote>
-<p>根据服务器版本下载对应的源码版本，因为我的是x86的，下载linux-amd64就好</p>
-<p><img src="/images/RustDesk/image-20241207145705493.png" alt="image-20241207145705493"></p>
-<p><img src="/images/RustDesk/image-20241207145608431.png" alt="image-20241207145608431"></p>
-<ul>
-<li>1、安装宝塔：<code>https://www.bt.cn/new/download.html</code></li>
-</ul>
-<p>CentOS安装宝塔</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url=https://download.bt.cn/install/install_lts.sh;if [ -f /usr/bin/curl ];then curl -sSO $url;else wget -O install_lts.sh $url;fi;bash install_lts.sh ed8484bec</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/RustDesk/image-20241207150305917.png" alt="image-20241207150305917"></p>
-<p>安装完成根据生成的外网地址或者内网地址登录宝塔，此时如果登录不了，请在服务器防火墙放通对应的端口，本例为：35011</p>
-<p>第一次登录需要注册一个宝塔账号，注册后登录，如下图所示：</p>
-<p><img src="/images/RustDesk/image-20241207150559196.png" alt="image-20241207150559196"></p>
-<ul>
-<li>2、配置RustDesk服务</li>
-</ul>
-<p><img src="/images/RustDesk/image-20241207150749818.png" alt="image-20241207150749818"></p>
-<p>点击文件，选择你喜欢的文件夹创建rustdesk文件，本例为www下</p>
-<p><img src="/images/RustDesk/image-20241207151238636.png" alt="image-20241207151238636"></p>
-<p><img src="/images/RustDesk/image-20241207151306473.png" alt="image-20241207151306473"></p>
-<p>解压文件，可以看到最后就三个文件</p>
-<p><img src="/images/RustDesk/image-20241207151401238.png" alt="image-20241207151401238"></p>
-<p>因为我们需要rustdesk服务时刻运行，并能自动重启，那么需要搞一个守护程序。软件商店搜索：进程守护 安装</p>
-<p><img src="/images/RustDesk/image-20241207151620540.png" alt="image-20241207151620540"></p>
-<p>添加守护程序，点击设置-&gt; 添加守护程序 -&gt; 确认</p>
-<p><img src="/images/RustDesk/image-20241207151734249.png" alt="image-20241207151734249"></p>
-<p>目录和启动命令以我的为例：</p>
-<p><img src="/images/RustDesk/image-20241207152041447.png" alt="image-20241207152041447"></p>
-<p><img src="/images/RustDesk/image-20241207152057817.png" alt="image-20241207152057817"></p>
-<p>守护程序设置好后，状态为Running时为正常</p>
-<p><img src="/images/RustDesk/image-20241207152314070.png" alt="image-20241207152314070"></p>
-<p>在文件列表中会生成一些文件，记住id_xx.pub里面为中继器的key，保存好后续使用</p>
-<p><img src="/images/RustDesk/image-20241207161233449.png" alt="image-20241207161233449"></p>
-<p>端口放通：你需要放通21116 - TCP&#x2F;UDP、21117 - TCP</p>
-<p>如图在安全中添加，当然在你的服务器安全组也需要放通</p>
-<p><img src="/images/RustDesk/image-20241207161445650.png" alt="image-20241207161445650"></p>
-<ul>
-<li>3、测试</li>
-</ul>
-<p>在软件中输入刚才对应的id和中继服务器以及key，主页状态为就绪说明已经成功，之后找两台设备使用即可</p>
-<p><img src="/images/RustDesk/image-20241207161726741.png" alt="image-20241207161726741"></p>
-<p><img src="/images/RustDesk/image-20241207161830887.png" alt="image-20241207161830887"></p>
-<h5 id="附：小店提供安装和中继器租用服务，有需要可以淘宝扫码查看"><a href="#附：小店提供安装和中继器租用服务，有需要可以淘宝扫码查看" class="headerlink" title="附：小店提供安装和中继器租用服务，有需要可以淘宝扫码查看"></a>附：小店提供安装和中继器租用服务，有需要可以淘宝扫码查看</h5><p><img src="/images/rustdesk.png" alt="pgsql"></p>
-]]></content>
-      <categories>
-        <category>瞎折腾</category>
-      </categories>
-      <tags>
-        <tag>RustDesk</tag>
-        <tag>远程协助</tag>
       </tags>
   </entry>
   <entry>
