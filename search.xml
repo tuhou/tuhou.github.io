@@ -1,74 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>hexo搭建</title>
-    <url>/2024/11/26/hexo01/</url>
-    <content><![CDATA[<p> 网址：tuhou.github.io</p>
-<p>从搭建hexo到发布到github，以及简单的优化</p>
-<p>简单介绍hexo：Hexo 是一个快速、简洁且高效的博客框架。 Hexo 使用 <a href="http://daringfireball.net/projects/markdown/">Markdown</a>（或其他标记语言）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
-<span id="more"></span>
-
-<p>依赖：本文以ubuntu为例，需要安装node和git</p>
-<h5 id="1、node安装："><a href="#1、node安装：" class="headerlink" title="1、node安装："></a>1、node安装：</h5><p>下载地址：<code>https://nodejs.cn/download/</code></p>
-<p><img src="/images/hexo01/image-20241126214015683.png" alt="image-20241126214015683"></p>
-<p>下载对应的版本双击安装</p>
-<p>安装完成后：创建对应的软链接</p>
-<p><code>ln -s /home/node/（你的安装目录） /usr/local/bin</code></p>
-<p><code>ln -s /home/npm/（你的安装目录） /usr/local/bin</code></p>
-<h5 id="2、安装git"><a href="#2、安装git" class="headerlink" title="2、安装git"></a>2、安装git</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install git</span><br></pre></td></tr></table></figure>
-
-<p>此时需注意：使用npm的时候可能会报错，此处需要设置npm的源，因为淘宝源已经过期，那么当前将其设置为新的。</p>
-<p><code>npm config set registry https://registry.npmmirror.com/</code></p>
-<h5 id="3、安装hexo"><a href="#3、安装hexo" class="headerlink" title="3、安装hexo"></a>3、安装hexo</h5><p><code>npm install -g hexo-cli</code></p>
-<p>此文章以我的目录为例，创建</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir /home/blog</span><br><span class="line">cd /home/blog</span><br></pre></td></tr></table></figure>
-
-<p>hexo初始化</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init</span><br><span class="line">hexo g</span><br><span class="line">hexo s --debug</span><br></pre></td></tr></table></figure>
-
-<p>此时，你可以看到本地<code>http://localhost:4000</code>就能看到对应的网站了</p>
-<p><img src="/images/hexo01/image-20241126222900783.png" alt="image-20241126222900783"></p>
-<p>当然安装hexo并不是我们的最终目的，我们要将hexo上传到github，并生成一个github的网站</p>
-<h5 id="4、github端设置"><a href="#4、github端设置" class="headerlink" title="4、github端设置"></a>4、github端设置</h5><p>1、github端创建一个公共的仓库，注意名称命名为 xxx.github.io必须的（xxx设置为你自己想设置的），确认就好</p>
-<p><img src="/images/hexo01/image-20241126230358114.png" alt="image-20241126230358114"></p>
-<p>2、在服务器上，配置本地用户信息</p>
-<ul>
-<li>使用 <code>git config --global user.name &quot;name&quot; </code>配置本地用户信息，name为你的git账户名</li>
-<li>使用 <code>git config --global user.email &quot;xxx@xx.com&quot;</code>配置本地邮箱，email为你git账户邮箱</li>
-<li>使用  <code>ssh-keygen -t rsa -C&quot;xxx@xx.com&quot;</code> 命令生成本地私钥和密钥信息，需要输入yes是输入y<ul>
-<li>秘钥生成后，在本地<code>~/.ssh</code>，在此路径上找到git的密码文件 id_rsa.pub</li>
-</ul>
-</li>
-</ul>
-<p>3、进行git与github的授权认证</p>
-<ul>
-<li>在github设置页面，选择左侧<code>ssh and GPG keys</code> 名称随意，key为id_rsa.pub添加</li>
-</ul>
-<p><img src="/images/hexo01/image-20241127002414324.png" alt="image-20241127002414324"></p>
-<p><img src="/images/hexo01/image-20241127002456565.png" alt="image-20241127002456565"></p>
-<p>此时回到服务器，命令行输入<code>ssh -T git@github.com</code>检查可以与远程进行统信，会出现Hi …说明授权成功</p>
-<p>4、以为目前github已经不支持密码授权，所以下载需要搞一个token： settings -&gt; Developer settings</p>
-<p><img src="/images/hexo01/image-20241127003406845.png" alt="image-20241127003406845"></p>
-<p>创建后记得记住，因为只展示一次</p>
-<p>5、在hexo的主配置文件_config.yml中配置</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: https://github.com/tuhou/tuhou.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/hexo01/image-20241127003603610.png" alt="image-20241127003603610"></p>
-<h5 id="5、文章上线到github"><a href="#5、文章上线到github" class="headerlink" title="5、文章上线到github"></a>5、文章上线到github</h5><p>会让你输入名称和token，可以看到已经有了</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/hexo01/image-20241127003823703.png" alt="image-20241127003823703"></p>
-<p><img src="/images/hexo01/image-20241127004215902.png" alt="image-20241127004215902"></p>
-<p>后续的美化暂时停下，等后续再聊</p>
-]]></content>
-      <categories>
-        <category>hexo</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>搭建私有的个人远程RustDesk</title>
     <url>/2024/12/07/RustDesk/</url>
     <content><![CDATA[<h4 id="在Linux服务器搭建RustDesk远程"><a href="#在Linux服务器搭建RustDesk远程" class="headerlink" title="在Linux服务器搭建RustDesk远程"></a>在Linux服务器搭建RustDesk远程</h4><blockquote>
@@ -139,6 +71,74 @@
       </tags>
   </entry>
   <entry>
+    <title>hexo搭建</title>
+    <url>/2024/11/26/hexo01/</url>
+    <content><![CDATA[<p> 网址：tuhou.github.io</p>
+<p>从搭建hexo到发布到github，以及简单的优化</p>
+<p>简单介绍hexo：Hexo 是一个快速、简洁且高效的博客框架。 Hexo 使用 <a href="http://daringfireball.net/projects/markdown/">Markdown</a>（或其他标记语言）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
+<span id="more"></span>
+
+<p>依赖：本文以ubuntu为例，需要安装node和git</p>
+<h5 id="1、node安装："><a href="#1、node安装：" class="headerlink" title="1、node安装："></a>1、node安装：</h5><p>下载地址：<code>https://nodejs.cn/download/</code></p>
+<p><img src="/images/hexo01/image-20241126214015683.png" alt="image-20241126214015683"></p>
+<p>下载对应的版本双击安装</p>
+<p>安装完成后：创建对应的软链接</p>
+<p><code>ln -s /home/node/（你的安装目录） /usr/local/bin</code></p>
+<p><code>ln -s /home/npm/（你的安装目录） /usr/local/bin</code></p>
+<h5 id="2、安装git"><a href="#2、安装git" class="headerlink" title="2、安装git"></a>2、安装git</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install git</span><br></pre></td></tr></table></figure>
+
+<p>此时需注意：使用npm的时候可能会报错，此处需要设置npm的源，因为淘宝源已经过期，那么当前将其设置为新的。</p>
+<p><code>npm config set registry https://registry.npmmirror.com/</code></p>
+<h5 id="3、安装hexo"><a href="#3、安装hexo" class="headerlink" title="3、安装hexo"></a>3、安装hexo</h5><p><code>npm install -g hexo-cli</code></p>
+<p>此文章以我的目录为例，创建</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir /home/blog</span><br><span class="line">cd /home/blog</span><br></pre></td></tr></table></figure>
+
+<p>hexo初始化</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init</span><br><span class="line">hexo g</span><br><span class="line">hexo s --debug</span><br></pre></td></tr></table></figure>
+
+<p>此时，你可以看到本地<code>http://localhost:4000</code>就能看到对应的网站了</p>
+<p><img src="/images/hexo01/image-20241126222900783.png" alt="image-20241126222900783"></p>
+<p>当然安装hexo并不是我们的最终目的，我们要将hexo上传到github，并生成一个github的网站</p>
+<h5 id="4、github端设置"><a href="#4、github端设置" class="headerlink" title="4、github端设置"></a>4、github端设置</h5><p>1、github端创建一个公共的仓库，注意名称命名为 xxx.github.io必须的（xxx设置为你自己想设置的），确认就好</p>
+<p><img src="/images/hexo01/image-20241126230358114.png" alt="image-20241126230358114"></p>
+<p>2、在服务器上，配置本地用户信息</p>
+<ul>
+<li>使用 <code>git config --global user.name &quot;name&quot; </code>配置本地用户信息，name为你的git账户名</li>
+<li>使用 <code>git config --global user.email &quot;xxx@xx.com&quot;</code>配置本地邮箱，email为你git账户邮箱</li>
+<li>使用  <code>ssh-keygen -t rsa -C&quot;xxx@xx.com&quot;</code> 命令生成本地私钥和密钥信息，需要输入yes是输入y<ul>
+<li>秘钥生成后，在本地<code>~/.ssh</code>，在此路径上找到git的密码文件 id_rsa.pub</li>
+</ul>
+</li>
+</ul>
+<p>3、进行git与github的授权认证</p>
+<ul>
+<li>在github设置页面，选择左侧<code>ssh and GPG keys</code> 名称随意，key为id_rsa.pub添加</li>
+</ul>
+<p><img src="/images/hexo01/image-20241127002414324.png" alt="image-20241127002414324"></p>
+<p><img src="/images/hexo01/image-20241127002456565.png" alt="image-20241127002456565"></p>
+<p>此时回到服务器，命令行输入<code>ssh -T git@github.com</code>检查可以与远程进行统信，会出现Hi …说明授权成功</p>
+<p>4、以为目前github已经不支持密码授权，所以下载需要搞一个token： settings -&gt; Developer settings</p>
+<p><img src="/images/hexo01/image-20241127003406845.png" alt="image-20241127003406845"></p>
+<p>创建后记得记住，因为只展示一次</p>
+<p>5、在hexo的主配置文件_config.yml中配置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: https://github.com/tuhou/tuhou.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/hexo01/image-20241127003603610.png" alt="image-20241127003603610"></p>
+<h5 id="5、文章上线到github"><a href="#5、文章上线到github" class="headerlink" title="5、文章上线到github"></a>5、文章上线到github</h5><p>会让你输入名称和token，可以看到已经有了</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/hexo01/image-20241127003823703.png" alt="image-20241127003823703"></p>
+<p><img src="/images/hexo01/image-20241127004215902.png" alt="image-20241127004215902"></p>
+<p>后续的美化暂时停下，等后续再聊</p>
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>postgresql安装</title>
     <url>/2024/12/04/postgresql01/</url>
     <content><![CDATA[<h4 id="沉浸式安装postgresql-windows版"><a href="#沉浸式安装postgresql-windows版" class="headerlink" title="沉浸式安装postgresql-windows版"></a>沉浸式安装postgresql-windows版</h4><h5 id="注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错"><a href="#注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错" class="headerlink" title="注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错"></a>注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错</h5><span id="more"></span>
@@ -165,52 +165,6 @@
       </categories>
       <tags>
         <tag>postgresql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>mimiciv医疗数据库安装（derived衍生表）</title>
-    <url>/2024/12/06/postgresql03/</url>
-    <content><![CDATA[<h4 id="windows安装mimic医疗数据库衍生表derived"><a href="#windows安装mimic医疗数据库衍生表derived" class="headerlink" title="windows安装mimic医疗数据库衍生表derived"></a>windows安装mimic医疗数据库衍生表derived</h4><p>前置条件：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">安装git（全部默认安装即可）：下载地址 https://git-scm.com/downloads</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<p>紧接上回、已经安装完了icu和hosp数据，现在生成衍生表</p>
-<p>衍生表sql路径<code>D:\mimic-code-main\mimic-iv\concepts_postgres</code></p>
-<p><img src="/images/postgresql03/image-20241206193638730.png" alt="image-20241206193638730"></p>
-<h5 id="1、安装"><a href="#1、安装" class="headerlink" title="1、安装"></a>1、安装</h5><ul>
-<li>设置路径</li>
-</ul>
-<p><img src="/images/postgresql03/image-20241206193843842.png" alt="image-20241206193843842"></p>
-<ul>
-<li><p>执行postgres-functions.sql生成对应的方法<code>\i D:/mimic-code-main/mimic-iv/concepts_postgres/postgres-functions.sql</code></p>
-<p><img src="/images/postgresql03/image-20241206194003957.png" alt="image-20241206194003957"></p>
-</li>
-<li><p>执行shell生成衍生表格数据文件夹postgres</p>
-</li>
-</ul>
-<p><img src="/images/postgresql03/image-20241206194622743.png" alt="image-20241206194622743"></p>
-<p><img src="/images/postgresql03/image-20241206194818354.png" alt="image-20241206194818354"></p>
-<ul>
-<li>生成衍生表格数据<ul>
-<li>修改postgres-make-concepts.sql</li>
-</ul>
-</li>
-</ul>
-<p><img src="/images/postgresql03/image-20241206195056707.png" alt="image-20241206195056707"></p>
-<ul>
-<li>执行</li>
-</ul>
-<p><img src="/images/postgresql03/image-20241206195813987.png" alt="image-20241206195813987"></p>
-<p>之后就是漫长的等待，直到结束就好。</p>
-<h5 id="附：小店提供安装服务，有需要可以淘宝扫码查看"><a href="#附：小店提供安装服务，有需要可以淘宝扫码查看" class="headerlink" title="附：小店提供安装服务，有需要可以淘宝扫码查看"></a>附：小店提供安装服务，有需要可以淘宝扫码查看</h5><p><img src="/images/pgsql.png" alt="pgsql"></p>
-]]></content>
-      <categories>
-        <category>postgresql</category>
-      </categories>
-      <tags>
-        <tag>postgresql</tag>
-        <tag>MIMIC</tag>
       </tags>
   </entry>
   <entry>
@@ -251,6 +205,52 @@
 <p><img src="/images/postgresql02/image-20241206181931467.png" alt="image-20241206181931467"></p>
 <p>icu</p>
 <p><img src="/images/postgresql02/image-20241206181948265.png" alt="image-20241206181948265"></p>
+<h5 id="附：小店提供安装服务，有需要可以淘宝扫码查看"><a href="#附：小店提供安装服务，有需要可以淘宝扫码查看" class="headerlink" title="附：小店提供安装服务，有需要可以淘宝扫码查看"></a>附：小店提供安装服务，有需要可以淘宝扫码查看</h5><p><img src="/images/pgsql.png" alt="pgsql"></p>
+]]></content>
+      <categories>
+        <category>postgresql</category>
+      </categories>
+      <tags>
+        <tag>postgresql</tag>
+        <tag>MIMIC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mimiciv医疗数据库安装（derived衍生表）</title>
+    <url>/2024/12/06/postgresql03/</url>
+    <content><![CDATA[<h4 id="windows安装mimic医疗数据库衍生表derived"><a href="#windows安装mimic医疗数据库衍生表derived" class="headerlink" title="windows安装mimic医疗数据库衍生表derived"></a>windows安装mimic医疗数据库衍生表derived</h4><p>前置条件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">安装git（全部默认安装即可）：下载地址 https://git-scm.com/downloads</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>紧接上回、已经安装完了icu和hosp数据，现在生成衍生表</p>
+<p>衍生表sql路径<code>D:\mimic-code-main\mimic-iv\concepts_postgres</code></p>
+<p><img src="/images/postgresql03/image-20241206193638730.png" alt="image-20241206193638730"></p>
+<h5 id="1、安装"><a href="#1、安装" class="headerlink" title="1、安装"></a>1、安装</h5><ul>
+<li>设置路径</li>
+</ul>
+<p><img src="/images/postgresql03/image-20241206193843842.png" alt="image-20241206193843842"></p>
+<ul>
+<li><p>执行postgres-functions.sql生成对应的方法<code>\i D:/mimic-code-main/mimic-iv/concepts_postgres/postgres-functions.sql</code></p>
+<p><img src="/images/postgresql03/image-20241206194003957.png" alt="image-20241206194003957"></p>
+</li>
+<li><p>执行shell生成衍生表格数据文件夹postgres</p>
+</li>
+</ul>
+<p><img src="/images/postgresql03/image-20241206194622743.png" alt="image-20241206194622743"></p>
+<p><img src="/images/postgresql03/image-20241206194818354.png" alt="image-20241206194818354"></p>
+<ul>
+<li>生成衍生表格数据<ul>
+<li>修改postgres-make-concepts.sql</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/postgresql03/image-20241206195056707.png" alt="image-20241206195056707"></p>
+<ul>
+<li>执行</li>
+</ul>
+<p><img src="/images/postgresql03/image-20241206195813987.png" alt="image-20241206195813987"></p>
+<p>之后就是漫长的等待，直到结束就好。</p>
 <h5 id="附：小店提供安装服务，有需要可以淘宝扫码查看"><a href="#附：小店提供安装服务，有需要可以淘宝扫码查看" class="headerlink" title="附：小店提供安装服务，有需要可以淘宝扫码查看"></a>附：小店提供安装服务，有需要可以淘宝扫码查看</h5><p><img src="/images/pgsql.png" alt="pgsql"></p>
 ]]></content>
       <categories>
