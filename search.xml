@@ -94,35 +94,6 @@
       </tags>
   </entry>
   <entry>
-    <title>postgresql安装</title>
-    <url>/2024/12/04/postgresql01/</url>
-    <content><![CDATA[<h4 id="沉浸式安装postgresql-windows版"><a href="#沉浸式安装postgresql-windows版" class="headerlink" title="沉浸式安装postgresql-windows版"></a>沉浸式安装postgresql-windows版</h4><h5 id="注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错"><a href="#注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错" class="headerlink" title="注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错"></a>注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错</h5><span id="more"></span>
-
-<h5 id="1、下载安装包"><a href="#1、下载安装包" class="headerlink" title="1、下载安装包"></a>1、下载安装包</h5><p><code>https://www.enterprisedb.com/downloads/postgres-postgresql-downloads</code></p>
-<p>在下载页面下载你需要版本的pgsql安装包</p>
-<h5 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h5><p><img src="/images/postgresql01/image-20241204155029168.png" alt="image-20241204155029168"></p>
-<p><img src="/images/postgresql01/image-20241204155126233.png" alt="image-20241204155126233"></p>
-<p><img src="/images/postgresql01/image-20241204155203948.png" alt="image-20241204155203948"></p>
-<p><img src="/images/postgresql01/image-20241204155219197.png" alt="image-20241204155219197"></p>
-<p><img src="/images/postgresql01/image-20241204155403455.png" alt="image-20241204155403455"></p>
-<p><img src="/images/postgresql01/image-20241204155333693.png" alt="image-20241204155333693"></p>
-<p><img src="/images/postgresql01/image-20241204155419481.png" alt="image-20241204155419481"></p>
-<p><img src="/images/postgresql01/image-20241204155434572.png" alt="image-20241204155434572"></p>
-<p><img src="/images/postgresql01/image-20241204155447005.png" alt="image-20241204155447005"></p>
-<p>next之后就开始等待吧，结束后直接finish，然后取消Stack Builder就好</p>
-<p><img src="/images/postgresql01/image-20241204161353769.png" alt="image-20241204161353769"></p>
-<p>到此，windows的pgsql安装已经完成。简单测试下</p>
-<p><img src="/images/postgresql01/image-20241204164335658.png" alt="image-20241204164335658"></p>
-<h5 id="3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。"><a href="#3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。" class="headerlink" title="3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。"></a>3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。</h5><h5 id="附：-小店提供安装服务，有需要可以淘宝扫码查看"><a href="#附：-小店提供安装服务，有需要可以淘宝扫码查看" class="headerlink" title="附： 小店提供安装服务，有需要可以淘宝扫码查看"></a>附： 小店提供安装服务，有需要可以淘宝扫码查看</h5><p><img src="/images/pgsql.png" alt="pgsql"></p>
-]]></content>
-      <categories>
-        <category>postgresql</category>
-      </categories>
-      <tags>
-        <tag>postgresql</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hexo搭建</title>
     <url>/2024/11/26/hexo01/</url>
     <content><![CDATA[<p> 网址：tuhou.github.io</p>
@@ -191,49 +162,32 @@
       </tags>
   </entry>
   <entry>
-    <title>mimiciv医疗数据库安装（derived衍生表）</title>
-    <url>/2024/12/06/postgresql03/</url>
-    <content><![CDATA[<h4 id="windows安装mimic医疗数据库衍生表derived"><a href="#windows安装mimic医疗数据库衍生表derived" class="headerlink" title="windows安装mimic医疗数据库衍生表derived"></a>windows安装mimic医疗数据库衍生表derived</h4><p>前置条件：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">安装git（全部默认安装即可）：下载地址 https://git-scm.com/downloads</span><br></pre></td></tr></table></figure>
+    <title>postgresql安装</title>
+    <url>/2024/12/04/postgresql01/</url>
+    <content><![CDATA[<h4 id="沉浸式安装postgresql-windows版"><a href="#沉浸式安装postgresql-windows版" class="headerlink" title="沉浸式安装postgresql-windows版"></a>沉浸式安装postgresql-windows版</h4><h5 id="注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错"><a href="#注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错" class="headerlink" title="注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错"></a>注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错</h5><span id="more"></span>
 
-<span id="more"></span>
-
-<p>紧接上回、已经安装完了icu和hosp数据，现在生成衍生表</p>
-<p>衍生表sql路径<code>D:\mimic-code-main\mimic-iv\concepts_postgres</code></p>
-<p><img src="/images/postgresql03/image-20241206193638730.png" alt="image-20241206193638730"></p>
-<h5 id="1、安装"><a href="#1、安装" class="headerlink" title="1、安装"></a>1、安装</h5><ul>
-<li>设置路径</li>
-</ul>
-<p><img src="/images/postgresql03/image-20241206193843842.png" alt="image-20241206193843842"></p>
-<ul>
-<li><p>执行postgres-functions.sql生成对应的方法<code>\i D:/mimic-code-main/mimic-iv/concepts_postgres/postgres-functions.sql</code></p>
-<p><img src="/images/postgresql03/image-20241206194003957.png" alt="image-20241206194003957"></p>
-</li>
-<li><p>执行shell生成衍生表格数据文件夹postgres</p>
-</li>
-</ul>
-<p><img src="/images/postgresql03/image-20241206194622743.png" alt="image-20241206194622743"></p>
-<p><img src="/images/postgresql03/image-20241206194818354.png" alt="image-20241206194818354"></p>
-<ul>
-<li>生成衍生表格数据<ul>
-<li>修改postgres-make-concepts.sql</li>
-</ul>
-</li>
-</ul>
-<p><img src="/images/postgresql03/image-20241206195056707.png" alt="image-20241206195056707"></p>
-<ul>
-<li>执行</li>
-</ul>
-<p><img src="/images/postgresql03/image-20241206195813987.png" alt="image-20241206195813987"></p>
-<p>之后就是漫长的等待，直到结束就好。</p>
-<h5 id="附：小店提供安装服务，有需要可以淘宝扫码查看"><a href="#附：小店提供安装服务，有需要可以淘宝扫码查看" class="headerlink" title="附：小店提供安装服务，有需要可以淘宝扫码查看"></a>附：小店提供安装服务，有需要可以淘宝扫码查看</h5><p><img src="/images/pgsql.png" alt="pgsql"></p>
+<h5 id="1、下载安装包"><a href="#1、下载安装包" class="headerlink" title="1、下载安装包"></a>1、下载安装包</h5><p><code>https://www.enterprisedb.com/downloads/postgres-postgresql-downloads</code></p>
+<p>在下载页面下载你需要版本的pgsql安装包</p>
+<h5 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h5><p><img src="/images/postgresql01/image-20241204155029168.png" alt="image-20241204155029168"></p>
+<p><img src="/images/postgresql01/image-20241204155126233.png" alt="image-20241204155126233"></p>
+<p><img src="/images/postgresql01/image-20241204155203948.png" alt="image-20241204155203948"></p>
+<p><img src="/images/postgresql01/image-20241204155219197.png" alt="image-20241204155219197"></p>
+<p><img src="/images/postgresql01/image-20241204155403455.png" alt="image-20241204155403455"></p>
+<p><img src="/images/postgresql01/image-20241204155333693.png" alt="image-20241204155333693"></p>
+<p><img src="/images/postgresql01/image-20241204155419481.png" alt="image-20241204155419481"></p>
+<p><img src="/images/postgresql01/image-20241204155434572.png" alt="image-20241204155434572"></p>
+<p><img src="/images/postgresql01/image-20241204155447005.png" alt="image-20241204155447005"></p>
+<p>next之后就开始等待吧，结束后直接finish，然后取消Stack Builder就好</p>
+<p><img src="/images/postgresql01/image-20241204161353769.png" alt="image-20241204161353769"></p>
+<p>到此，windows的pgsql安装已经完成。简单测试下</p>
+<p><img src="/images/postgresql01/image-20241204164335658.png" alt="image-20241204164335658"></p>
+<h5 id="3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。"><a href="#3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。" class="headerlink" title="3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。"></a>3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。</h5><h5 id="附：-小店提供安装服务，有需要可以淘宝扫码查看"><a href="#附：-小店提供安装服务，有需要可以淘宝扫码查看" class="headerlink" title="附： 小店提供安装服务，有需要可以淘宝扫码查看"></a>附： 小店提供安装服务，有需要可以淘宝扫码查看</h5><p><img src="/images/pgsql.png" alt="pgsql"></p>
 ]]></content>
       <categories>
         <category>postgresql</category>
       </categories>
       <tags>
         <tag>postgresql</tag>
-        <tag>MIMIC</tag>
       </tags>
   </entry>
   <entry>
@@ -274,6 +228,52 @@
 <p><img src="/images/postgresql02/image-20241206181931467.png" alt="image-20241206181931467"></p>
 <p>icu</p>
 <p><img src="/images/postgresql02/image-20241206181948265.png" alt="image-20241206181948265"></p>
+<h5 id="附：小店提供安装服务，有需要可以淘宝扫码查看"><a href="#附：小店提供安装服务，有需要可以淘宝扫码查看" class="headerlink" title="附：小店提供安装服务，有需要可以淘宝扫码查看"></a>附：小店提供安装服务，有需要可以淘宝扫码查看</h5><p><img src="/images/pgsql.png" alt="pgsql"></p>
+]]></content>
+      <categories>
+        <category>postgresql</category>
+      </categories>
+      <tags>
+        <tag>postgresql</tag>
+        <tag>MIMIC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mimiciv医疗数据库安装（derived衍生表）</title>
+    <url>/2024/12/06/postgresql03/</url>
+    <content><![CDATA[<h4 id="windows安装mimic医疗数据库衍生表derived"><a href="#windows安装mimic医疗数据库衍生表derived" class="headerlink" title="windows安装mimic医疗数据库衍生表derived"></a>windows安装mimic医疗数据库衍生表derived</h4><p>前置条件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">安装git（全部默认安装即可）：下载地址 https://git-scm.com/downloads</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>紧接上回、已经安装完了icu和hosp数据，现在生成衍生表</p>
+<p>衍生表sql路径<code>D:\mimic-code-main\mimic-iv\concepts_postgres</code></p>
+<p><img src="/images/postgresql03/image-20241206193638730.png" alt="image-20241206193638730"></p>
+<h5 id="1、安装"><a href="#1、安装" class="headerlink" title="1、安装"></a>1、安装</h5><ul>
+<li>设置路径</li>
+</ul>
+<p><img src="/images/postgresql03/image-20241206193843842.png" alt="image-20241206193843842"></p>
+<ul>
+<li><p>执行postgres-functions.sql生成对应的方法<code>\i D:/mimic-code-main/mimic-iv/concepts_postgres/postgres-functions.sql</code></p>
+<p><img src="/images/postgresql03/image-20241206194003957.png" alt="image-20241206194003957"></p>
+</li>
+<li><p>执行shell生成衍生表格数据文件夹postgres</p>
+</li>
+</ul>
+<p><img src="/images/postgresql03/image-20241206194622743.png" alt="image-20241206194622743"></p>
+<p><img src="/images/postgresql03/image-20241206194818354.png" alt="image-20241206194818354"></p>
+<ul>
+<li>生成衍生表格数据<ul>
+<li>修改postgres-make-concepts.sql</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/postgresql03/image-20241206195056707.png" alt="image-20241206195056707"></p>
+<ul>
+<li>执行</li>
+</ul>
+<p><img src="/images/postgresql03/image-20241206195813987.png" alt="image-20241206195813987"></p>
+<p>之后就是漫长的等待，直到结束就好。</p>
 <h5 id="附：小店提供安装服务，有需要可以淘宝扫码查看"><a href="#附：小店提供安装服务，有需要可以淘宝扫码查看" class="headerlink" title="附：小店提供安装服务，有需要可以淘宝扫码查看"></a>附：小店提供安装服务，有需要可以淘宝扫码查看</h5><p><img src="/images/pgsql.png" alt="pgsql"></p>
 ]]></content>
       <categories>
