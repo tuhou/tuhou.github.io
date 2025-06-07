@@ -71,26 +71,32 @@
       </tags>
   </entry>
   <entry>
-    <title>docker镜像加速教程</title>
-    <url>/2024/12/31/docker01/</url>
-    <content><![CDATA[<h4 id="docker镜像下载教程"><a href="#docker镜像下载教程" class="headerlink" title="docker镜像下载教程"></a>docker镜像下载教程</h4><ul>
-<li>购买多个秘钥的请注意，一个一个下载，下载存在延迟，以免秘钥浪费</li>
-</ul>
-<span id="more"></span>
+    <title>postgresql安装</title>
+    <url>/2024/12/04/postgresql01/</url>
+    <content><![CDATA[<h4 id="沉浸式安装postgresql-windows版"><a href="#沉浸式安装postgresql-windows版" class="headerlink" title="沉浸式安装postgresql-windows版"></a>沉浸式安装postgresql-windows版</h4><h5 id="注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错"><a href="#注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错" class="headerlink" title="注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错"></a>注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错</h5><span id="more"></span>
 
-<h5 id="1、镜像搜索"><a href="#1、镜像搜索" class="headerlink" title="1、镜像搜索"></a>1、镜像搜索</h5><p>地址：<code>http://113.133.183.165:45678/</code></p>
-<p><img src="/images/docker01/1.png" alt="image-1"></p>
-<p>输入镜像名称：点击查询，等待一段时间会展示搜索结果，同时将查询到的结果展示到下拉的架构列表</p>
-<h4 id="2、镜像下载"><a href="#2、镜像下载" class="headerlink" title="2、镜像下载"></a>2、镜像下载</h4><p><img src="/images/docker01/2.png" alt="image-20241210192956945"></p>
-<p>选择对应的架构，输入秘钥点击下载，等待一段时间加载下载地址</p>
-<h4 id="3、下载文件"><a href="#3、下载文件" class="headerlink" title="3、下载文件"></a>3、下载文件</h4><p><img src="/images/docker01/3.png" alt="image-20241210192956945"></p>
-<p>默认户自行下载，若是不小心没保存之类，不要刷新页面，直接点击下载链接，同样可以下载</p>
+<h5 id="1、下载安装包"><a href="#1、下载安装包" class="headerlink" title="1、下载安装包"></a>1、下载安装包</h5><p><code>https://www.enterprisedb.com/downloads/postgres-postgresql-downloads</code></p>
+<p>在下载页面下载你需要版本的pgsql安装包</p>
+<h5 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h5><p><img src="/images/postgresql01/image-20241204155029168.png" alt="image-20241204155029168"></p>
+<p><img src="/images/postgresql01/image-20241204155126233.png" alt="image-20241204155126233"></p>
+<p><img src="/images/postgresql01/image-20241204155203948.png" alt="image-20241204155203948"></p>
+<p><img src="/images/postgresql01/image-20241204155219197.png" alt="image-20241204155219197"></p>
+<p><img src="/images/postgresql01/image-20241204155403455.png" alt="image-20241204155403455"></p>
+<p><img src="/images/postgresql01/image-20241204155333693.png" alt="image-20241204155333693"></p>
+<p><img src="/images/postgresql01/image-20241204155419481.png" alt="image-20241204155419481"></p>
+<p><img src="/images/postgresql01/image-20241204155434572.png" alt="image-20241204155434572"></p>
+<p><img src="/images/postgresql01/image-20241204155447005.png" alt="image-20241204155447005"></p>
+<p>next之后就开始等待吧，结束后直接finish，然后取消Stack Builder就好</p>
+<p><img src="/images/postgresql01/image-20241204161353769.png" alt="image-20241204161353769"></p>
+<p>到此，windows的pgsql安装已经完成。简单测试下</p>
+<p><img src="/images/postgresql01/image-20241204164335658.png" alt="image-20241204164335658"></p>
+<h5 id="3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。"><a href="#3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。" class="headerlink" title="3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。"></a>3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。</h5><h5 id="附：-小店提供安装服务，有需要可以淘宝扫码查看"><a href="#附：-小店提供安装服务，有需要可以淘宝扫码查看" class="headerlink" title="附： 小店提供安装服务，有需要可以淘宝扫码查看"></a>附： 小店提供安装服务，有需要可以淘宝扫码查看</h5><p><img src="/images/pgsql.png" alt="pgsql"></p>
 ]]></content>
       <categories>
-        <category>教程</category>
+        <category>postgresql</category>
       </categories>
       <tags>
-        <tag>docker</tag>
+        <tag>postgresql</tag>
       </tags>
   </entry>
   <entry>
@@ -162,6 +168,29 @@
       </tags>
   </entry>
   <entry>
+    <title>docker镜像加速教程</title>
+    <url>/2024/12/31/docker01/</url>
+    <content><![CDATA[<h4 id="docker镜像下载教程"><a href="#docker镜像下载教程" class="headerlink" title="docker镜像下载教程"></a>docker镜像下载教程</h4><ul>
+<li>购买多个秘钥的请注意，一个一个下载，下载存在延迟，以免秘钥浪费</li>
+</ul>
+<span id="more"></span>
+
+<h5 id="1、镜像搜索"><a href="#1、镜像搜索" class="headerlink" title="1、镜像搜索"></a>1、镜像搜索</h5><p>地址：<code>http://113.133.183.165:45678/</code></p>
+<p><img src="/images/docker01/1.png" alt="image-1"></p>
+<p>输入镜像名称：点击查询，等待一段时间会展示搜索结果，同时将查询到的结果展示到下拉的架构列表</p>
+<h4 id="2、镜像下载"><a href="#2、镜像下载" class="headerlink" title="2、镜像下载"></a>2、镜像下载</h4><p><img src="/images/docker01/2.png" alt="image-20241210192956945"></p>
+<p>选择对应的架构，输入秘钥点击下载，等待一段时间加载下载地址</p>
+<h4 id="3、下载文件"><a href="#3、下载文件" class="headerlink" title="3、下载文件"></a>3、下载文件</h4><p><img src="/images/docker01/3.png" alt="image-20241210192956945"></p>
+<p>默认户自行下载，若是不小心没保存之类，不要刷新页面，直接点击下载链接，同样可以下载</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>mimiciv医疗数据库安装（icu+hosp）</title>
     <url>/2024/12/05/postgresql02/</url>
     <content><![CDATA[<h4 id="windows安装mimic医疗数据库"><a href="#windows安装mimic医疗数据库" class="headerlink" title="windows安装mimic医疗数据库"></a>windows安装mimic医疗数据库</h4><h5 id="注意：mimic需要硬盘空间120G左右，请预留足够的空间"><a href="#注意：mimic需要硬盘空间120G左右，请预留足够的空间" class="headerlink" title="注意：mimic需要硬盘空间120G左右，请预留足够的空间"></a>注意：mimic需要硬盘空间120G左右，请预留足够的空间</h5><p>前置条件：</p>
@@ -205,37 +234,8 @@
         <category>postgresql</category>
       </categories>
       <tags>
+        <tag>postgresql</tag>
         <tag>MIMIC</tag>
-        <tag>postgresql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>postgresql安装</title>
-    <url>/2024/12/04/postgresql01/</url>
-    <content><![CDATA[<h4 id="沉浸式安装postgresql-windows版"><a href="#沉浸式安装postgresql-windows版" class="headerlink" title="沉浸式安装postgresql-windows版"></a>沉浸式安装postgresql-windows版</h4><h5 id="注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错"><a href="#注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错" class="headerlink" title="注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错"></a>注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错</h5><span id="more"></span>
-
-<h5 id="1、下载安装包"><a href="#1、下载安装包" class="headerlink" title="1、下载安装包"></a>1、下载安装包</h5><p><code>https://www.enterprisedb.com/downloads/postgres-postgresql-downloads</code></p>
-<p>在下载页面下载你需要版本的pgsql安装包</p>
-<h5 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h5><p><img src="/images/postgresql01/image-20241204155029168.png" alt="image-20241204155029168"></p>
-<p><img src="/images/postgresql01/image-20241204155126233.png" alt="image-20241204155126233"></p>
-<p><img src="/images/postgresql01/image-20241204155203948.png" alt="image-20241204155203948"></p>
-<p><img src="/images/postgresql01/image-20241204155219197.png" alt="image-20241204155219197"></p>
-<p><img src="/images/postgresql01/image-20241204155403455.png" alt="image-20241204155403455"></p>
-<p><img src="/images/postgresql01/image-20241204155333693.png" alt="image-20241204155333693"></p>
-<p><img src="/images/postgresql01/image-20241204155419481.png" alt="image-20241204155419481"></p>
-<p><img src="/images/postgresql01/image-20241204155434572.png" alt="image-20241204155434572"></p>
-<p><img src="/images/postgresql01/image-20241204155447005.png" alt="image-20241204155447005"></p>
-<p>next之后就开始等待吧，结束后直接finish，然后取消Stack Builder就好</p>
-<p><img src="/images/postgresql01/image-20241204161353769.png" alt="image-20241204161353769"></p>
-<p>到此，windows的pgsql安装已经完成。简单测试下</p>
-<p><img src="/images/postgresql01/image-20241204164335658.png" alt="image-20241204164335658"></p>
-<h5 id="3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。"><a href="#3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。" class="headerlink" title="3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。"></a>3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。</h5><h5 id="附：-小店提供安装服务，有需要可以淘宝扫码查看"><a href="#附：-小店提供安装服务，有需要可以淘宝扫码查看" class="headerlink" title="附： 小店提供安装服务，有需要可以淘宝扫码查看"></a>附： 小店提供安装服务，有需要可以淘宝扫码查看</h5><p><img src="/images/pgsql.png" alt="pgsql"></p>
-]]></content>
-      <categories>
-        <category>postgresql</category>
-      </categories>
-      <tags>
-        <tag>postgresql</tag>
       </tags>
   </entry>
   <entry>
@@ -280,8 +280,8 @@
         <category>postgresql</category>
       </categories>
       <tags>
-        <tag>MIMIC</tag>
         <tag>postgresql</tag>
+        <tag>MIMIC</tag>
       </tags>
   </entry>
   <entry>
