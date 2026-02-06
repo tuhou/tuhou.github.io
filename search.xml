@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>test照片</title>
+      <link href="/2026/01/31/test%E7%85%A7%E7%89%87/"/>
+      <url>/2026/01/31/test%E7%85%A7%E7%89%87/</url>
+      
+        <content type="html"><![CDATA[<p>这是一个测试</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>png测试</title>
+      <link href="/2026/01/31/This-is-test/"/>
+      <url>/2026/01/31/This-is-test/</url>
+      
+        <content type="html"><![CDATA[<p>title: docker镜像加速教程<br>date: 2024-12-31 20:10:20<br>tags: docker<br>categories: 教程<br>cover: &#x2F;img&#x2F;default.png</p><p>Ces </p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>小红书加密分析</title>
+      <link href="/2026/01/31/12343/"/>
+      <url>/2026/01/31/12343/</url>
+      
+        <content type="html"><![CDATA[<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251209112842305.png" alt="image-20251209112842305">通过切换类目找到数据来源</p><p>搜索找到加密位置</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251209113052247.png" alt="image-20251209113052247"></p><p>分析可知，X-s实际就是v(x,s)的值，也就是seccore_signv2(x,s)其中</p><p>x值为<code>/api/sns/web/v1/homefeed</code></p><p>s值为</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;cursor_score&quot;: &quot;&quot;,</span><br><span class="line">    &quot;num&quot;: 31,</span><br><span class="line">    &quot;refresh_type&quot;: 1,</span><br><span class="line">    &quot;note_index&quot;: 26,</span><br><span class="line">    &quot;unread_begin_note_id&quot;: &quot;&quot;,</span><br><span class="line">    &quot;unread_end_note_id&quot;: &quot;&quot;,</span><br><span class="line">    &quot;unread_note_count&quot;: 0,</span><br><span class="line">    &quot;category&quot;: &quot;homefeed.fashion_v3&quot;,</span><br><span class="line">    &quot;search_key&quot;: &quot;&quot;,</span><br><span class="line">    &quot;need_num&quot;: 6,</span><br><span class="line">    &quot;image_formats&quot;: [</span><br><span class="line">        &quot;jpg&quot;,</span><br><span class="line">        &quot;webp&quot;,</span><br><span class="line">        &quot;avif&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;need_filter_image&quot;: false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251209113253398.png" alt="image-20251209113253398"></p><p>进入函数</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251209114149724.png" alt="image-20251209114149724"></p><p>分析的主要内容就是f值，而f值唯一的未知值就是s，只需要分析s的来源就行。s &#x3D; window.mnsv2(c,d)</p><p>直接断点后，hook window.mnsv2，</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">(function () &#123;</span><br><span class="line">    const name = &#x27;mnsv2&#x27;;</span><br><span class="line">    let value;</span><br><span class="line">    Object.defineProperty(window, name, &#123;</span><br><span class="line">        configurable: true,</span><br><span class="line">        enumerable: true,</span><br><span class="line">        get() &#123;</span><br><span class="line">            return value;</span><br><span class="line">        &#125;,</span><br><span class="line">        set(v) &#123;</span><br><span class="line">            console.warn(`[HOOK] window.$&#123;name&#125; 被创建 / 重新赋值`);</span><br><span class="line">            try &#123;</span><br><span class="line">                throw new Error(&#x27;mnsv2 define trace&#x27;);</span><br><span class="line">            &#125; catch (e) &#123;</span><br><span class="line">                console.group(`[mnsv2 定义位置]`);</span><br><span class="line">                console.log(e.stack);</span><br><span class="line">                console.groupEnd();</span><br><span class="line">            &#125;</span><br><span class="line">            debugger; </span><br><span class="line">            value = v;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    console.log(&#x27;[HOOK] 已监听 window.mnsv2 的生成位置&#x27;);</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure><p>当然你能直接搜索signV2Init，找到window.mnsv2生成的位置</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251224155635954.png" alt="image-20251224155635954"></p><h4 id="补环境："><a href="#补环境：" class="headerlink" title="补环境："></a>补环境：</h4><p>1、第二部分代码的环境</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251223223944461.png" alt="image-20251223223944461"></p><p>对比浏览器补上对应的值</p><p>2、挂代理略</p><p>初始环境</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">window=globalThis</span><br><span class="line">location=&#123;&#125;</span><br><span class="line">document=&#123;&#125;</span><br><span class="line">localStorage=&#123;&#125;</span><br><span class="line">navigator=&#123;&#125;</span><br><span class="line">screen=&#123;&#125;</span><br><span class="line"></span><br><span class="line">location = watch(location, &#x27;location&#x27;)</span><br><span class="line">document = watch(document, &#x27;document&#x27;)</span><br><span class="line">localStorage = watch(localStorage, &#x27;localStorage&#x27;)</span><br><span class="line">navigator = watch(navigator, &#x27;navigator&#x27;)</span><br><span class="line">screen = watch(screen, &#x27;screen&#x27;)</span><br><span class="line">globalThis = watch(globalThis, &#x27;globalThis&#x27;)</span><br><span class="line">window = watch(window, &#x27;window&#x27;)</span><br></pre></td></tr></table></figure><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251223225159933.png" alt="image-20251223225159933"></p><p>根据报错补环境，直接补上</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">globalThis.addEventListener = watch(function addEventListener(name)&#123;&#125;, &#x27;addEventListener&#x27;)</span><br></pre></td></tr></table></figure><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251223225806289.png" alt="image-20251223225806289"></p><p>此时已经可以看到走到了调用mnsv2，此时找到方法调用中的undefined进行一个一个环境补</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251224000604841.png" alt="image-20251224000604841"></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251224000611214.png" alt="image-20251224000611214"></p><p>这些先不管，等到补完环境，会正常，补这些就行</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251224000643724.png" alt="image-20251224000643724"></p><p>navigator这些都是可以固定的</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">function Navigator()&#123;&#125;</span><br><span class="line">Navigator.prototype.appCodeName = &quot;Mozilla&quot;;</span><br><span class="line">Navigator.prototype.appName = &quot;Netscape&quot;;</span><br><span class="line">Navigator.prototype.language = &quot;zh-CN&quot;;</span><br><span class="line">Navigator.prototype.languages = [</span><br><span class="line">    &quot;zh-CN&quot;,</span><br><span class="line">    &quot;zh&quot;,</span><br><span class="line">    &quot;en&quot;</span><br><span class="line">];</span><br><span class="line">Navigator.prototype.platform = &quot;MacIntel&quot;;</span><br><span class="line">Navigator.prototype.product = &quot;Gecko&quot;;</span><br><span class="line">Navigator.prototype.productSub = &quot;20030107&quot;;</span><br><span class="line">function PermissionStatus()&#123;</span><br><span class="line">    this.state = &quot;denied&quot;</span><br><span class="line">    this.then = function then()&#123;&#125;</span><br><span class="line">&#125;;safeFunction(PermissionStatus)</span><br><span class="line">function Permissions()&#123;</span><br><span class="line">&#125;</span><br><span class="line">Permissions.prototype.query = function query() &#123;</span><br><span class="line">    // console.log(&quot;对象 =&gt; navigator.permissions.query &quot; + &quot;调用方法: query&quot;, arguments[0])</span><br><span class="line">    return Promise.resolve(new PermissionStatus())</span><br><span class="line">&#125;;safeFunction(Permissions.prototype.query)</span><br><span class="line">Navigator.prototype.permissions = new Permissions()</span><br><span class="line">Navigator.prototype.userAgent = &quot;&quot;;</span><br><span class="line">Navigator.prototype.vendor = &quot;Google Inc.&quot;;</span><br><span class="line">Navigator.prototype.webdriver = false;</span><br><span class="line">navigator = new Navigator()</span><br><span class="line">window.navigator = navigator;</span><br><span class="line">window.Navigator = Navigator;</span><br><span class="line"></span><br><span class="line">function Screen()&#123;&#125;</span><br><span class="line">screen = new Screen()</span><br><span class="line">window.screen = screen;</span><br><span class="line">window.Screen = Screen;</span><br><span class="line"></span><br><span class="line">window.MouseEvent = function MouseEvent()&#123;&#125;</span><br></pre></td></tr></table></figure><p>接着补document</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251224001605668.png" alt="image-20251224001605668"></p><p>补完后发现其他</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251224001654873.png" alt="image-20251224001654873"></p><p>等到补到getElementsByTagName时，需要结合浏览器拿到结果</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let e = document.getElementsByTagName(&quot;*&quot;)</span><br><span class="line">      , t = new Set;</span><br><span class="line">    for (let a of e)</span><br><span class="line">        t.add(a.tagName.toLowerCase());</span><br></pre></td></tr></table></figure><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251224002342249.png" alt="image-20251224002342249"></p><p>接着补document.all和document.body，补完补一个cookie就可以看见值了</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251224145906382.png" alt="image-20251224145906382"></p><p>但是此时还是有报错，补完这个不报错</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function XMLHttpRequest() &#123;&#125;</span><br><span class="line">XMLHttpRequest.prototype.open = function () &#123;&#125;;</span><br><span class="line">XMLHttpRequest.prototype.send = function () &#123;&#125;;</span><br><span class="line">XMLHttpRequest.prototype.setRequestHeader = function () &#123;&#125;;</span><br><span class="line">XMLHttpRequest.prototype.addEventListener = function () &#123;&#125;;</span><br><span class="line">window.XMLHttpRequest = XMLHttpRequest;</span><br></pre></td></tr></table></figure><p>调用后，完美撒花</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251224150118243.png" alt="image-20251224150118243"></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>test3</title>
+      <link href="/2026/01/31/test3/"/>
+      <url>/2026/01/31/test3/</url>
+      
+        <content type="html"><![CDATA[<p>test4</p><p><img src="/images/pasted-2.png" alt="upload successful"> </p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>test2</title>
+      <link href="/2026/01/31/test2/"/>
+      <url>/2026/01/31/test2/</url>
+      
+        <content type="html"><![CDATA[<p>test2</p><p><img src="/images/pasted-1.png" alt="upload successful"> </p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>This is test</title>
+      <link href="/2026/01/29/This-is-test-1/"/>
+      <url>/2026/01/29/This-is-test-1/</url>
+      
+        <content type="html"><![CDATA[<p><img src="/images/pasted-0.png" alt="upload successful"><br>This is test</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="/2026/01/29/hello-world/"/>
+      <url>/2026/01/29/hello-world/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
+</search>
