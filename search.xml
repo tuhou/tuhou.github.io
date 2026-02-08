@@ -4,91 +4,131 @@
   
     
     <entry>
-      <title>test照片</title>
-      <link href="/2026/01/31/test%E7%85%A7%E7%89%87/"/>
-      <url>/2026/01/31/test%E7%85%A7%E7%89%87/</url>
+      <title>搭建私有的个人远程RustDesk</title>
+      <link href="/2024/12/07/RustDesk/"/>
+      <url>/2024/12/07/RustDesk/</url>
       
-        <content type="html"><![CDATA[<p>这是一个测试</p>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>png测试111</title>
-      <link href="/2026/01/31/This-is-test/"/>
-      <url>/2026/01/31/This-is-test/</url>
-      
-        <content type="html"><![CDATA[<hr><p>title: docker镜像加速教程<br>date: 2024-12-31 20:10:20<br>cover: &#x2F;img&#x2F;default.png</p><hr><p>Ces </p>]]></content>
+        <content type="html"><![CDATA[<h4 id="在Linux服务器搭建RustDesk远程"><a href="#在Linux服务器搭建RustDesk远程" class="headerlink" title="在Linux服务器搭建RustDesk远程"></a>在Linux服务器搭建RustDesk远程</h4><blockquote><p>为什么搭建RustDesk，市面上的Todesk、向日葵不能使用吗？</p><p>PC端自用，使用Todesk和向日葵确实能满足需求，但是涉及到移动设备的远控时，免费的Todesk、向日葵不支持移动设备远控，同时在PC远控也有诸多限制，而今天介绍到的RustDesk完全没有这些限制，支持多平台（Linux、Windows、macOS、Android）</p></blockquote><span id="more"></span><blockquote><p>前置条件：一台公网ip的Linux云服务器</p></blockquote><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241207144634301.png" alt="image-20241207144634301"></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241207144712331.png" alt="image-20241207144712331"></p><h5 id="1、搭建"><a href="#1、搭建" class="headerlink" title="1、搭建"></a>1、搭建</h5><blockquote><p>本教程基于Linux（centos）、在宝塔上安装RustDesk服务</p><p>项目地址：<code>https://github.com/rustdesk/rustdesk-server/releases/</code></p></blockquote><p>根据服务器版本下载对应的源码版本，因为我的是x86的，下载linux-amd64就好</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241207145705493.png" alt="image-20241207145705493"></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241207145608431.png" alt="image-20241207145608431"></p><ul><li>1、安装宝塔：<code>https://www.bt.cn/new/download.html</code></li></ul><p>CentOS安装宝塔</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url=https://download.bt.cn/install/install_lts.sh;if [ -f /usr/bin/curl ];then curl -sSO $url;else wget -O install_lts.sh $url;fi;bash install_lts.sh ed8484bec</span><br></pre></td></tr></table></figure><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241207150305917.png" alt="image-20241207150305917"></p><p>安装完成根据生成的外网地址或者内网地址登录宝塔，此时如果登录不了，请在服务器防火墙放通对应的端口，本例为：35011</p><p>第一次登录需要注册一个宝塔账号，注册后登录，如下图所示：</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241207150559196.png" alt="image-20241207150559196"></p><ul><li>2、配置RustDesk服务</li></ul><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241207150749818.png" alt="image-20241207150749818"></p><p>点击文件，选择你喜欢的文件夹创建rustdesk文件，本例为www下</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241207151238636.png" alt="image-20241207151238636"></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241207151306473.png" alt="image-20241207151306473"></p><p>解压文件，可以看到最后就三个文件</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241207151401238.png" alt="image-20241207151401238"></p><p>因为我们需要rustdesk服务时刻运行，并能自动重启，那么需要搞一个守护程序。软件商店搜索：进程守护 安装</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241207151620540.png" alt="image-20241207151620540"></p><p>添加守护程序，点击设置-&gt; 添加守护程序 -&gt; 确认</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241207151734249.png" alt="image-20241207151734249"></p><p>目录和启动命令以我的为例：</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241207152041447.png" alt="image-20241207152041447"></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241207152057817.png" alt="image-20241207152057817"></p><p>守护程序设置好后，状态为Running时为正常</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241207152314070.png" alt="image-20241207152314070"></p><p>在文件列表中会生成一些文件，记住id_xx.pub里面为中继器的key，保存好后续使用</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241207161233449.png" alt="image-20241207161233449"></p><p>端口放通：你需要放通21116 - TCP&#x2F;UDP、21117 - TCP</p><p>如图在安全中添加，当然在你的服务器安全组也需要放通</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241207161445650.png" alt="image-20241207161445650"></p><h5 id="2、测试"><a href="#2、测试" class="headerlink" title="2、测试"></a>2、测试</h5><p>在软件中输入刚才对应的id和中继服务器以及key，主页状态为就绪说明已经成功，之后找两台设备使用即可</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241207161726741.png" alt="image-20241207161726741"></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241207161830887.png" alt="image-20241207161830887"></p><h5 id="附：小店提供安装和中继器租用服务，有需要可以淘宝扫码查看"><a href="#附：小店提供安装和中继器租用服务，有需要可以淘宝扫码查看" class="headerlink" title="附：小店提供安装和中继器租用服务，有需要可以淘宝扫码查看"></a>附：小店提供安装和中继器租用服务，有需要可以淘宝扫码查看</h5><p><img src="/images/rustdesk.png" alt="pgsql"></p>]]></content>
       
       
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>小红书加密分析</title>
-      <link href="/2026/01/31/12343/"/>
-      <url>/2026/01/31/12343/</url>
-      
-        <content type="html"><![CDATA[<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251209112842305.png" alt="image-20251209112842305">通过切换类目找到数据来源</p><p>搜索找到加密位置</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251209113052247.png" alt="image-20251209113052247"></p><p>分析可知，X-s实际就是v(x,s)的值，也就是seccore_signv2(x,s)其中</p><p>x值为<code>/api/sns/web/v1/homefeed</code></p><p>s值为</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;cursor_score&quot;: &quot;&quot;,</span><br><span class="line">    &quot;num&quot;: 31,</span><br><span class="line">    &quot;refresh_type&quot;: 1,</span><br><span class="line">    &quot;note_index&quot;: 26,</span><br><span class="line">    &quot;unread_begin_note_id&quot;: &quot;&quot;,</span><br><span class="line">    &quot;unread_end_note_id&quot;: &quot;&quot;,</span><br><span class="line">    &quot;unread_note_count&quot;: 0,</span><br><span class="line">    &quot;category&quot;: &quot;homefeed.fashion_v3&quot;,</span><br><span class="line">    &quot;search_key&quot;: &quot;&quot;,</span><br><span class="line">    &quot;need_num&quot;: 6,</span><br><span class="line">    &quot;image_formats&quot;: [</span><br><span class="line">        &quot;jpg&quot;,</span><br><span class="line">        &quot;webp&quot;,</span><br><span class="line">        &quot;avif&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;need_filter_image&quot;: false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251209113253398.png" alt="image-20251209113253398"></p><p>进入函数</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251209114149724.png" alt="image-20251209114149724"></p><p>分析的主要内容就是f值，而f值唯一的未知值就是s，只需要分析s的来源就行。s &#x3D; window.mnsv2(c,d)</p><p>直接断点后，hook window.mnsv2，</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">(function () &#123;</span><br><span class="line">    const name = &#x27;mnsv2&#x27;;</span><br><span class="line">    let value;</span><br><span class="line">    Object.defineProperty(window, name, &#123;</span><br><span class="line">        configurable: true,</span><br><span class="line">        enumerable: true,</span><br><span class="line">        get() &#123;</span><br><span class="line">            return value;</span><br><span class="line">        &#125;,</span><br><span class="line">        set(v) &#123;</span><br><span class="line">            console.warn(`[HOOK] window.$&#123;name&#125; 被创建 / 重新赋值`);</span><br><span class="line">            try &#123;</span><br><span class="line">                throw new Error(&#x27;mnsv2 define trace&#x27;);</span><br><span class="line">            &#125; catch (e) &#123;</span><br><span class="line">                console.group(`[mnsv2 定义位置]`);</span><br><span class="line">                console.log(e.stack);</span><br><span class="line">                console.groupEnd();</span><br><span class="line">            &#125;</span><br><span class="line">            debugger; </span><br><span class="line">            value = v;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    console.log(&#x27;[HOOK] 已监听 window.mnsv2 的生成位置&#x27;);</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure><p>当然你能直接搜索signV2Init，找到window.mnsv2生成的位置</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251224155635954.png" alt="image-20251224155635954"></p><h4 id="补环境："><a href="#补环境：" class="headerlink" title="补环境："></a>补环境：</h4><p>1、第二部分代码的环境</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251223223944461.png" alt="image-20251223223944461"></p><p>对比浏览器补上对应的值</p><p>2、挂代理略</p><p>初始环境</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">window=globalThis</span><br><span class="line">location=&#123;&#125;</span><br><span class="line">document=&#123;&#125;</span><br><span class="line">localStorage=&#123;&#125;</span><br><span class="line">navigator=&#123;&#125;</span><br><span class="line">screen=&#123;&#125;</span><br><span class="line"></span><br><span class="line">location = watch(location, &#x27;location&#x27;)</span><br><span class="line">document = watch(document, &#x27;document&#x27;)</span><br><span class="line">localStorage = watch(localStorage, &#x27;localStorage&#x27;)</span><br><span class="line">navigator = watch(navigator, &#x27;navigator&#x27;)</span><br><span class="line">screen = watch(screen, &#x27;screen&#x27;)</span><br><span class="line">globalThis = watch(globalThis, &#x27;globalThis&#x27;)</span><br><span class="line">window = watch(window, &#x27;window&#x27;)</span><br></pre></td></tr></table></figure><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251223225159933.png" alt="image-20251223225159933"></p><p>根据报错补环境，直接补上</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">globalThis.addEventListener = watch(function addEventListener(name)&#123;&#125;, &#x27;addEventListener&#x27;)</span><br></pre></td></tr></table></figure><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251223225806289.png" alt="image-20251223225806289"></p><p>此时已经可以看到走到了调用mnsv2，此时找到方法调用中的undefined进行一个一个环境补</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251224000604841.png" alt="image-20251224000604841"></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251224000611214.png" alt="image-20251224000611214"></p><p>这些先不管，等到补完环境，会正常，补这些就行</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251224000643724.png" alt="image-20251224000643724"></p><p>navigator这些都是可以固定的</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">function Navigator()&#123;&#125;</span><br><span class="line">Navigator.prototype.appCodeName = &quot;Mozilla&quot;;</span><br><span class="line">Navigator.prototype.appName = &quot;Netscape&quot;;</span><br><span class="line">Navigator.prototype.language = &quot;zh-CN&quot;;</span><br><span class="line">Navigator.prototype.languages = [</span><br><span class="line">    &quot;zh-CN&quot;,</span><br><span class="line">    &quot;zh&quot;,</span><br><span class="line">    &quot;en&quot;</span><br><span class="line">];</span><br><span class="line">Navigator.prototype.platform = &quot;MacIntel&quot;;</span><br><span class="line">Navigator.prototype.product = &quot;Gecko&quot;;</span><br><span class="line">Navigator.prototype.productSub = &quot;20030107&quot;;</span><br><span class="line">function PermissionStatus()&#123;</span><br><span class="line">    this.state = &quot;denied&quot;</span><br><span class="line">    this.then = function then()&#123;&#125;</span><br><span class="line">&#125;;safeFunction(PermissionStatus)</span><br><span class="line">function Permissions()&#123;</span><br><span class="line">&#125;</span><br><span class="line">Permissions.prototype.query = function query() &#123;</span><br><span class="line">    // console.log(&quot;对象 =&gt; navigator.permissions.query &quot; + &quot;调用方法: query&quot;, arguments[0])</span><br><span class="line">    return Promise.resolve(new PermissionStatus())</span><br><span class="line">&#125;;safeFunction(Permissions.prototype.query)</span><br><span class="line">Navigator.prototype.permissions = new Permissions()</span><br><span class="line">Navigator.prototype.userAgent = &quot;&quot;;</span><br><span class="line">Navigator.prototype.vendor = &quot;Google Inc.&quot;;</span><br><span class="line">Navigator.prototype.webdriver = false;</span><br><span class="line">navigator = new Navigator()</span><br><span class="line">window.navigator = navigator;</span><br><span class="line">window.Navigator = Navigator;</span><br><span class="line"></span><br><span class="line">function Screen()&#123;&#125;</span><br><span class="line">screen = new Screen()</span><br><span class="line">window.screen = screen;</span><br><span class="line">window.Screen = Screen;</span><br><span class="line"></span><br><span class="line">window.MouseEvent = function MouseEvent()&#123;&#125;</span><br></pre></td></tr></table></figure><p>接着补document</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251224001605668.png" alt="image-20251224001605668"></p><p>补完后发现其他</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251224001654873.png" alt="image-20251224001654873"></p><p>等到补到getElementsByTagName时，需要结合浏览器拿到结果</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let e = document.getElementsByTagName(&quot;*&quot;)</span><br><span class="line">      , t = new Set;</span><br><span class="line">    for (let a of e)</span><br><span class="line">        t.add(a.tagName.toLowerCase());</span><br></pre></td></tr></table></figure><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251224002342249.png" alt="image-20251224002342249"></p><p>接着补document.all和document.body，补完补一个cookie就可以看见值了</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251224145906382.png" alt="image-20251224145906382"></p><p>但是此时还是有报错，补完这个不报错</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function XMLHttpRequest() &#123;&#125;</span><br><span class="line">XMLHttpRequest.prototype.open = function () &#123;&#125;;</span><br><span class="line">XMLHttpRequest.prototype.send = function () &#123;&#125;;</span><br><span class="line">XMLHttpRequest.prototype.setRequestHeader = function () &#123;&#125;;</span><br><span class="line">XMLHttpRequest.prototype.addEventListener = function () &#123;&#125;;</span><br><span class="line">window.XMLHttpRequest = XMLHttpRequest;</span><br></pre></td></tr></table></figure><p>调用后，完美撒花</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20251224150118243.png" alt="image-20251224150118243"></p>]]></content>
+      <categories>
+          
+          <category> 瞎折腾 </category>
+          
+      </categories>
       
       
+        <tags>
+            
+            <tag> RustDesk </tag>
+            
+            <tag> 远程协助 </tag>
+            
+        </tags>
       
     </entry>
     
     
     
     <entry>
-      <title>test3</title>
-      <link href="/2026/01/31/test3/"/>
-      <url>/2026/01/31/test3/</url>
+      <title>mimiciv医疗数据库安装（derived衍生表）</title>
+      <link href="/2024/12/06/postgresql03/"/>
+      <url>/2024/12/06/postgresql03/</url>
       
-        <content type="html"><![CDATA[<p>test4</p><p><img src="/images/pasted-2.png" alt="upload successful"> </p>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>test2</title>
-      <link href="/2026/01/31/test2/"/>
-      <url>/2026/01/31/test2/</url>
-      
-        <content type="html"><![CDATA[<p>test2</p><p><img src="/images/pasted-1.png" alt="upload successful"> </p>]]></content>
+        <content type="html"><![CDATA[<h4 id="windows安装mimic医疗数据库衍生表derived"><a href="#windows安装mimic医疗数据库衍生表derived" class="headerlink" title="windows安装mimic医疗数据库衍生表derived"></a>windows安装mimic医疗数据库衍生表derived</h4><p>前置条件：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">安装git（全部默认安装即可）：下载地址 https://git-scm.com/downloads</span><br></pre></td></tr></table></figure><span id="more"></span><p>紧接上回、已经安装完了icu和hosp数据，现在生成衍生表</p><p>衍生表sql路径<code>D:\mimic-code-main\mimic-iv\concepts_postgres</code></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241206193638730.png" alt="image-20241206193638730"></p><h5 id="1、安装"><a href="#1、安装" class="headerlink" title="1、安装"></a>1、安装</h5><ul><li>设置路径</li></ul><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241206193843842.png" alt="image-20241206193843842"></p><ul><li><p>执行postgres-functions.sql生成对应的方法<code>\i D:/mimic-code-main/mimic-iv/concepts_postgres/postgres-functions.sql</code></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241206194003957.png" alt="image-20241206194003957"></p></li><li><p>执行shell生成衍生表格数据文件夹postgres</p></li></ul><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241206194622743.png" alt="image-20241206194622743"></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241206194818354.png" alt="image-20241206194818354"></p><ul><li>生成衍生表格数据<ul><li>修改postgres-make-concepts.sql</li></ul></li></ul><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241206195056707.png" alt="image-20241206195056707"></p><ul><li>执行</li></ul><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241206195813987.png" alt="image-20241206195813987"></p><p>之后就是漫长的等待，直到结束就好。</p><p>小店提供安装服务，有需要可以淘宝扫码查看</p><p><img src="/images/pgsql.png" alt="pgsql"></p>]]></content>
       
       
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Hello World</title>
-      <link href="/2026/01/29/hello-world/"/>
-      <url>/2026/01/29/hello-world/</url>
-      
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+      <categories>
+          
+          <category> postgresql </category>
+          
+      </categories>
       
       
+        <tags>
+            
+            <tag> postgresql </tag>
+            
+            <tag> MIMIC </tag>
+            
+        </tags>
       
     </entry>
     
     
     
     <entry>
-      <title>This is test</title>
-      <link href="/2026/01/29/This-is-test-1/"/>
-      <url>/2026/01/29/This-is-test-1/</url>
+      <title>mimiciv医疗数据库安装（icu+hosp）</title>
+      <link href="/2024/12/05/postgresql02/"/>
+      <url>/2024/12/05/postgresql02/</url>
       
-        <content type="html"><![CDATA[<p><img src="/images/pasted-0.png" alt="upload successful"><br>This is test</p>]]></content>
+        <content type="html"><![CDATA[<h4 id="windows安装mimic医疗数据库"><a href="#windows安装mimic医疗数据库" class="headerlink" title="windows安装mimic医疗数据库"></a>windows安装mimic医疗数据库</h4><h5 id="注意：mimic需要硬盘空间120G左右，请预留足够的空间"><a href="#注意：mimic需要硬盘空间120G左右，请预留足够的空间" class="headerlink" title="注意：mimic需要硬盘空间120G左右，请预留足够的空间"></a>注意：mimic需要硬盘空间120G左右，请预留足够的空间</h5><p>前置条件：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1、安装7z</span><br><span class="line">2、安装postgresql</span><br><span class="line">3、mimic数据包 https://physionet.org/content/mimiciv/2.2/</span><br><span class="line">4、mimic数据生成包：https://github.com/MIT-LCP/mimic-code</span><br></pre></td></tr></table></figure><span id="more"></span><h5 id="1、安装"><a href="#1、安装" class="headerlink" title="1、安装"></a>1、安装</h5><p>以mimiciv2.2为例，请确保前置条件已经搞好。</p><p>在D盘创建一个数据根目录MIMIC，用于后续的设置，我是直接将相关的数据都放入了MIMIC</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241205200313591.png" alt="image-20241205200313591"></p><p>登录到pgsql的shell中</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241205153150243.png" alt="image-20241205153150243"></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241205153223718.png" alt="image-20241205153223718"></p><h5 id="2、安装命令"><a href="#2、安装命令" class="headerlink" title="2、安装命令"></a>2、安装命令</h5><ul><li>1、创建数据库</li></ul><p>Drop database if exists mimiciv;</p><p>create database mimiciv owner postgres;</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241205154720915.png" alt="image-20241205154720915"></p><ul><li>设置默认目录与编码</li></ul><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241205154907509.png" alt="image-20241205154907509"></p><p>在命令行依次执行create、load_7z、constraint、index.sql文件</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241205170955572.png" alt="image-20241205170955572"></p><p>若出现permission deny，将所有的”&quot;替换成 “&#x2F;“</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241205171222144.png" alt="image-20241205171222144"></p><p>执行到load_7z.sql导入数据、根据电脑性能，会等待1-2个小时 <code>\i D:/MIMIC/load_7z.sql</code></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241205200140882.png" alt="image-20241205200140882"></p><p>执行<code>\i D:/MIMIC/constraint.sql</code>创建主键</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241206142203677.png" alt="image-20241206142203677"></p><p>执行<code>\i D:/MIMIC/index.sql</code>创建索引</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241206151808889.png" alt="image-20241206151808889"></p><h5 id="3、查看"><a href="#3、查看" class="headerlink" title="3、查看"></a>3、查看</h5><p>hosp</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241206181931467.png" alt="image-20241206181931467"></p><p>icu</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241206181948265.png" alt="image-20241206181948265"></p>]]></content>
       
       
+      <categories>
+          
+          <category> postgresql </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> postgresql </tag>
+            
+            <tag> MIMIC </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>postgresql安装</title>
+      <link href="/2024/12/04/postgresql01/"/>
+      <url>/2024/12/04/postgresql01/</url>
+      
+        <content type="html"><![CDATA[<h4 id="沉浸式安装postgresql-windows版"><a href="#沉浸式安装postgresql-windows版" class="headerlink" title="沉浸式安装postgresql-windows版"></a>沉浸式安装postgresql-windows版</h4><h5 id="注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错"><a href="#注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错" class="headerlink" title="注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错"></a>注意：pgsql对路径严格要求、安装路径不能存在中文，否则会报错</h5><span id="more"></span><h5 id="1、下载安装包"><a href="#1、下载安装包" class="headerlink" title="1、下载安装包"></a>1、下载安装包</h5><p><code>https://www.enterprisedb.com/downloads/postgres-postgresql-downloads</code></p><p>在下载页面下载你需要版本的pgsql安装包</p><h5 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h5><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241204155029168.png" alt="image-20241204155029168"></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241204155126233.png" alt="image-20241204155126233"></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241204155203948.png" alt="image-20241204155203948"></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241204155219197.png" alt="image-20241204155219197"></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241204155403455.png" alt="image-20241204155403455"></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241204155333693.png" alt="image-20241204155333693"></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241204155419481.png" alt="image-20241204155419481"></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241204155434572.png" alt="image-20241204155434572"></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241204155447005.png" alt="image-20241204155447005"></p><p>next之后就开始等待吧，结束后直接finish，然后取消Stack Builder就好</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241204161353769.png" alt="image-20241204161353769"></p><p>到此，windows的pgsql安装已经完成。简单测试下</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241204164335658.png" alt="image-20241204164335658"></p><h5 id="3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。"><a href="#3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。" class="headerlink" title="3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。"></a>3、演示只是在完全正常的情况下，安装pgsql会出现各种各样的报错，这个我们后续慢慢道来。</h5>]]></content>
+      
+      
+      <categories>
+          
+          <category> postgresql </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> postgresql </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>hexo搭建</title>
+      <link href="/2024/11/26/hexo01/"/>
+      <url>/2024/11/26/hexo01/</url>
+      
+        <content type="html"><![CDATA[<p> 网址：tuhou.github.io</p><p>从搭建hexo到发布到github，以及简单的优化</p><p>简单介绍hexo：Hexo 是一个快速、简洁且高效的博客框架。 Hexo 使用 <a href="http://daringfireball.net/projects/markdown/">Markdown</a>（或其他标记语言）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p><span id="more"></span><p>依赖：本文以ubuntu为例，需要安装node和git</p><h5 id="1、node安装："><a href="#1、node安装：" class="headerlink" title="1、node安装："></a>1、node安装：</h5><p>下载地址：<code>https://nodejs.cn/download/</code></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241126214015683.png" alt="image-20241126214015683"></p><p>下载对应的版本双击安装</p><p>安装完成后：创建对应的软链接</p><p><code>ln -s /home/node/（你的安装目录） /usr/local/bin</code></p><p><code>ln -s /home/npm/（你的安装目录） /usr/local/bin</code></p><h5 id="2、安装git"><a href="#2、安装git" class="headerlink" title="2、安装git"></a>2、安装git</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install git</span><br></pre></td></tr></table></figure><p>此时需注意：使用npm的时候可能会报错，此处需要设置npm的源，因为淘宝源已经过期，那么当前将其设置为新的。</p><p><code>npm config set registry https://registry.npmmirror.com/</code></p><h5 id="3、安装hexo"><a href="#3、安装hexo" class="headerlink" title="3、安装hexo"></a>3、安装hexo</h5><p><code>npm install -g hexo-cli</code></p><p>此文章以我的目录为例，创建</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /home/blog</span><br><span class="line">cd /home/blog</span><br></pre></td></tr></table></figure><p>hexo初始化</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br><span class="line">hexo g</span><br><span class="line">hexo s --debug</span><br></pre></td></tr></table></figure><p>此时，你可以看到本地<code>http://localhost:4000</code>就能看到对应的网站了</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241126222900783.png" alt="image-20241126222900783"></p><p>当然安装hexo并不是我们的最终目的，我们要将hexo上传到github，并生成一个github的网站</p><h5 id="4、github端设置"><a href="#4、github端设置" class="headerlink" title="4、github端设置"></a>4、github端设置</h5><p>1、github端创建一个公共的仓库，注意名称命名为 xxx.github.io必须的（xxx设置为你自己想设置的），确认就好</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241126230358114.png" alt="image-20241126230358114"></p><p>2、在服务器上，配置本地用户信息</p><ul><li>使用 <code>git config --global user.name &quot;name&quot; </code>配置本地用户信息，name为你的git账户名</li><li>使用 <code>git config --global user.email &quot;xxx@xx.com&quot;</code>配置本地邮箱，email为你git账户邮箱</li><li>使用  <code>ssh-keygen -t rsa -C&quot;xxx@xx.com&quot;</code> 命令生成本地私钥和密钥信息，需要输入yes是输入y<ul><li>秘钥生成后，在本地<code>~/.ssh</code>，在此路径上找到git的密码文件 id_rsa.pub</li></ul></li></ul><p>3、进行git与github的授权认证</p><ul><li>在github设置页面，选择左侧<code>ssh and GPG keys</code> 名称随意，key为id_rsa.pub添加</li></ul><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241127002414324.png" alt="image-20241127002414324"></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241127002456565.png" alt="image-20241127002456565"></p><p>此时回到服务器，命令行输入<code>ssh -T git@github.com</code>检查可以与远程进行统信，会出现Hi …说明授权成功</p><p>4、以为目前github已经不支持密码授权，所以下载需要搞一个token： settings -&gt; Developer settings</p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241127003406845.png" alt="image-20241127003406845"></p><p>创建后记得记住，因为只展示一次</p><p>5、在hexo的主配置文件_config.yml中配置</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: https://github.com/tuhou/tuhou.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241127003603610.png" alt="image-20241127003603610"></p><h5 id="5、文章上线到github"><a href="#5、文章上线到github" class="headerlink" title="5、文章上线到github"></a>5、文章上线到github</h5><p>会让你输入名称和token，可以看到已经有了</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241127003823703.png" alt="image-20241127003823703"></p><p><img src="C:\Users\tuhou\AppData\Roaming\Typora\typora-user-images\image-20241127004215902.png" alt="image-20241127004215902"></p><p>后续的美化暂时停下，等后续再聊</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> hexo </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+        </tags>
       
     </entry>
     
