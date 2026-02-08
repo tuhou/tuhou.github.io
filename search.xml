@@ -4,11 +4,36 @@
   
     
     <entry>
+      <title>Linux搭建emby私人服务器</title>
+      <link href="/2024/12/26/emby/"/>
+      <url>/2024/12/26/emby/</url>
+      
+        <content type="html"><![CDATA[<h4 id="Linux搭建emby私人服务器"><a href="#Linux搭建emby私人服务器" class="headerlink" title="Linux搭建emby私人服务器"></a>Linux搭建emby私人服务器</h4><blockquote><p>‌Emby是什么：Emby是一款媒体服务器和媒体中心应用程序，允许用户将他们的媒体文件（如电影、电视节目、音乐等）存储在一个地方，并通过各种设备进行访问和播放。Emby的目标是提供一个流畅、用户友好的媒体管理和播放体验‌。</p><p>优点：<br>1️⃣ 跨平台支持：无论你使用的是 Mac、Windows、Linux、苹果设备、安卓还是智能电视，Emby 都有相应的客户端可供安装，让你在任何设备上都能享受家庭影院。</p><p>2️⃣ 媒体管理：Emby 可以自动抓取影片的元数据，包括海报、剧情简介、演员信息等，让你的影视资源一目了然。</p><p>3️⃣ 用户权限管理：你可以创建多个用户，并为每个用户自定义访问权限，满足不同家庭成员的观影需求。</p><p>4️⃣ 实时转码：Emby 可以根据设备和网络状况实时转码，确保流畅的播放体验。</p></blockquote><h5 id="1、安装"><a href="#1、安装" class="headerlink" title="1、安装"></a>1、安装</h5><p>官网：<code>https://emby.media/</code></p><p>本文以debain系统为例，搭建一个emby服务器并上传视频观看</p><p>教程：<code>https://emby.media/linux-server.html</code></p><p>简单2步，就能构建一个emby服务，因为下载太慢，本文手动下载后安装</p><p><img src="/images/emby/image-20241210192956945.png" alt="image-20241210192956945"></p><p><img src="/images/emby/image-20241210193109089.png" alt="image-20241210193109089"></p><h5 id="2、简单设置"><a href="#2、简单设置" class="headerlink" title="2、简单设置"></a>2、简单设置</h5><p><img src="/images/emby/image-20241210193527305.png" alt="image-20241210193527305"></p><p><img src="/images/emby/image-20241210193611809.png" alt="image-20241210193611809"></p><p>后续一直默认就好，安装完成添加对应的影片，在emby输入地址就能正常访问。</p><p>以我们自己搭建的服务器为例：</p><p><img src="/images/emby/image-20260208231745952.png" alt="image-20260208231745952"></p><p>连接后添加对应的账号就行</p><p><img src="/images/emby/image-20260208231825900.png" alt="image-20260208231825900"> </p><p>我们自己的片库大致是这样，感兴趣的可以试试,有需要可以淘宝扫码查看<br><img src="/img/emby.png" alt="emby"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 瞎折腾 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> emby </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>搭建私有的个人远程RustDesk</title>
       <link href="/2024/12/07/RustDesk/"/>
       <url>/2024/12/07/RustDesk/</url>
       
-        <content type="html"><![CDATA[<h4 id="在Linux服务器搭建RustDesk远程"><a href="#在Linux服务器搭建RustDesk远程" class="headerlink" title="在Linux服务器搭建RustDesk远程"></a>在Linux服务器搭建RustDesk远程</h4><blockquote><p>为什么搭建RustDesk，市面上的Todesk、向日葵不能使用吗？</p><p>PC端自用，使用Todesk和向日葵确实能满足需求，但是涉及到移动设备的远控时，免费的Todesk、向日葵不支持移动设备远控，同时在PC远控也有诸多限制，而今天介绍到的RustDesk完全没有这些限制，支持多平台（Linux、Windows、macOS、Android）</p></blockquote><span id="more"></span><blockquote><p>前置条件：一台公网ip的Linux云服务器</p></blockquote><p><img src="/images/RustDesk/image-20241207144634301.png" alt="image-20241207144634301"></p><p><img src="/images/RustDesk/image-20241207144712331.png" alt="image-20241207144712331"></p><h5 id="1、搭建"><a href="#1、搭建" class="headerlink" title="1、搭建"></a>1、搭建</h5><blockquote><p>本教程基于Linux（centos）、在宝塔上安装RustDesk服务</p><p>项目地址：<code>https://github.com/rustdesk/rustdesk-server/releases/</code></p></blockquote><p>根据服务器版本下载对应的源码版本，因为我的是x86的，下载linux-amd64就好</p><p><img src="/images/RustDesk/image-20241207145705493.png" alt="image-20241207145705493"></p><p><img src="/images/RustDesk/image-20241207145608431.png" alt="image-20241207145608431"></p><ul><li>1、安装宝塔：<code>https://www.bt.cn/new/download.html</code></li></ul><p>CentOS安装宝塔</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url=https://download.bt.cn/install/install_lts.sh;if [ -f /usr/bin/curl ];then curl -sSO $url;else wget -O install_lts.sh $url;fi;bash install_lts.sh ed8484bec</span><br></pre></td></tr></table></figure><p><img src="/images/RustDesk/image-20241207150305917.png" alt="image-20241207150305917"></p><p>安装完成根据生成的外网地址或者内网地址登录宝塔，此时如果登录不了，请在服务器防火墙放通对应的端口，本例为：35011</p><p>第一次登录需要注册一个宝塔账号，注册后登录，如下图所示：</p><p><img src="/images/RustDesk/image-20241207150559196.png" alt="image-20241207150559196"></p><ul><li>2、配置RustDesk服务</li></ul><p><img src="/images/RustDesk/image-20241207150749818.png" alt="image-20241207150749818"></p><p>点击文件，选择你喜欢的文件夹创建rustdesk文件，本例为www下</p><p><img src="/images/RustDesk/image-20241207151238636.png" alt="image-20241207151238636"></p><p><img src="/images/RustDesk/image-20241207151306473.png" alt="image-20241207151306473"></p><p>解压文件，可以看到最后就三个文件</p><p><img src="/images/RustDesk/image-20241207151401238.png" alt="image-20241207151401238"></p><p>因为我们需要rustdesk服务时刻运行，并能自动重启，那么需要搞一个守护程序。软件商店搜索：进程守护 安装</p><p><img src="/images/RustDesk/image-20241207151620540.png" alt="image-20241207151620540"></p><p>添加守护程序，点击设置-&gt; 添加守护程序 -&gt; 确认</p><p><img src="/images/RustDesk/image-20241207151734249.png" alt="image-20241207151734249"></p><p>目录和启动命令以我的为例：</p><p><img src="/images/RustDesk/image-20241207152041447.png" alt="image-20241207152041447"></p><p><img src="/images/RustDesk/image-20241207152057817.png" alt="image-20241207152057817"></p><p>守护程序设置好后，状态为Running时为正常</p><p><img src="/images/RustDesk/image-20241207152314070.png" alt="image-20241207152314070"></p><p>在文件列表中会生成一些文件，记住id_xx.pub里面为中继器的key，保存好后续使用</p><p><img src="/images/RustDesk/image-20241207161233449.png" alt="image-20241207161233449"></p><p>端口放通：你需要放通21116 - TCP&#x2F;UDP、21117 - TCP</p><p>如图在安全中添加，当然在你的服务器安全组也需要放通</p><p><img src="/images/RustDesk/image-20241207161445650.png" alt="image-20241207161445650"></p><h5 id="2、测试"><a href="#2、测试" class="headerlink" title="2、测试"></a>2、测试</h5><p>在软件中输入刚才对应的id和中继服务器以及key，主页状态为就绪说明已经成功，之后找两台设备使用即可</p><p><img src="/images/RustDesk/image-20241207161726741.png" alt="image-20241207161726741"></p><p><img src="/images/RustDesk/image-20241207161830887.png" alt="image-20241207161830887"></p><h5 id="附：小店提供安装和中继器租用服务，有需要可以淘宝扫码查看"><a href="#附：小店提供安装和中继器租用服务，有需要可以淘宝扫码查看" class="headerlink" title="附：小店提供安装和中继器租用服务，有需要可以淘宝扫码查看"></a>附：小店提供安装和中继器租用服务，有需要可以淘宝扫码查看</h5><p><img src="/images/rustdesk.png" alt="pgsql"></p>]]></content>
+        <content type="html"><![CDATA[<h4 id="在Linux服务器搭建RustDesk远程"><a href="#在Linux服务器搭建RustDesk远程" class="headerlink" title="在Linux服务器搭建RustDesk远程"></a>在Linux服务器搭建RustDesk远程</h4><blockquote><p>为什么搭建RustDesk，市面上的Todesk、向日葵不能使用吗？</p><p>PC端自用，使用Todesk和向日葵确实能满足需求，但是涉及到移动设备的远控时，免费的Todesk、向日葵不支持移动设备远控，同时在PC远控也有诸多限制，而今天介绍到的RustDesk完全没有这些限制，支持多平台（Linux、Windows、macOS、Android）</p></blockquote><span id="more"></span><blockquote><p>前置条件：一台公网ip的Linux云服务器</p></blockquote><p><img src="/images/RustDesk/image-20241207144634301.png" alt="image-20241207144634301"></p><p><img src="/images/RustDesk/image-20241207144712331.png" alt="image-20241207144712331"></p><h5 id="1、搭建"><a href="#1、搭建" class="headerlink" title="1、搭建"></a>1、搭建</h5><blockquote><p>本教程基于Linux（centos）、在宝塔上安装RustDesk服务</p><p>项目地址：<code>https://github.com/rustdesk/rustdesk-server/releases/</code></p></blockquote><p>根据服务器版本下载对应的源码版本，因为我的是x86的，下载linux-amd64就好</p><p><img src="/images/RustDesk/image-20241207145705493.png" alt="image-20241207145705493"></p><p><img src="/images/RustDesk/image-20241207145608431.png" alt="image-20241207145608431"></p><ul><li>1、安装宝塔：<code>https://www.bt.cn/new/download.html</code></li></ul><p>CentOS安装宝塔</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url=https://download.bt.cn/install/install_lts.sh;if [ -f /usr/bin/curl ];then curl -sSO $url;else wget -O install_lts.sh $url;fi;bash install_lts.sh ed8484bec</span><br></pre></td></tr></table></figure><p><img src="/images/RustDesk/image-20241207150305917.png" alt="image-20241207150305917"></p><p>安装完成根据生成的外网地址或者内网地址登录宝塔，此时如果登录不了，请在服务器防火墙放通对应的端口，本例为：35011</p><p>第一次登录需要注册一个宝塔账号，注册后登录，如下图所示：</p><p><img src="/images/RustDesk/image-20241207150559196.png" alt="image-20241207150559196"></p><ul><li>2、配置RustDesk服务</li></ul><p><img src="/images/RustDesk/image-20241207150749818.png" alt="image-20241207150749818"></p><p>点击文件，选择你喜欢的文件夹创建rustdesk文件，本例为www下</p><p><img src="/images/RustDesk/image-20241207151238636.png" alt="image-20241207151238636"></p><p><img src="/images/RustDesk/image-20241207151306473.png" alt="image-20241207151306473"></p><p>解压文件，可以看到最后就三个文件</p><p><img src="/images/RustDesk/image-20241207151401238.png" alt="image-20241207151401238"></p><p>因为我们需要rustdesk服务时刻运行，并能自动重启，那么需要搞一个守护程序。软件商店搜索：进程守护 安装</p><p><img src="/images/RustDesk/image-20241207151620540.png" alt="image-20241207151620540"></p><p>添加守护程序，点击设置-&gt; 添加守护程序 -&gt; 确认</p><p><img src="/images/RustDesk/image-20241207151734249.png" alt="image-20241207151734249"></p><p>目录和启动命令以我的为例：</p><p><img src="/images/RustDesk/image-20241207152041447.png" alt="image-20241207152041447"></p><p><img src="/images/RustDesk/image-20241207152057817.png" alt="image-20241207152057817"></p><p>守护程序设置好后，状态为Running时为正常</p><p><img src="/images/RustDesk/image-20241207152314070.png" alt="image-20241207152314070"></p><p>在文件列表中会生成一些文件，记住id_xx.pub里面为中继器的key，保存好后续使用</p><p><img src="/images/RustDesk/image-20241207161233449.png" alt="image-20241207161233449"></p><p>端口放通：你需要放通21116 - TCP&#x2F;UDP、21117 - TCP</p><p>如图在安全中添加，当然在你的服务器安全组也需要放通</p><p><img src="/images/RustDesk/image-20241207161445650.png" alt="image-20241207161445650"></p><h5 id="2、测试"><a href="#2、测试" class="headerlink" title="2、测试"></a>2、测试</h5><p>在软件中输入刚才对应的id和中继服务器以及key，主页状态为就绪说明已经成功，之后找两台设备使用即可</p><p><img src="/images/RustDesk/image-20241207161726741.png" alt="image-20241207161726741"></p><p><img src="/images/RustDesk/image-20241207161830887.png" alt="image-20241207161830887"></p>]]></content>
       
       
       <categories>
@@ -35,7 +60,7 @@
       <link href="/2024/12/06/postgresql03/"/>
       <url>/2024/12/06/postgresql03/</url>
       
-        <content type="html"><![CDATA[<h4 id="windows安装mimic医疗数据库衍生表derived"><a href="#windows安装mimic医疗数据库衍生表derived" class="headerlink" title="windows安装mimic医疗数据库衍生表derived"></a>windows安装mimic医疗数据库衍生表derived</h4><p>前置条件：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">安装git（全部默认安装即可）：下载地址 https://git-scm.com/downloads</span><br></pre></td></tr></table></figure><span id="more"></span><p>紧接上回、已经安装完了icu和hosp数据，现在生成衍生表</p><p>衍生表sql路径<code>D:\mimic-code-main\mimic-iv\concepts_postgres</code></p><p><img src="/images/postgresql03/image-20241206193638730.png" alt="image-20241206193638730"></p><h5 id="1、安装"><a href="#1、安装" class="headerlink" title="1、安装"></a>1、安装</h5><ul><li>设置路径</li></ul><p><img src="/images/postgresql03/image-20241206193843842.png" alt="image-20241206193843842"></p><ul><li><p>执行postgres-functions.sql生成对应的方法<code>\i D:/mimic-code-main/mimic-iv/concepts_postgres/postgres-functions.sql</code></p><p><img src="/images/postgresql03/image-20241206194003957.png" alt="image-20241206194003957"></p></li><li><p>执行shell生成衍生表格数据文件夹postgres</p></li></ul><p><img src="/images/postgresql03/image-20241206194622743.png" alt="image-20241206194622743"></p><p><img src="/images/postgresql03/image-20241206194818354.png" alt="image-20241206194818354"></p><ul><li>生成衍生表格数据<ul><li>修改postgres-make-concepts.sql</li></ul></li></ul><p><img src="/images/postgresql03/image-20241206195056707.png" alt="image-20241206195056707"></p><ul><li>执行</li></ul><p><img src="/images/postgresql03/image-20241206195813987.png" alt="image-20241206195813987"></p><p>之后就是漫长的等待，直到结束就好。</p><p>小店提供安装服务，有需要可以淘宝扫码查看</p><p><img src="/images/pgsql.png" alt="pgsql"></p>]]></content>
+        <content type="html"><![CDATA[<h4 id="windows安装mimic医疗数据库衍生表derived"><a href="#windows安装mimic医疗数据库衍生表derived" class="headerlink" title="windows安装mimic医疗数据库衍生表derived"></a>windows安装mimic医疗数据库衍生表derived</h4><p>前置条件：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">安装git（全部默认安装即可）：下载地址 https://git-scm.com/downloads</span><br></pre></td></tr></table></figure><span id="more"></span><p>紧接上回、已经安装完了icu和hosp数据，现在生成衍生表</p><p>衍生表sql路径<code>D:\mimic-code-main\mimic-iv\concepts_postgres</code></p><p><img src="/images/postgresql03/image-20241206193638730.png" alt="image-20241206193638730"></p><h5 id="1、安装"><a href="#1、安装" class="headerlink" title="1、安装"></a>1、安装</h5><ul><li>设置路径</li></ul><p><img src="/images/postgresql03/image-20241206193843842.png" alt="image-20241206193843842"></p><ul><li><p>执行postgres-functions.sql生成对应的方法<code>\i D:/mimic-code-main/mimic-iv/concepts_postgres/postgres-functions.sql</code></p><p><img src="/images/postgresql03/image-20241206194003957.png" alt="image-20241206194003957"></p></li><li><p>执行shell生成衍生表格数据文件夹postgres</p></li></ul><p><img src="/images/postgresql03/image-20241206194622743.png" alt="image-20241206194622743"></p><p><img src="/images/postgresql03/image-20241206194818354.png" alt="image-20241206194818354"></p><ul><li>生成衍生表格数据<ul><li>修改postgres-make-concepts.sql</li></ul></li></ul><p><img src="/images/postgresql03/image-20241206195056707.png" alt="image-20241206195056707"></p><ul><li>执行</li></ul><p><img src="/images/postgresql03/image-20241206195813987.png" alt="image-20241206195813987"></p><p>之后就是漫长的等待，直到结束就好。</p><p>小店提供安装服务，有需要可以淘宝扫码查看</p><p><img src="/img/pgsql.png" alt="pgsql"></p>]]></content>
       
       
       <categories>
@@ -47,9 +72,9 @@
       
         <tags>
             
-            <tag> MIMIC </tag>
-            
             <tag> postgresql </tag>
+            
+            <tag> MIMIC </tag>
             
         </tags>
       
@@ -74,9 +99,9 @@
       
         <tags>
             
-            <tag> MIMIC </tag>
-            
             <tag> postgresql </tag>
+            
+            <tag> MIMIC </tag>
             
         </tags>
       
