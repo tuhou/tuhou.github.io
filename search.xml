@@ -4,25 +4,6 @@
   
     
     <entry>
-      <title>title</title>
-      <link href="/2026/02/09/%E5%8F%91%E6%96%87%E6%B5%8B%E8%AF%952/"/>
-      <url>/2026/02/09/%E5%8F%91%E6%96%87%E6%B5%8B%E8%AF%952/</url>
-      
-        <content type="html"><![CDATA[<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">title: Linux搭建emby私人服务器</span><br><span class="line">date: 2024-12-26 23:10:20</span><br><span class="line">tags: emby</span><br><span class="line">categories: 瞎折腾</span><br></pre></td></tr></table></figure><h4 id="Linux搭建emby私人服务器"><a href="#Linux搭建emby私人服务器" class="headerlink" title="Linux搭建emby私人服务器"></a>Linux搭建emby私人服务器</h4><blockquote><p><strong>‌Emby是什么：Emby是一款媒体服务器和媒体中心应用程序，允许用户将他们的媒体文件（如电影、电视节目、音乐等）存储在一个地方，并通过各种设备进行访问和播放。Emby的目标是提供一个流畅、用户友好的媒体管理和播放体验‌。</strong></p><p><strong>优点：</strong> <strong>1️⃣ 跨平台支持：无论你使用的是 Mac、Windows、Linux、苹果设备、安卓还是智能电视，Emby 都有相应的客户端可供安装，让你在任何设备上都能享受家庭影院。</strong></p><p><strong>2️⃣ 媒体管理：Emby 可以自动抓取影片的元数据，包括海报、剧情简介、演员信息等，让你的影视资源一目了然。</strong></p><p><strong>3️⃣ 用户权限管理：你可以创建多个用户，并为每个用户自定义访问权限，满足不同家庭成员的观影需求。</strong></p><p><strong>4️⃣ 实时转码：Emby 可以根据设备和网络状况实时转码，确保流畅的播放体验。</strong></p></blockquote><h5 id=""><a href="#" class="headerlink" title=""></a></h5>]]></content>
-      
-      
-      <categories>
-          
-          <category> 瞎折腾 </category>
-          
-      </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Untitled</title>
       <link href="/2026/02/09/%E5%8F%91%E6%96%87%E6%B5%8B%E8%AF%95/"/>
       <url>/2026/02/09/%E5%8F%91%E6%96%87%E6%B5%8B%E8%AF%95/</url>
