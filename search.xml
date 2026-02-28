@@ -4,11 +4,32 @@
   
     
     <entry>
+      <title>SpiderDemo第一题-请求头检查</title>
+      <link href="/2026/02/28/SpiderDemo%E7%AC%AC%E4%B8%80%E9%A2%98-%E8%AF%B7%E6%B1%82%E5%A4%B4%E6%A3%80%E6%9F%A5/"/>
+      <url>/2026/02/28/SpiderDemo%E7%AC%AC%E4%B8%80%E9%A2%98-%E8%AF%B7%E6%B1%82%E5%A4%B4%E6%A3%80%E6%9F%A5/</url>
+      
+        <content type="html"><![CDATA[<p>刚过完年，祝大家恭喜发财。有小伙伴在尝试spiderdemo<code>https://www.spiderdemo.cn/</code>,看了一下这个应该是比之前的马上爬难多了，从他的名称上来看，和猿人学的很像。</p><p>废话不多说，开始今天的第一题：请求头检测</p><h4 id="1、抓包"><a href="#1、抓包" class="headerlink" title="1、抓包"></a>1、抓包</h4><p><img src="/images/spiderDemo1/image-20260226094103604.png" alt="image-20260226094103604"></p><p>抓包直接显示报错，那就换成charles来看看</p><p><img src="/images/spiderDemo1/image-20260226094220326.png" alt="image-20260226094220326"></p><p>charles里面找到了对应的包，直接拷贝到postman试试，能不能获取到值</p><p><img src="/images/spiderDemo1/image-20260226094349524.png" alt="image-20260226094349524"></p><p><img src="/images/spiderDemo1/image-20260226094526742.png" alt="image-20260226094526742"></p><p>postman也能正常获取到值，但是使用python请求会报错</p><h4 id="2、分析"><a href="#2、分析" class="headerlink" title="2、分析"></a>2、分析</h4><p>从题目明确得知是请求头的问题，如何进一步查看问题所在呢，python代码加上代码，charles抓包对比和正常网页请求时的差异</p><p><img src="/images/spiderDemo1/image-20260226095136821.png" alt="image-20260226095136821"></p><p><img src="/images/spiderDemo1/image-20260226095147299.png" alt="image-20260226095147299"></p><p><img src="/images/spiderDemo1/image-20260226095159082.png" alt="image-20260226095159082"></p><p>能明显看出两次请求的请求头顺序不一致，因此使用OrderedDict来固定请求头的顺序</p><p><img src="/images/spiderDemo1/image-20260226095338446.png" alt="image-20260226095338446"></p><p>可以看到成功获取到结果</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> JS逆向 </category>
+          
+          <category> 爬虫 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>SpiderDemo第二题-加解密调整</title>
       <link href="/2026/02/28/SpiderDemo%E7%AC%AC%E4%BA%8C%E9%A2%98-%E5%8A%A0%E8%A7%A3%E5%AF%86%E8%B0%83%E6%95%B4/"/>
       <url>/2026/02/28/SpiderDemo%E7%AC%AC%E4%BA%8C%E9%A2%98-%E5%8A%A0%E8%A7%A3%E5%AF%86%E8%B0%83%E6%95%B4/</url>
       
-        <content type="html"><![CDATA[<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cover: images/cover/pexels-dreamypixel-547115.jpg</span><br></pre></td></tr></table></figure><p>第二题：加解密挑战</p><h4 id="1、抓包"><a href="#1、抓包" class="headerlink" title="1、抓包"></a>1、抓包</h4><p><img src="/images/spiderDemo2/image-20260226102435192.png" alt="image-20260226102435192"></p><p>若出现这个问题，直接关闭Disable cache就好，当然使用charles去抓包也行</p><p><img src="/images/spiderDemo2/image-20260226102546385.png" alt="image-20260226102546385"></p><p>接口分析，可以看到解密值就是一个sign，timestamp时间戳忽略，从堆栈找，当然全局搜索也行</p><p><img src="/images/spiderDemo2/image-20260226102757894.png" alt="image-20260226102757894"></p><p><img src="/images/spiderDemo2/image-20260226102806888.png" alt="image-20260226102806888"></p><p>很快就找到加密点</p><h4 id="2、加密分析"><a href="#2、加密分析" class="headerlink" title="2、加密分析"></a>2、加密分析</h4><p><img src="/images/spiderDemo2/image-20260226102903956.png" alt="image-20260226102903956"></p><p>看到有md5，查看是不是通用加密</p><p><img src="/images/spiderDemo2/image-20260226102938805.png" alt="image-20260226102938805"></p><p>对不上，直接扣代码，点击函数后跳转到此处</p><p><img src="/images/spiderDemo2/image-20260226103342909.png" alt="image-20260226103342909"></p><p>直接全部扣下来，到新页面调用（拷贝时，关闭格式化）</p><p><img src="/images/spiderDemo2/image-20260226103432678.png" alt="image-20260226103432678"></p><p><img src="/images/spiderDemo2/image-20260226103516972.png" alt="image-20260226103516972"></p><p>调用成功</p><h4 id="3、补环境"><a href="#3、补环境" class="headerlink" title="3、补环境"></a>3、补环境</h4><p>直接导入所有的代码到pycharm中执行，发现有很多报错</p><p><img src="/images/spiderDemo2/image-20260226173245865.png" alt="image-20260226173245865"></p><p>缺啥补啥，或者直接将整段代码给到AI</p><p><img src="/images/spiderDemo2/image-20260226173447488.png" alt="image-20260226173447488"></p><p>可以看到此处是AI的建议，为了看的方便，直接ob解混淆<code>https://deobfuscate.relative.im/</code></p><p><img src="/images/spiderDemo2/image-20260227092431929.png" alt="image-20260227092431929"></p><p>可以看到很多环境检测，用于影响结果的三目表达式，将此处的检测点全部补全就能拿到对应的结果</p><p><img src="/images/spiderDemo2/image-20260227101211041.png" alt="image-20260227101211041"></p><h4 id="4、直接调用"><a href="#4、直接调用" class="headerlink" title="4、直接调用"></a>4、直接调用</h4><p>OB还原后能看到加密位置是加了盐</p><p><img src="/images/spiderDemo2/image-20260227093208402.png" alt="image-20260227093208402"></p><p>直接通过ai改写一个加盐的解密函数</p><p><img src="/images/spiderDemo2/image-20260227093255550.png" alt="image-20260227093255550"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import hashlib</span><br><span class="line"></span><br><span class="line">def sign(s: str) -&gt; str:</span><br><span class="line">    salt_bytes = (</span><br><span class="line">        b&#x27;\xa3\xac\xa1\xa3\x66\x64\x6a\x66&#x27;</span><br><span class="line">        b&#x27;\x2c\x6a\x6b\x67\x66\x6b\x6c&#x27;</span><br><span class="line">    )</span><br><span class="line">  </span><br><span class="line">    data = s.encode(&#x27;utf-8&#x27;) + salt_bytes</span><br><span class="line">    return hashlib.md5(data).hexdigest()</span><br><span class="line"></span><br><span class="line">print(sign(&quot;17720728999692&quot;))</span><br></pre></td></tr></table></figure><p><img src="/images/spiderDemo2/image-20260227093417835.png" alt="image-20260227093417835"></p><p>能看到结果一致</p>]]></content>
+        <content type="html"><![CDATA[<p>第二题：加解密挑战</p><h4 id="1、抓包"><a href="#1、抓包" class="headerlink" title="1、抓包"></a>1、抓包</h4><p><img src="/images/spiderDemo2/image-20260226102435192.png" alt="image-20260226102435192"></p><p>若出现这个问题，直接关闭Disable cache就好，当然使用charles去抓包也行</p><p><img src="/images/spiderDemo2/image-20260226102546385.png" alt="image-20260226102546385"></p><p>接口分析，可以看到解密值就是一个sign，timestamp时间戳忽略，从堆栈找，当然全局搜索也行</p><p><img src="/images/spiderDemo2/image-20260226102757894.png" alt="image-20260226102757894"></p><p><img src="/images/spiderDemo2/image-20260226102806888.png" alt="image-20260226102806888"></p><p>很快就找到加密点</p><h4 id="2、加密分析"><a href="#2、加密分析" class="headerlink" title="2、加密分析"></a>2、加密分析</h4><p><img src="/images/spiderDemo2/image-20260226102903956.png" alt="image-20260226102903956"></p><p>看到有md5，查看是不是通用加密</p><p><img src="/images/spiderDemo2/image-20260226102938805.png" alt="image-20260226102938805"></p><p>对不上，直接扣代码，点击函数后跳转到此处</p><p><img src="/images/spiderDemo2/image-20260226103342909.png" alt="image-20260226103342909"></p><p>直接全部扣下来，到新页面调用（拷贝时，关闭格式化）</p><p><img src="/images/spiderDemo2/image-20260226103432678.png" alt="image-20260226103432678"></p><p><img src="/images/spiderDemo2/image-20260226103516972.png" alt="image-20260226103516972"></p><p>调用成功</p><h4 id="3、补环境"><a href="#3、补环境" class="headerlink" title="3、补环境"></a>3、补环境</h4><p>直接导入所有的代码到pycharm中执行，发现有很多报错</p><p><img src="/images/spiderDemo2/image-20260226173245865.png" alt="image-20260226173245865"></p><p>缺啥补啥，或者直接将整段代码给到AI</p><p><img src="/images/spiderDemo2/image-20260226173447488.png" alt="image-20260226173447488"></p><p>可以看到此处是AI的建议，为了看的方便，直接ob解混淆<code>https://deobfuscate.relative.im/</code></p><p><img src="/images/spiderDemo2/image-20260227092431929.png" alt="image-20260227092431929"></p><p>可以看到很多环境检测，用于影响结果的三目表达式，将此处的检测点全部补全就能拿到对应的结果</p><p><img src="/images/spiderDemo2/image-20260227101211041.png" alt="image-20260227101211041"></p><h4 id="4、直接调用"><a href="#4、直接调用" class="headerlink" title="4、直接调用"></a>4、直接调用</h4><p>OB还原后能看到加密位置是加了盐</p><p><img src="/images/spiderDemo2/image-20260227093208402.png" alt="image-20260227093208402"></p><p>直接通过ai改写一个加盐的解密函数</p><p><img src="/images/spiderDemo2/image-20260227093255550.png" alt="image-20260227093255550"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import hashlib</span><br><span class="line"></span><br><span class="line">def sign(s: str) -&gt; str:</span><br><span class="line">    salt_bytes = (</span><br><span class="line">        b&#x27;\xa3\xac\xa1\xa3\x66\x64\x6a\x66&#x27;</span><br><span class="line">        b&#x27;\x2c\x6a\x6b\x67\x66\x6b\x6c&#x27;</span><br><span class="line">    )</span><br><span class="line">  </span><br><span class="line">    data = s.encode(&#x27;utf-8&#x27;) + salt_bytes</span><br><span class="line">    return hashlib.md5(data).hexdigest()</span><br><span class="line"></span><br><span class="line">print(sign(&quot;17720728999692&quot;))</span><br></pre></td></tr></table></figure><p><img src="/images/spiderDemo2/image-20260227093417835.png" alt="image-20260227093417835"></p><p>能看到结果一致</p>]]></content>
       
       
       <categories>
@@ -25,27 +46,6 @@
             <tag> 逆向 </tag>
             
         </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>SpiderDemo第一题-请求头检查</title>
-      <link href="/2026/02/28/SpiderDemo%E7%AC%AC%E4%B8%80%E9%A2%98-%E8%AF%B7%E6%B1%82%E5%A4%B4%E6%A3%80%E6%9F%A5/"/>
-      <url>/2026/02/28/SpiderDemo%E7%AC%AC%E4%B8%80%E9%A2%98-%E8%AF%B7%E6%B1%82%E5%A4%B4%E6%A3%80%E6%9F%A5/</url>
-      
-        <content type="html"><![CDATA[<p>刚过完年，祝大家恭喜发财。有小伙伴在尝试spiderdemo<code>https://www.spiderdemo.cn/</code>,看了一下这个应该是比之前的马上爬难多了，从他的名称上来看，和猿人学的很像。</p><p>废话不多说，开始今天的第一题：请求头检测</p><h4 id="1、抓包"><a href="#1、抓包" class="headerlink" title="1、抓包"></a>1、抓包</h4><p><img src="/images/spiderDemo1/image-20260226094103604.png" alt="image-20260226094103604"></p><p>抓包直接显示报错，那就换成charles来看看</p><p><img src="/images/spiderDemo1/image-20260226094220326.png" alt="image-20260226094220326"></p><p>charles里面找到了对应的包，直接拷贝到postman试试，能不能获取到值</p><p><img src="/images/spiderDemo1/image-20260226094349524.png" alt="image-20260226094349524"></p><p><img src="/images/spiderDemo1/image-20260226094526742.png" alt="image-20260226094526742"></p><p>postman也能正常获取到值，但是使用python请求会报错</p><h4 id="2、分析"><a href="#2、分析" class="headerlink" title="2、分析"></a>2、分析</h4><p>从题目明确得知是请求头的问题，如何进一步查看问题所在呢，python代码加上代码，charles抓包对比和正常网页请求时的差异</p><p><img src="/images/spiderDemo1/image-20260226095136821.png" alt="image-20260226095136821"></p><p><img src="/images/spiderDemo1/image-20260226095147299.png" alt="image-20260226095147299"></p><p><img src="/images/spiderDemo1/image-20260226095159082.png" alt="image-20260226095159082"></p><p>能明显看出两次请求的请求头顺序不一致，因此使用OrderedDict来固定请求头的顺序</p><p><img src="/images/spiderDemo1/image-20260226095338446.png" alt="image-20260226095338446"></p><p>可以看到成功获取到结果</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> JS逆向 </category>
-          
-          <category> 爬虫 </category>
-          
-      </categories>
-      
       
     </entry>
     
