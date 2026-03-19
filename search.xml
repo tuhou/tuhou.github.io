@@ -4,21 +4,25 @@
   
     
     <entry>
-      <title>SpiderDemo第一题-请求头检查</title>
-      <link href="/2026/02/28/SpiderDemo%E7%AC%AC%E4%B8%80%E9%A2%98-%E8%AF%B7%E6%B1%82%E5%A4%B4%E6%A3%80%E6%9F%A5/"/>
-      <url>/2026/02/28/SpiderDemo%E7%AC%AC%E4%B8%80%E9%A2%98-%E8%AF%B7%E6%B1%82%E5%A4%B4%E6%A3%80%E6%9F%A5/</url>
+      <title>每日60S读懂世界（2026-03-19）</title>
+      <link href="/2026/03/19/60S/%E6%AF%8F%E6%97%A560S-2026-03-19/"/>
+      <url>/2026/03/19/60S/%E6%AF%8F%E6%97%A560S-2026-03-19/</url>
       
-        <content type="html"><![CDATA[<p>刚过完年，祝大家恭喜发财。有小伙伴在尝试spiderdemo<code>https://www.spiderdemo.cn/</code>,看了一下这个应该是比之前的马上爬难多了，从他的名称上来看，和猿人学的很像。</p><p>废话不多说，开始今天的第一题：请求头检测</p><h4 id="1、抓包"><a href="#1、抓包" class="headerlink" title="1、抓包"></a>1、抓包</h4><p><img src="/images/spiderDemo1/image-20260226094103604.png" alt="image-20260226094103604"></p><p>抓包直接显示报错，那就换成charles来看看</p><p><img src="/images/spiderDemo1/image-20260226094220326.png" alt="image-20260226094220326"></p><p>charles里面找到了对应的包，直接拷贝到postman试试，能不能获取到值</p><p><img src="/images/spiderDemo1/image-20260226094349524.png" alt="image-20260226094349524"></p><p><img src="/images/spiderDemo1/image-20260226094526742.png" alt="image-20260226094526742"></p><p>postman也能正常获取到值，但是使用python请求会报错</p><h4 id="2、分析"><a href="#2、分析" class="headerlink" title="2、分析"></a>2、分析</h4><p>从题目明确得知是请求头的问题，如何进一步查看问题所在呢，python代码加上代码，charles抓包对比和正常网页请求时的差异</p><p><img src="/images/spiderDemo1/image-20260226095136821.png" alt="image-20260226095136821"></p><p><img src="/images/spiderDemo1/image-20260226095147299.png" alt="image-20260226095147299"></p><p><img src="/images/spiderDemo1/image-20260226095159082.png" alt="image-20260226095159082"></p><p>能明显看出两次请求的请求头顺序不一致，因此使用OrderedDict来固定请求头的顺序</p><p><img src="/images/spiderDemo1/image-20260226095338446.png" alt="image-20260226095338446"></p><p>可以看到成功获取到结果</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="📰-今日新闻"><a href="#📰-今日新闻" class="headerlink" title="📰 今日新闻"></a>📰 今日新闻</h2><p>每天 60s 读懂世界（2026-03-19）</p><ol><li>国内油价 24 日将迎年内第六轮调整，预计每升上涨约 1.6 元，或将重回 “9 元时代”，加满一箱油或多花 100 元</li><li>中办、国办发布关于做好第二轮土地承包到期后再延长 30 年试点工作的意见</li><li>江苏出台城市发展行动方案：明确将推动省内 6 个城市与上海大都市圈的深度融合</li><li>最新数据显示：四川去年人口减少约 46 万人，在目前公布的数据中，人口减少量暂居首位</li><li>中疾控提醒：多国出现麻疹疫情反弹或暴发，我国面临较大输入风险，儿童应及时补种疫苗</li><li>证监会：坚决清除影响资本市场改革发展的 “拦路虎”“绊脚石”</li><li>税务总局：有奖发票试点城市已投放奖金 18.5 亿元，累计吸引 2.3 亿人次参与，对促进消费效果初显</li><li>四川一院校放 6 天春假让学生去赏花恋爱，校方回应：教师同时带薪休假，已持续 8 年</li><li>腾讯年报披露：截至去年底员工超 11 万，年度总薪酬成本达 1307 亿元，人均薪酬成本超 110 万元</li><li>特朗普称访华将推迟五到六周，中方回应：中美将继续就特朗普访华事保持沟通</li><li>日媒：今年前两个月中国内地访日游客数量同比下降 54.1%，对日本零售、住宿、餐饮等多个行业造成冲击</li><li>美媒：特朗普授权解除船禁 60 天，将允许外国船只在美港口之间运输商品，以降低美境内能源运输成本</li><li>外媒：特朗普称应考虑美国退出北约的可能性，此前呼吁盟友赴霍尔木兹海峡护航，英、法、德、日、韩等国反应冷淡</li><li>外媒：伊朗称在未来几个小时内打击沙特、阿联酋和卡塔尔三国石油设施，敦促相关区域民众撤离</li><li>外媒：伊朗总统证实拉里贾尼已遇难并发表悼词；以防长称将升级冲突，伊朗没有人有豁免权，所有伊朗人都是目标</li></ol><p>【微语】与其等待一束光来照亮你，不如先让自己成为那束能穿透缝隙的光。</p><hr>]]></content>
       
       
       <categories>
           
-          <category> JS逆向 </category>
-          
-          <category> 爬虫 </category>
+          <category> 60S读懂世界 </category>
           
       </categories>
       
+      
+        <tags>
+            
+            <tag> 每日60S读懂世界 </tag>
+            
+        </tags>
       
     </entry>
     
@@ -46,6 +50,27 @@
             <tag> 逆向 </tag>
             
         </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>SpiderDemo第一题-请求头检查</title>
+      <link href="/2026/02/28/SpiderDemo%E7%AC%AC%E4%B8%80%E9%A2%98-%E8%AF%B7%E6%B1%82%E5%A4%B4%E6%A3%80%E6%9F%A5/"/>
+      <url>/2026/02/28/SpiderDemo%E7%AC%AC%E4%B8%80%E9%A2%98-%E8%AF%B7%E6%B1%82%E5%A4%B4%E6%A3%80%E6%9F%A5/</url>
+      
+        <content type="html"><![CDATA[<p>刚过完年，祝大家恭喜发财。有小伙伴在尝试spiderdemo<code>https://www.spiderdemo.cn/</code>,看了一下这个应该是比之前的马上爬难多了，从他的名称上来看，和猿人学的很像。</p><p>废话不多说，开始今天的第一题：请求头检测</p><h4 id="1、抓包"><a href="#1、抓包" class="headerlink" title="1、抓包"></a>1、抓包</h4><p><img src="/images/spiderDemo1/image-20260226094103604.png" alt="image-20260226094103604"></p><p>抓包直接显示报错，那就换成charles来看看</p><p><img src="/images/spiderDemo1/image-20260226094220326.png" alt="image-20260226094220326"></p><p>charles里面找到了对应的包，直接拷贝到postman试试，能不能获取到值</p><p><img src="/images/spiderDemo1/image-20260226094349524.png" alt="image-20260226094349524"></p><p><img src="/images/spiderDemo1/image-20260226094526742.png" alt="image-20260226094526742"></p><p>postman也能正常获取到值，但是使用python请求会报错</p><h4 id="2、分析"><a href="#2、分析" class="headerlink" title="2、分析"></a>2、分析</h4><p>从题目明确得知是请求头的问题，如何进一步查看问题所在呢，python代码加上代码，charles抓包对比和正常网页请求时的差异</p><p><img src="/images/spiderDemo1/image-20260226095136821.png" alt="image-20260226095136821"></p><p><img src="/images/spiderDemo1/image-20260226095147299.png" alt="image-20260226095147299"></p><p><img src="/images/spiderDemo1/image-20260226095159082.png" alt="image-20260226095159082"></p><p>能明显看出两次请求的请求头顺序不一致，因此使用OrderedDict来固定请求头的顺序</p><p><img src="/images/spiderDemo1/image-20260226095338446.png" alt="image-20260226095338446"></p><p>可以看到成功获取到结果</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> JS逆向 </category>
+          
+          <category> 爬虫 </category>
+          
+      </categories>
+      
       
     </entry>
     
