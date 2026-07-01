@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>马上爬试题练习第17题</title>
+      <link href="/2026/07/01/%E9%A9%AC%E4%B8%8A%E7%88%AC%E8%AF%95%E9%A2%98%E7%BB%83%E4%B9%A0%E7%AC%AC17%E9%A2%98/"/>
+      <url>/2026/07/01/%E9%A9%AC%E4%B8%8A%E7%88%AC%E8%AF%95%E9%A2%98%E7%BB%83%E4%B9%A0%E7%AC%AC17%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<p>抓包</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260127003039151.png" alt="image-20260127003039151"></p><p>可以看到返回值加密了，照样通过堆栈找加密点</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260127003140134.png" alt="image-20260127003140134"><br><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260127003150563.png" alt="image-20260127003150563"></p><p>根据已有代码，有对结果更新的只有一个updateCounter函数</p><p>上下文找，以及在updateCounter函数内部查看调用，可以看到函数update确实调用字体表更新值</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260127003343925.png" alt="image-20260127003343925"></p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260127003422197.png" alt="image-20260127003422197"></p><p>这个比较简单，直接全扣下来执行，可以看到有报错</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260127003620156.png" alt="image-20260127003620156"></p><p>在浏览器中查看，此处都为false，根本没有执行，可以注释</p><p>注释后第二个报错</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260127003741007.png" alt="image-20260127003741007"></p><p>在浏览器中得知他是一个更新操作</p><p>断点到这，实际g就是我们需要的值</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260127003928076.png" alt="image-20260127003928076"></p><p>直接return g就行，可以看到已经有值了</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260127004000576.png" alt="image-20260127004000576"></p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260127004025210.png" alt="image-20260127004025210"></p><p>更多内容也在公众号更新：码字的秃猴</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/stable/tuhou.png" alt="tuhou"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> JS逆向 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 逆向 </tag>
+            
+            <tag> 马上爬 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>马上爬试题练习第16题</title>
       <link href="/2026/07/01/%E9%A9%AC%E4%B8%8A%E7%88%AC%E8%AF%95%E9%A2%98%E7%BB%83%E4%B9%A0%E7%AC%AC16%E9%A2%98/"/>
       <url>/2026/07/01/%E9%A9%AC%E4%B8%8A%E7%88%AC%E8%AF%95%E9%A2%98%E7%BB%83%E4%B9%A0%E7%AC%AC16%E9%A2%98/</url>
