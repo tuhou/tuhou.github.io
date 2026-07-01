@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>马上爬试题练习第19题</title>
+      <link href="/2026/07/01/%E9%A9%AC%E4%B8%8A%E7%88%AC%E8%AF%95%E9%A2%98%E7%BB%83%E4%B9%A0%E7%AC%AC19%E9%A2%98/"/>
+      <url>/2026/07/01/%E9%A9%AC%E4%B8%8A%E7%88%AC%E8%AF%95%E9%A2%98%E7%BB%83%E4%B9%A0%E7%AC%AC19%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<p>抓包</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260127215533988.png" alt="image-20260127215533988"></p><p>可以看到加密值有两个，直接查看堆栈</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260127215618206.png" alt="image-20260127215618206"></p><p>发现关键值DES3，加密值为data.r，加密key为data.key</p><p>不废话直接使用python实现</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260127215733463.png" alt="image-20260127215733463"></p><p>可以发现一致</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260127220811009.png" alt="image-20260127220811009"></p><p>更多内容也在公众号更新：码字的秃猴</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/stable/tuhou.png" alt="tuhou"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> JS逆向 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 逆向 </tag>
+            
+            <tag> 马上爬 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>马上爬试题练习第18题</title>
       <link href="/2026/07/01/%E9%A9%AC%E4%B8%8A%E7%88%AC%E8%AF%95%E9%A2%98%E7%BB%83%E4%B9%A0%E7%AC%AC18%E9%A2%98/"/>
       <url>/2026/07/01/%E9%A9%AC%E4%B8%8A%E7%88%AC%E8%AF%95%E9%A2%98%E7%BB%83%E4%B9%A0%E7%AC%AC18%E9%A2%98/</url>
