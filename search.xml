@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>马上爬试题练习第16题</title>
+      <link href="/2026/07/01/%E9%A9%AC%E4%B8%8A%E7%88%AC%E8%AF%95%E9%A2%98%E7%BB%83%E4%B9%A0%E7%AC%AC16%E9%A2%98/"/>
+      <url>/2026/07/01/%E9%A9%AC%E4%B8%8A%E7%88%AC%E8%AF%95%E9%A2%98%E7%BB%83%E4%B9%A0%E7%AC%AC16%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<p>抓包</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260126234946561.png" alt="image-20260126234946561"></p><p>可以看到加密点为请求参数里的h5值</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260126235118841.png" alt="image-20260126235118841"></p><p>h5值为base64，所以此时可以直接搜btoa，找加密点</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260126235211299.png" alt="image-20260126235211299"></p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260126235227528.png" alt="image-20260126235227528"></p><p>当然我们不能这样，万一btoa也被混淆了呢</p><p>直接找堆栈</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260126235433206.png" alt="image-20260126235433206"></p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260126235445397.png" alt="image-20260126235445397"></p><p>可以看到这里已经生成了值，继续往上找</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260126235600797.png" alt="image-20260126235600797"></p><p>可以看到在此处已经生成了，点击函数进去就能看到对应的加密点</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260126235647064.png" alt="image-20260126235647064"></p><p>实际上的加密为<code>this._$sdnmd(_$lR)</code>然后base64</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260126235847410.png" alt="image-20260126235847410"></p><p>本来打算扣代码的，但是要补的环境太多，直接全部扣下来，改写对应的函数即可</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260127000117478.png" alt="image-20260127000117478"></p><p>从折叠后的代码可以看到实际只有一个函数和一个调用</p><p>改写部分为</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">window.PcSign = new window.Sign(&#123;</span><br><span class="line">            appId: &quot;b5216&quot;,</span><br><span class="line">            preRequest: !1,</span><br><span class="line">        &#125;)</span><br><span class="line">      </span><br><span class="line">//调用函数</span><br><span class="line">function get_h5(page, timestamp)&#123;</span><br><span class="line">    const j = &#123;</span><br><span class="line">        &quot;page&quot;: page,</span><br><span class="line">        &quot;t&quot;: timestamp</span><br><span class="line">    &#125;;</span><br><span class="line">    let _$lw = window.PcSign._$sdnmd(j);</span><br><span class="line">    _$lw = btoa(_$lw.h5st+String(_$lw.t))</span><br><span class="line">    return &#123;</span><br><span class="line">        &quot;h5&quot;: _$lw</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;   </span><br></pre></td></tr></table></figure><p>当我在pycharm中准备补环境的时候，加上补环境框架，已经出值了</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260127000523311.png" alt="image-20260127000523311"></p><p>后面发现是只需要有window、document、navigator这三个就行</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260127000658394.png" alt="image-20260127000658394"></p><p>更多内容也在公众号更新：码字的秃猴</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/stable/tuhou.png" alt="tuhou"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> JS逆向 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 逆向 </tag>
+            
+            <tag> 马上爬 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>马上爬试题练习第15题</title>
       <link href="/2026/07/01/%E9%A9%AC%E4%B8%8A%E7%88%AC%E8%AF%95%E9%A2%98%E7%BB%83%E4%B9%A0%E7%AC%AC15%E9%A2%98/"/>
       <url>/2026/07/01/%E9%A9%AC%E4%B8%8A%E7%88%AC%E8%AF%95%E9%A2%98%E7%BB%83%E4%B9%A0%E7%AC%AC15%E9%A2%98/</url>
