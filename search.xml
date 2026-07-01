@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>马上爬试题练习第13题</title>
+      <link href="/2026/07/01/%E9%A9%AC%E4%B8%8A%E7%88%AC%E8%AF%95%E9%A2%98%E7%BB%83%E4%B9%A0%E7%AC%AC13%E9%A2%98/"/>
+      <url>/2026/07/01/%E9%A9%AC%E4%B8%8A%E7%88%AC%E8%AF%95%E9%A2%98%E7%BB%83%E4%B9%A0%E7%AC%AC13%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<p>抓包分析</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260118231521507.png" alt="image-20260118231521507"></p><p>加密参数为R和S</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260118231704270.png" alt="image-20260118231704270"></p><p>从堆栈上打上断点，此处，执行后就获得了值</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260118231826064.png" alt="image-20260118231826064"></p><p>寻找发现beforeSend即为加密函数</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260118232204388.png" alt="image-20260118232204388"></p><p>进去后还是熟悉的流程函数，执行到第二步可以看到一个值出来了</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260118232958548.png" alt="image-20260118232958548"></p><p><code>_0xfcd8a0[_0x34e6a4(0x1ab)](_0x1e5c29)   === _0x1e5c29()</code></p><p>代码流程分析可写为</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var _0x454710 =  &quot;0123456789abcdef&quot;</span><br><span class="line">var _0xee3b28 = [];</span><br><span class="line">for (var _0x20183e = 0x0; _0x20183e &lt; 0x20 ; _0x20183e++) &#123;</span><br><span class="line">_0xee3b28[_0x20183e] = _0x454710[&quot;substr&quot;](Math[&quot;floor&quot;](Math[&quot;random&quot;]()*16),1);</span><br><span class="line">&#125;</span><br><span class="line">_0xee3b28[0xe] = &#x27;\x34&#x27;</span><br><span class="line">_0xee3b28[0x13] = _0x454710[&quot;substr&quot;](((_0xee3b28[0x13]&amp;0x3)|0x8), 0x1)</span><br><span class="line">_0xee3b28[0x8] = _0xee3b28[0xd] = _0xee3b28[0x12] = _0xee3b28[0x17]</span><br><span class="line">var _0x4b1861 = _0xee3b28[&quot;join&quot;](&#x27;&#x27;);</span><br></pre></td></tr></table></figure><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260118235314701.png" alt="image-20260118235314701"></p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260118235439913.png" alt="image-20260118235439913"></p><p>生成值长度一致，因为是随机值计算得出，结果不同正常</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260118235615178.png" alt="image-20260118235615178"></p><p>全局查看_0x350b3a值，发现最后赋值为R</p><p>同样，到case7，发现另一个值S</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260118235845816.png" alt="image-20260118235845816"></p><p>拆解<code>var _0x3104de = _0xfcd8a0[_0x34e6a4(0x234)](mmm, _0xfcd8a0[_0x34e6a4(0x220)](_0xfcd8a0[&#39;\x52\x75\x6a\x76\x5a&#39;](_0x3f9dab, _0x350b3a), _0x2059bf))</code></p><p>实际为：mmm(R+page值+时间戳)</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260119000142300.png" alt="image-20260119000142300"></p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260119000225340.png" alt="image-20260119000225340"></p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260119000343281.png" alt="image-20260119000343281"></p><p>S值32位，让我想到了老朋友md5，测试确实如此</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260119225427668.png" alt="image-20260119225427668"></p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260119225435465.png" alt="image-20260119225435465"></p><p>直接代结果</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260120000422927.png" alt="image-20260120000422927"></p><p>请求会有很多次失败，记得加一个多次请求</p><p>当然扣代码一样能实现对应的效果：代码折叠后能看到mmm函数的位置</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260120215408686.png" alt="image-20260120215408686"></p><p>扣除mmm后直接缺啥补啥</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260120220319555.png" alt="image-20260120220319555"></p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260701/image-20260120220332938.png" alt="image-20260120220332938"></p><p>更多内容也在公众号更新：码字的秃猴</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/stable/tuhou.png" alt="tuhou"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> JS逆向 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 逆向 </tag>
+            
+            <tag> 马上爬 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>马上爬试题练习第11题</title>
       <link href="/2026/07/01/%E9%A9%AC%E4%B8%8A%E7%88%AC%E8%AF%95%E9%A2%98%E7%BB%83%E4%B9%A0%E7%AC%AC11%E9%A2%98/"/>
       <url>/2026/07/01/%E9%A9%AC%E4%B8%8A%E7%88%AC%E8%AF%95%E9%A2%98%E7%BB%83%E4%B9%A0%E7%AC%AC11%E9%A2%98/</url>
