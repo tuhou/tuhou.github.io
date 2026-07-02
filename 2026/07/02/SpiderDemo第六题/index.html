@@ -1,0 +1,295 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SpiderDemo第六题 | 码字的秃猴</title><noscript>开启JavaScript才能访问本站哦~</noscript><link rel="icon" href="/img/pwa/favicon.png"><link rel="stylesheet" href="/css/index.css?v=3.0.21"><link rel="canonical" href="http://example.com/2026/07/02/SpiderDemo%E7%AC%AC%E5%85%AD%E9%A2%98/index.html"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><!-- Feature-specific CSS--><!-- aplayer--><!-- swiper--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.css"><!-- fancybox ui--><!-- katex--><!-- Open Graph--><meta name="description" content="一：抓包分析 翻页和查看堆栈信息，发现代码强混淆，没法单步调试 先使用xhr断住 二：数组对象分析直接查看目前存在的数据对象 从上面能看到body数据以及关键信息 1&amp;#123; &amp;quot;pageNumber&amp;quot;: 1, &amp;quot;challengeType&amp;amp;qu"><!-- pwa--><meta name="theme-color" content="#006a73"><meta name="apple-mobile-web-app-status-bar-style" content="#006a73"><link rel="manifest" href="/manifest.json"><meta name="msapplication-TileColor" content="#006a73"><link rel="mask-icon" href="/img/pwa/favicon.png" color="#006a73"><link rel="apple-touch-icon" sizes="180x180" href="/img/pwa/favicon.png"><link rel="icon" type="image/png" sizes="16x16" href="/img/pwa/favicon_16.png"><link rel="icon" type="image/png" sizes="32x32" href="/img/pwa/favicon_32.png"><link rel="bookmark" href="/img/pwa/favicon.png"><script>console.log(' %c Solitude %c ' + '3.0.21' + ' %c https://github.com/everfu/hexo-theme-solitude',
+    'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+    'background:#ff9a9a ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+    'background:unset ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff')
+</script><script>(()=>{
+        const saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0)
+                    return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        };
+        window.utils = {
+            saveToLocal: saveToLocal,
+            getCSS: (url, id = false) => new Promise((resolve, reject) => {
+              const link = document.createElement('link')
+              link.rel = 'stylesheet'
+              link.href = url
+              if (id) link.id = id
+              link.onerror = reject
+              link.onload = link.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                link.onload = link.onreadystatechange = null
+                resolve()
+              }
+              document.head.appendChild(link)
+            }),
+            getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+              const script = document.createElement('script')
+              script.src = url
+              script.async = true
+              script.onerror = reject
+              script.onload = script.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+              }
+
+              Object.keys(attr).forEach(key => {
+                script.setAttribute(key, attr[key])
+              })
+
+              document.head.appendChild(script)
+            }),
+            addGlobalFn: (key, fn, name = false, parent = window) => {
+                const globalFn = parent.globalFn || {}
+                const keyObj = globalFn[key] || {}
+
+                if (name && keyObj[name]) return
+
+                name = name || Object.keys(keyObj).length
+                keyObj[name] = fn
+                globalFn[key] = keyObj
+                parent.globalFn = globalFn
+            },
+            addEventListenerPjax: (ele, event, fn, option = false) => {
+              ele.addEventListener(event, fn, option)
+              utils.addGlobalFn('pjax', () => {
+                  ele.removeEventListener(event, fn, option)
+              })
+            },
+            diffDateFormat: (selector) => {
+                selector.forEach(item => {
+                    const date = new Date(item.getAttribute('datetime') || item.textContent);
+                    item.textContent = (date.getMonth() + 1).toString()+'/'+date.getDate().toString();
+                });
+            },
+        }
+    })()</script><!-- theme--><script>initTheme = () => {
+    let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const cachedMode = utils.saveToLocal.get('theme');
+    if (cachedMode === undefined) {
+        const nowMode =
+            isDarkMode ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', nowMode);
+    } else {
+        document.documentElement.setAttribute('data-theme', cachedMode);
+    }
+    typeof rm === 'object' && rm.mode(cachedMode === 'dark' && isDarkMode)
+}
+initTheme()</script><script>const GLOBAL_CONFIG = {
+    root: '/',
+    algolia: undefined,
+    localsearch: {"preload":null,"path":"/search.xml"},
+    runtime: '2026-01-31 00:00:00',
+    lazyload: {
+        enable: false,
+        error: '/img/error_load.avif'
+    },
+    copyright: false,
+    highlight: {"limit":200,"expand":true,"copy":true,"syntax":"highlight.js"},
+    randomlink: false,
+    lang: {"theme":{"dark":"已切换至深色模式","light":"已切换至浅色模式"},"copy":{"success":"复制成功","error":"复制失败"},"backtop":"返回顶部","time":{"day":"天前","hour":"小时前","just":"刚刚","min":"分钟前","month":"个月前"},"day":" 天","f12":"开发者模式已打开，请遵循GPL协议。","totalk":"无需删除空行，直接输入评论即可","search":{"empty":"找不到你查询的内容：${query}","hit":"找到 ${hits} 条结果，用时 ${time} 毫秒","placeholder":"输入关键词快速查找","count":"共 <b>${count}</b> 条结果。","loading":"搜索中..."}},
+    aside: {
+        state: {
+            morning: "✨ 早上好，新的一天开始了",
+            noon: "🍲 午餐时间",
+            afternoon: "🌞 下午好",
+            night: "早点休息",
+            goodnight: "晚安 😴",
+        },
+        witty_words: [],
+        witty_comment: {
+            prefix: '好久不见，',
+            back: '欢迎再次回来，',
+        },
+    },
+    covercolor: {
+        enable: true
+    },
+    comment: false,
+    lightbox: 'null',
+    right_menu: {"mode":{"dark":"深色模式","light":"浅色模式"},"img_error":"此图片无法复制与下载","translate":null},
+    translate: {"translateDelay":0,"defaultEncoding":2},
+    lure: false,
+    expire: false,
+};</script><script id="config-diff">var PAGE_CONFIG = {
+    is_post: true,
+    is_page: false,
+    is_home: false,
+    page: '',
+    toc: true,
+    comment: false,
+    ai_text: false,
+    color: false,
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body id="body"><div id="console"><div class="close-btn" onclick="sco.hideConsole()"><i class="solitude fas fa-xmark"></i></div><div class="console-card-group"><div class="console-card-group-right"><div class="console-card tags" onclick="sco.hideConsole()"><div class="card-content"><div class="author-content-item-tips">标签</div><div class="author-content-item-title">寻找感兴趣的领域</div></div><div class="card-tag-cloud"><a href="/tags/hexo/">hexo<sup>3</sup></a><a href="/tags/%E5%BB%BA%E7%AB%99/">建站<sup>1</sup></a><a href="/tags/RustDesk/">RustDesk<sup>1</sup></a><a href="/tags/%E8%BF%9C%E7%A8%8B%E5%8D%8F%E5%8A%A9/">远程协助<sup>1</sup></a><a href="/tags/%E9%80%86%E5%90%91/">逆向<sup>17</sup></a><a href="/tags/emby/">emby<sup>1</sup></a><a href="/tags/postgresql/">postgresql<sup>3</sup></a><a href="/tags/MIMIC/">MIMIC<sup>2</sup></a><a href="/tags/%E8%BD%AF%E4%BB%B6/">软件<sup>1</sup></a><a href="/tags/%E9%A9%AC%E4%B8%8A%E7%88%AC/">马上爬<sup>11</sup></a><a href="/tags/wasm/">wasm<sup>1</sup></a></div></div><div class="console-card history" onclick="sco.hideConsole()"><ul class="card-archive-list"><li class="item"><a href="/archives/2026/07/"><span class="date">2026/07</span><div class="count-group"><span class="count">12</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/2026/06/"><span class="date">2026/06</span><div class="count-group"><span class="count">4</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/2026/02/"><span class="date">2026/02</span><div class="count-group"><span class="count">5</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/2024/12/"><span class="date">2024/12</span><div class="count-group"><span class="count">5</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/2024/11/"><span class="date">2024/11</span><div class="count-group"><span class="count">1</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/"><span class="date">全部文章</span><div class="count-group"><span class="count">27</span><span class="unit">篇</span></div></a></li></ul></div></div></div><div class="button-group"><div class="console-btn-item"><span class="darkmode_switchbutton" onclick="sco.switchDarkMode()" title="昼夜切换"><i class="solitude fas fa-circle-half-stroke"></i></span></div><div class="console-btn-item" id="consoleHideAside"><span class="asideSwitch" onclick="sco.switchHideAside()" title="边栏显示控制"><i class="solitude fas fa-arrows-left-right-to-line"></i></span></div></div><div class="console-mask" onclick="sco.hideConsole()"></div></div><div id="sidebar" style="zoom: 1;"><div id="menu-mask" style="display: none;"></div><div id="sidebar-menus"><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a></div></div></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><span class="darkmode_switchbutton menu-child" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span>显示模式</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文章</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>归档</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.zqbaba.org/"><i class="solitude  fas fa-wifi"></i><span>NBA在线观看</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>我的</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user"></i><span>关于秃猴</span></a></li><li><a class="site-page child" href="/tlink/"><i class="solitude  fas fa-toolbox"></i><span>在线工具</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="card-tag-cloud"><a href="/tags/hexo/">hexo<sup>3</sup></a><a href="/tags/%E5%BB%BA%E7%AB%99/">建站<sup>1</sup></a><a href="/tags/RustDesk/">RustDesk<sup>1</sup></a><a href="/tags/%E8%BF%9C%E7%A8%8B%E5%8D%8F%E5%8A%A9/">远程协助<sup>1</sup></a><a href="/tags/%E9%80%86%E5%90%91/">逆向<sup>17</sup></a><a href="/tags/emby/">emby<sup>1</sup></a><a href="/tags/postgresql/">postgresql<sup>3</sup></a><a href="/tags/MIMIC/">MIMIC<sup>2</sup></a><a href="/tags/%E8%BD%AF%E4%BB%B6/">软件<sup>1</sup></a><a href="/tags/%E9%A9%AC%E4%B8%8A%E7%88%AC/">马上爬<sup>11</sup></a><a href="/tags/wasm/">wasm<sup>1</sup></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav class="show" id="nav"><div id="nav-group"><div id="blog_name"><a href="/" title="返回博客主页" id="site-name"><span class="title">码字的秃猴</span><i class="solitude fas fa-home"></i></a></div><div id="page-name-mask"><div id="page-name"><a id="page-name-text" onclick="sco.toTop()">SpiderDemo第六题</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文章</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>归档</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.zqbaba.org/"><i class="solitude  fas fa-wifi"></i><span>NBA在线观看</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>我的</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user"></i><span>关于秃猴</span></a></li><li><a class="site-page child" href="/tlink/"><i class="solitude  fas fa-toolbox"></i><span>在线工具</span></a></li></ul></div></div></div><div id="nav-left"></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机一篇文章" href="javascript:void(0);"><i class="solitude fas fa-dice-d6"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索"><i class="solitude fas fa-magnifying-glass"></i></a></div><div class="nav-button" id="nav-totop" onclick="sco.toTop()"><a class="totopbtn"><i class="solitude fas fa-arrow-up"></i><span id="percent">0</span></a></div><div id="toggle-menu"><a class="site-page"><i class="solitude fas fa-bars"></i></a></div></div></div></nav><div class="coverdiv" id="coverdiv"><img class="nolazyload" id="post-cover" src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/cover/pexels-lucas-porras-1937324539-34928213.8adxlx98vo.webp" alt="SpiderDemo第六题"></div><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original" title="该文章为原创文章，注意版权协议">原创</a><span class="post-meta-categories"><a class="post-meta-categories" href="/categories/JS%E9%80%86%E5%90%91/">JS逆向</a></span><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%80%86%E5%90%91/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>逆向</span></a></div></div></div></div><h1 class="post-title">SpiderDemo第六题</h1><div id="post-meta"><div class="meta-secondline"></div></div></div><div class="post-radius-bottom"></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content article-container"><h4 id="一：抓包分析"><a href="#一：抓包分析" class="headerlink" title="一：抓包分析"></a>一：抓包分析</h4><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260505213612988.png" alt="image-20260505213612988"></p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260505213623799.png" alt="image-20260505213623799"></p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260505213821877.png" alt="image-20260505213821877"></p>
+<p>翻页和查看堆栈信息，发现代码强混淆，没法单步调试</p>
+<p>先使用xhr断住</p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260505214046756.png" alt="image-20260505214046756"></p>
+<h4 id="二：数组对象分析"><a href="#二：数组对象分析" class="headerlink" title="二：数组对象分析"></a>二：数组对象分析</h4><p>直接查看目前存在的数据对象</p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260505214236334.png" alt="image-20260505214236334"></p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260505214324389.png" alt="image-20260505214324389"></p>
+<p>从上面能看到body数据以及关键信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;    &quot;pageNumber&quot;: 1,    &quot;challengeType&quot;: &quot;jsvmp_challenge&quot;,    &quot;authToken&quot;: &quot;bkkW/CQe/DzxrZBA39sCWzujmUeTT4vNxQ3/Jf75al34+4rjCHHWzVIvErP1ASawrLTjO2TjogxbBiYOLI4wgwKlpQ2raAnMpQNESaEHjI/f4o77lY33+TWuH9Qjd1uMdxArEWv+t65HgP/9BNggOuV0W+m7w/WnBYtp0O9Oy00=&quot;,    &quot;timestamp&quot;: 1777988368,    &quot;fingerprint&quot;: &#123;        &quot;userAgent&quot;: &quot;SA6K0D7HCozqkkMhZNvWd4EkywEaFTNmHGfuqQ+KhLLxhBHEFf5q1G7CQ76QmKUEGb4mUcYTCbU3csgCZX17Efss9oI04jVFFM7naINVIsGoBbOtJ2j/RQOfY3qZFkdy30VS/p+SFyP1msMvKJUW4U/LuzYVDvBg19rd44ECzEs=&quot;,        &quot;language&quot;: &quot;zh-CN&quot;,        &quot;screenResolution&quot;: &quot;1920x1080&quot;,        &quot;colorDepth&quot;: &quot;24&quot;,        &quot;timezoneOffset&quot;: -480,        &quot;cookiesEnabled&quot;: true,        &quot;plugins&quot;: &quot;PDF Viewer, Chrome PDF Viewer, Chromium PDF Viewer, Microsoft Edge PDF Viewer, WebKit built-in PDF&quot;,        &quot;sessionStorage&quot;: true,        &quot;javaEnabled&quot;: false        &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对比api请求的Payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">•ü••••jsvmp_challenge•¬•ERY56cchTe0cL3mMXzwusXMCZPtZadL/iCGgu2MQXdedIKYXo9RiFEHNiQnC2GIuhXFcTeI14EKsPgxA6gNCVR+SX4N/WzIABScRLX6sPxhbU0LREL+/1TigeNU4kmCca6h2rDMf5ZSqMPfF4GVxiYG3RLPK0A6OcfutUsIWU98= ®åçÏ•*±•¬•DovL5XRHGnj83tLEfDROJ5FsYg4LgRGXQ1xqQj0EmM5aZ+RiVfMA05l0K46JbPm2zVhDOofT0pYD0Qfcjyu/NxN1Oq7nHVNdS0yFPqWKb3hMl1FYn3eed9n0x++VTjMKnpW5pb3UBMS6nZF6iWsGbmphKSx9b3mseZKgQnJRNk0=••zh-CN•1920x1080&quot;•24( 0•:bPDF Viewer, Chrome PDF Viewer, Chromium PDF Viewer, Microsoft Edge PDF Viewer, WebKit built-in PDF@•H</span><br></pre></td></tr></table></figure>
+
+<p>是不是大致一致，转换body中的513位的数组</p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260505215459973.png" alt="image-20260505215459973"></p>
+<p>发现也是这个值，直接protobuf反序列化一下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import blackboxprotobuffrom loguru import logger# 前5位是空格及长度# Uint8Array的长度位513 body  array = [0, 0, 0, 1, 252, 8, 3, 18, 15, 106, 115, 118, 109, 112, 95, 99, 104, 97, 108, 108, 101, 110, 103, 101, 26, 172, 1, 87, 97, 106, 75, 110, 110, 114, 79, 89, 55, 80, 113, 84, 105, 120, 101, 55, 56, 113, 118, 56, 83, 86, 82, 47, 49, 107, 47, 121, 57, 97, 67, 122, 51, 111, 108, 114, 66, 69, 81, 106, 71, 108, 67, 70, 76, 103, 55, 49, 89, 117, 80, 49, 83, 110, 114, 78, 109, 65, 104, 89, 77, 120, 102, 104, 53, 51, 82, 86, 114, 87, 83, 81, 71, 90, 57, 69, 54, 54, 88, 85, 97, 76, 104, 83, 106, 50, 65, 78, 49, 112, 122, 79, 118, 114, 115, 83, 57, 76, 47, 101, 88, 43, 48, 117, 88, 82, 89, 118, 69, 81, 114, 72, 82, 88, 73, 43, 51, 81, 77, 74, 83, 89, 110, 98, 49, 70, 77, 80, 84, 43, 104, 88, 57, 115, 65, 72, 67, 74, 55, 49, 112, 119, 106, 49, 116, 105, 98, 85, 90, 74, 97, 65, 88, 113, 105, 85, 49, 88, 103, 51, 85, 88, 75, 117, 104, 83, 89, 111, 55, 103, 61, 32, 209, 160, 232, 207, 6, 42, 177, 2, 10, 172, 1, 78, 82, 106, 83, 114, 57, 75, 122, 70, 121, 97, 73, 90, 108, 113, 52, 67, 48, 79, 50, 82, 84, 74, 98, 99, 66, 78, 115, 54, 97, 55, 73, 79, 119, 116, 120, 54, 101, 85, 72, 56, 114, 89, 80, 84, 87, 79, 114, 84, 104, 67, 97, 105, 78, 55, 81, 88, 106, 107, 119, 69, 115, 48, 85, 73, 56, 117, 82, 87, 108, 121, 112, 79, 114, 103, 116, 76, 89, 118, 112, 76, 50, 99, 99, 49, 69, 97, 71, 83, 75, 69, 101, 69, 100, 121, 65, 83, 101, 70, 72, 98, 114, 50, 118, 56, 51, 77, 81, 77, 51, 75, 112, 100, 85, 74, 109, 53, 67, 54, 68, 79, 77, 119, 100, 88, 73, 69, 56, 76, 86, 47, 106, 79, 110, 120, 83, 115, 106, 67, 120, 99, 47, 66, 122, 108, 70, 87, 78, 118, 54, 99, 101, 82, 110, 47, 79, 121, 115, 112, 111, 101, 117, 119, 65, 78, 110, 122, 78, 102, 86, 85, 61, 18, 5, 122, 104, 45, 67, 78, 26, 9, 49, 57, 50, 48, 120, 49, 48, 56, 48, 34, 2, 50, 52, 40, 32, 48, 1, 58, 98, 80, 68, 70, 32, 86, 105, 101, 119, 101, 114, 44, 32, 67, 104, 114, 111, 109, 101, 32, 80, 68, 70, 32, 86, 105, 101, 119, 101, 114, 44, 32, 67, 104, 114, 111, 109, 105, 117, 109, 32, 80, 68, 70, 32, 86, 105, 101, 119, 101, 114, 44, 32, 77, 105, 99, 114, 111, 115, 111, 102, 116, 32, 69, 100, 103, 101, 32, 80, 68, 70, 32, 86, 105, 101, 119, 101, 114, 44, 32, 87, 101, 98, 75, 105, 116, 32, 98, 117, 105, 108, 116, 45, 105, 110, 32, 80, 68, 70, 64, 1, 72, 0]# 解析protobuf数据original_data, message_type = blackboxprotobuf.decode_message(bytes(array[5:]))logger.info(f&#x27;序列化结果==&gt;&gt;&#123;original_data&#125;&#x27;)logger.info(f&#x27;序列化类型==&gt;&gt;&#123;message_type&#125;&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260505223439162.png" alt="image-20260505223439162"></p>
+<p>观察序列化的结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#x27;1&#x27;: 3,&#x27;2&#x27;: b &#x27;jsvmp_challenge&#x27;,&#x27;3&#x27;: b &#x27;WajKnnrOY7PqTixe78qv8SVR/1k/y9aCz3olrBEQjGlCFLg71YuP1SnrNmAhYMxfh53RVrWSQGZ9E66XUaLhSj2AN1pzOvrsS9L/eX+0uXRYvEQrHRXI+3QMJSYnb1FMPT+hX9sAHCJ71pwj1tibUZJaAXqiU1Xg3UXKuhSYo7g=&#x27;,&#x27;4&#x27;: 1777995857,&#x27;5&#x27;: &#123;&#x27;1&#x27;: b &#x27;NRjSr9KzFyaIZlq4C0O2RTJbcBNs6a7IOwtx6eUH8rYPTWOrThCaiN7QXjkwEs0UI8uRWlypOrgtLYvpL2cc1EaGSKEeEdyASeFHbr2v83MQM3KpdUJm5C6DOMwdXIE8LV/jOnxSsjCxc/BzlFWNv6ceRn/OyspoeuwANnzNfVU=&#x27;,&#x27;2&#x27;: b &#x27;zh-CN&#x27;,&#x27;3&#x27;: &#123;&#x27;6&#x27;: 3474580101544292921&#125;,&#x27;4&#x27;: b &#x27;24&#x27;,&#x27;5&#x27;: 32,&#x27;6&#x27;: 1,&#x27;7&#x27;: b &#x27;PDF Viewer, Chrome PDF Viewer, Chromium PDF Viewer, Microsoft Edge PDF Viewer, WebKit built-in PDF&#x27;,&#x27;8&#x27;: 1,&#x27;9&#x27;: 0&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到加密的只有</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RQ2uOoeBESxr00dfMtXLYY5JTo9xivZeqw4QntFCMm4O8aI0C8wg3H3Ireh7/v+24P+hDAO6awsxrlS5mrBVh1C0psrUrYxPuCDo4LedmvH0o2zP0gC451OKD2IuuLWJ33i7IlwCuZY21R6C47T0PzZrsy3tjGPr6KaqsTJW+ro=CajsmTe3fPFGjxG1nZLHVFpuDVJ4JhyQPXQvomCuYiPX9o0BGK90/enrp4GD8ando7seUUbk8z6lCqUEeE5rcPemL9SPZ7lVLmAnVpNrt6b4B6vHd9sJZypgGmUBBD+sPt+EgOMdprsuOIOxjqOPgZFgzm+rW68gygfHIciKzS8=</span><br></pre></td></tr></table></figure>
+
+<h4 id="三：加密参数分析"><a href="#三：加密参数分析" class="headerlink" title="三：加密参数分析"></a>三：加密参数分析</h4><p>加密长度</p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260505224147621.png" alt="image-20260505224147621"></p>
+<p>长度都为172</p>
+<p>直接AI分析一波</p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260505230325907.png" alt="image-20260505230325907"></p>
+<p>AI分析为RSA加密，那么直接全局搜索RSA的关键字<strong>encrypt和setPublicKey</strong></p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260505230501320.png" alt="image-20260505230501320"></p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260505230529698.png" alt="image-20260505230529698"></p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260505230618051.png" alt="image-20260505230618051"></p>
+<p>断住后重新请求</p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260505230701668.png" alt="image-20260505230701668"></p>
+<p>可以看到已经断住，继续走</p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260505230833443.png" alt="image-20260505230833443"></p>
+<p>看到断到加密位置了，字符加密有点像base64</p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260505231014212.png" alt="image-20260505231014212"></p>
+<p>可以看到实际为base64加密的拼接字符，然后Rsa加密获得结果，直接交给AI帮我们生成python代码</p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260505233703420.png" alt="image-20260505233703420"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import rsaimport base64# 你的公钥 PEM 字符串PUBLIC_KEY_PEM = &quot;&quot;&quot;-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCHshK1NixnImx08tq3V6VjvfwkARCOJbnPMZr4Ogh16ORkC45CFUB+2gu+IN2vjH3oJaY2e/6y0shD2fURMB3urxKE3gewRZMm5/T7noAXs4DJTOxJGwAJFHFfd9Zp73vXEcac4DKrvItOkjLx9P5JkA3947brgsMObYGdG3HOdwIDAQAB-----END PUBLIC KEY-----&quot;&quot;&quot;def rsa_encrypt(plaintext: bytes) -&gt; str:    # 从 PEM 格式加载公钥    pub_key = rsa.PublicKey.load_pkcs1_openssl_pem(PUBLIC_KEY_PEM.encode())    # 加密（rsa 库自动使用 PKCS#1 v1.5 填充）    ciphertext = rsa.encrypt(plaintext, pub_key)    # 返回 Base64 编码的密文    return base64.b64encode(ciphertext).decode(&#x27;utf-8&#x27;)# 示例if __name__ == &quot;__main__&quot;:    message = b&#x27;MTc3Nzk5MzY5N19qc3ZtcF9zZWNyZXRfa2V5XzIwMjQ=&#x27;    encrypted = rsa_encrypt(message)    print(encrypted)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260505233748654.png" alt="image-20260505233748654"></p>
+<p>对比输出长度，也是172</p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260505233733538.png" alt="image-20260505233733538"></p>
+<p>后续执行能看到另一个值是user-agent加密实现</p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260505234114524.png" alt="image-20260505234114524"></p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260506005406420.png" alt="image-20260506005406420"></p>
+<p>继续执行后可以看到加密值实际的位置</p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260506005905229.png" alt="image-20260506005905229"></p>
+<h4 id="四：函数调用"><a href="#四：函数调用" class="headerlink" title="四：函数调用"></a>四：函数调用</h4><p>经过上面的分析，目前的主要就是拼接出protobuf序列化的结果，在反序列化拼接出请求中的protobuf类型。核心代码如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timestamp = int(time.time())auth_token = rsa_encrypt(base64.b64encode(f&#x27;&#123;timestamp&#125;_jsvmp_secret_key_2024&#x27;.encode(&#x27;utf-8&#x27;)).decode(&#x27;utf-8&#x27;))ua = rsa_encrypt(&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)&quot;)original_data = &#123;    &#x27;1&#x27;: i,    &#x27;2&#x27;: b&#x27;jsvmp_challenge&#x27;,    &#x27;3&#x27;: auth_token.encode(),    &#x27;4&#x27;: timestamp,    &#x27;5&#x27;: &#123;        &#x27;1&#x27;: ua.encode(),        &#x27;2&#x27;: b&#x27;zh-CN&#x27;,        &#x27;3&#x27;: &#123;        &#x27;6&#x27;: 3474580101544292921        &#125;,        &#x27;4&#x27;: b&#x27;24&#x27;,        &#x27;5&#x27;: 32,        &#x27;6&#x27;: 1,        &#x27;7&#x27;: b&quot;PDF Viewer, Chrome PDF Viewer, Chromium PDF Viewer, Microsoft Edge PDF Viewer, WebKit built-in PDF&quot;,        &#x27;8&#x27;: 1,        &#x27;9&#x27;: 0    &#125;&#125;form_data = bytes(blackboxprotobuf.encode_message(original_data, message_type))response = requests.post(url, headers=headers, data=bytes([0, 0, 0, 1, 252]) + form_data)</span><br></pre></td></tr></table></figure>
+
+<p>执行结果如下所示，获得的是protobuf数据</p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260506095228757.png" alt="image-20260506095228757"></p>
+<p>解密，直接通过<strong>binascii.hexlify</strong>转换成16进制，然后剥离 gRPC 帧头。也就是从第10为开始取</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">def hexlify(response):    &quot;&quot;&quot;    直接通过binascii.hexlify转换成16进制，然后从第10位开始取，因为前面10位都是空的，是剥离 gRPC 帧头    @param response:    @return:    &quot;&quot;&quot;    response = binascii.hexlify(response.content).decode(&#x27;utf-8&#x27;)    byte_data = bytes.fromhex(response[10:])    data = blackboxprotobuf.protobuf_to_json(byte_data)    return data</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260506101453441.png" alt="image-20260506101453441"></p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260506123600484.png" alt="image-20260506123600484"></p>
+<p>替换掉所有的<code>&lt;span class=\&#39;context_kw&#123;i&#125;\&#39;&gt;&lt;/span&gt;</code>将它作为一个空字符</p>
+<p>能得到 <code>_673、1_17、_054、_686、6_67、51_6、617_、4_24、8_74、9_96</code></p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260506124316621.png" alt="image-20260506124316621"></p>
+<p>第二页的数字为：<code>8673、1517、1054、6686、6967、5156、6178、4424、8674、9596</code></p>
+<p>结合转换的base64值<code>58,57,53,56,61,57,58,54,56,57</code>能得出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">8 ---&gt; 585 ---&gt; 571 ---&gt; 536 ---&gt; 569 ---&gt; 618 ---&gt; 584 ---&gt; 54</span><br></pre></td></tr></table></figure>
+
+<p>得出的结论是，奇数减52，偶数减50得到缺值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">def get_data(response_data):    &quot;&quot;&quot;    获取替换后的实际值    @param response_data:    @return:    &quot;&quot;&quot;    response = json.loads(response_data[0])    html = response[&#x27;6&#x27;]    for i in range(10):        html = html.replace(f&quot;&lt;span class=&#x27;context_kw&#123;i&#125;&#x27;&gt;&lt;/span&gt;&quot;, &#x27;_&#x27;)    html_list = html.split(&#x27; &#x27;)    jiem = base64.b64decode((response[&#x27;7&#x27;]).encode(&#x27;utf-8&#x27;)).decode(&#x27;utf-8&#x27;)    jiem = jiem.split(&#x27;,&#x27;)    numbers = [int(html_list[i].replace(&#x27;_&#x27;, f&#x27;&#123;int(jiem[i]) - 50&#125;&#x27;)) if int(jiem[i]) % 2 == 0 else int(        html_list[i].replace(&#x27;_&#x27;, f&#x27;&#123;int(jiem[i]) - 52&#125;&#x27;)) for i in range(len(jiem))]    return numbers</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260506131748121.png" alt="image-20260506131748121"></p>
+<p>更多内容也在公众号更新：码字的秃猴</p>
+<p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/stable/tuhou.png" alt="tuhou"></p>
+</article><div class="post-copyright"><div class="post-copyright__author_group"><div class="post-copyright__author_img"><img class="post-copyright__author_img_front" src="/img/logo.png"></div><div class="post-copyright__author_name">码字的秃猴</div><div class="post-copyright__author_desc"></div></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div id="quit-box" onclick="RemoveRewardMask()"></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本文是原创文章，采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans">CC BY-NC-SA 4.0</a>协议，完整转载请注明来自<a href="/">码字的秃猴</a></span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%80%86%E5%90%91/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>逆向<span class="tagsPageCount">17</span></span></a></div></div></div><nav class="needEndHide pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2026/07/02/SpiderDemo%E7%AC%AC%E4%BA%94%E9%A2%98-%E6%9F%B3%E6%9A%97%E8%8A%B1%E6%98%8E%E5%8F%88%E4%B8%80%E5%A2%99/"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">SpiderDemo第五题-柳暗花明又一墙</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><div class="top-group"><div class="sayhi" id="sayhi" onclick="sco.changeWittyWord()"></div></div></div><div class="avatar"><img alt="头像" src="/img/logo.png"></div><div class="description"></div><div class="bottom-group"><span class="left"><div class="name">码字的秃猴</div><div class="desc">别向世界妥协！</div></span><div class="social-icons is-center"></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="solitude fas fa-bars"></i><span>文章目录</span></div><div class="toc-content" id="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%EF%BC%9A%E6%8A%93%E5%8C%85%E5%88%86%E6%9E%90"><span class="toc-text">一：抓包分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%EF%BC%9A%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1%E5%88%86%E6%9E%90"><span class="toc-text">二：数组对象分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%EF%BC%9A%E5%8A%A0%E5%AF%86%E5%8F%82%E6%95%B0%E5%88%86%E6%9E%90"><span class="toc-text">三：加密参数分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%9B%EF%BC%9A%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="toc-text">四：函数调用</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="solitude fas fa-map"></i><span>最近发布</span></div><div class="aside-list"><a class="aside-list-item" href="/2026/07/02/SpiderDemo%E7%AC%AC%E5%85%AD%E9%A2%98/" title="SpiderDemo第六题"><div class="thumbnail"><img alt="SpiderDemo第六题" src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/cover/pexels-lucas-porras-1937324539-34928213.8adxlx98vo.webp"></div><div class="content"><span class="title" href="/2026/07/02/SpiderDemo%E7%AC%AC%E5%85%AD%E9%A2%98/" title="SpiderDemo第六题">SpiderDemo第六题</span><span class="categories" href="/2026/07/02/SpiderDemo%E7%AC%AC%E5%85%AD%E9%A2%98/">JS逆向</span></div></a><a class="aside-list-item" href="/2026/07/02/SpiderDemo%E7%AC%AC%E4%BA%94%E9%A2%98-%E6%9F%B3%E6%9A%97%E8%8A%B1%E6%98%8E%E5%8F%88%E4%B8%80%E5%A2%99/" title="SpiderDemo第五题-柳暗花明又一墙"><div class="thumbnail"><img alt="SpiderDemo第五题-柳暗花明又一墙" src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/cover/pexels-nguy-n-du-1595594339-34352593.4clk58y890.webp"></div><div class="content"><span class="title" href="/2026/07/02/SpiderDemo%E7%AC%AC%E4%BA%94%E9%A2%98-%E6%9F%B3%E6%9A%97%E8%8A%B1%E6%98%8E%E5%8F%88%E4%B8%80%E5%A2%99/" title="SpiderDemo第五题-柳暗花明又一墙">SpiderDemo第五题-柳暗花明又一墙</span><span class="categories" href="/2026/07/02/SpiderDemo%E7%AC%AC%E4%BA%94%E9%A2%98-%E6%9F%B3%E6%9A%97%E8%8A%B1%E6%98%8E%E5%8F%88%E4%B8%80%E5%A2%99/">JS逆向</span></div></a><a class="aside-list-item" href="/2026/07/02/SpiderDemo%E7%AC%AC%E5%9B%9B%E9%A2%98-%20WASM%E6%8C%91%E6%88%98/" title="SpiderDemo第四题- WASM挑战"><div class="thumbnail"><img alt="SpiderDemo第四题- WASM挑战" src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/cover/pexels-pixabay-248796.lwek09d1o.webp"></div><div class="content"><span class="title" href="/2026/07/02/SpiderDemo%E7%AC%AC%E5%9B%9B%E9%A2%98-%20WASM%E6%8C%91%E6%88%98/" title="SpiderDemo第四题- WASM挑战">SpiderDemo第四题- WASM挑战</span><span class="categories" href="/2026/07/02/SpiderDemo%E7%AC%AC%E5%9B%9B%E9%A2%98-%20WASM%E6%8C%91%E6%88%98/">JS逆向</span></div></a><a class="aside-list-item" href="/2026/07/02/SpiderDemo%E7%AC%AC%E4%B8%89%E9%A2%98-protobuf%E6%B7%B7%E6%B7%86%E8%A7%A3%E6%9E%90%E6%8C%91%E6%88%98/" title="SpiderDemo第三题-protobuf混淆解析挑战"><div class="thumbnail"><img alt="SpiderDemo第三题-protobuf混淆解析挑战" src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/cover/pexels-quang-nguyen-vinh-222549-6129794.wj8d5ol7y.webp"></div><div class="content"><span class="title" href="/2026/07/02/SpiderDemo%E7%AC%AC%E4%B8%89%E9%A2%98-protobuf%E6%B7%B7%E6%B7%86%E8%A7%A3%E6%9E%90%E6%8C%91%E6%88%98/" title="SpiderDemo第三题-protobuf混淆解析挑战">SpiderDemo第三题-protobuf混淆解析挑战</span><span class="categories" href="/2026/07/02/SpiderDemo%E7%AC%AC%E4%B8%89%E9%A2%98-protobuf%E6%B7%B7%E6%B7%86%E8%A7%A3%E6%9E%90%E6%8C%91%E6%88%98/">JS逆向</span></div></a><a class="aside-list-item" href="/2026/07/01/%E9%A9%AC%E4%B8%8A%E7%88%AC%E8%AF%95%E9%A2%98%E7%BB%83%E4%B9%A0%E7%AC%AC19%E9%A2%98/" title="马上爬试题练习第19题"><div class="thumbnail"><img alt="马上爬试题练习第19题" src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/cover/pexels-quang-nguyen-vinh-222549-6129794.wj8d5ol7y.webp"></div><div class="content"><span class="title" href="/2026/07/01/%E9%A9%AC%E4%B8%8A%E7%88%AC%E8%AF%95%E9%A2%98%E7%BB%83%E4%B9%A0%E7%AC%AC19%E9%A2%98/" title="马上爬试题练习第19题">马上爬试题练习第19题</span><span class="categories" href="/2026/07/01/%E9%A9%AC%E4%B8%8A%E7%88%AC%E8%AF%95%E9%A2%98%E7%BB%83%E4%B9%A0%E7%AC%AC19%E9%A2%98/">JS逆向</span></div></a></div></div></div></div></main><footer id="footer"><div id="st-footer"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div class="copyright">© 2026 By<a class="footer-bar-link" href="/" title="码字的秃猴">码字的秃猴</a></div><div class="beian-group"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://hexo.io/" title="框架：Hexo">框架：Hexo</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="主题：Solitude">主题：Solitude</a></div></div><div class="footer-bar-right"></div></div></div><div class="comment-barrage needEndHide"></div></footer></div><div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="solitude fas fa-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="solitude fas fa-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="solitude fas fa-arrows-rotate"></i></div><div class="rightMenu-item" id="menu-top"><i class="solitude fas fa-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="solitude fas fa-clone"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="solitude fas fa-clipboard"></i><span>粘贴文本</span></div><div class="rightMenu-item" id="menu-newwindow"><i class="solitude far fa-window-maximize"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="solitude fas fa-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="solitude fas fa-clone"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="solitude fas fa-cloud-arrow-down"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-search"><i class="solitude fas fa-magnifying-glass"></i><span>站内搜索</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><div class="rightMenu-item" id="menu-randomPost" onclick="toRandomPost()||rm.hideRightMenu()"><i class="solitude fas fa-tower-broadcast"></i><span>随机文章</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><div class="rightMenu-item" id="menu-darkmode" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></div></div></div><div id="rightmenu-mask"></div></div><div><!-- Critical scripts loaded synchronously--><script src="/js/utils.js?v=3.0.21"></script><script src="/js/main.js?v=3.0.21"></script><!-- Non-critical scripts loaded asynchronously--><script async src="/js/third_party/waterfall.min.js?v=3.0.21"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><!-- Feature-specific scripts loaded asynchronously--><script defer src="/js/tw_cn.js?v=3.0.21"></script><!-- UI enhancement scripts--><script defer src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script src="https://cdn.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.js"></script><!-- Music player scripts--><!-- Cover color processing scripts--><script defer src="https://cdn.jsdelivr.net/npm/colorthief@2.6.0/dist/color-thief.min.js"></script><script defer src="/js/covercolor/local.js?v=3.0.21"></script><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+utils.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+</script><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!-- Search functionality--><!-- Right menu functionality--><script defer src="/js/right_menu.js?v=3.0.21"></script><div class="js-pjax"></div></div><!-- pjax--><script>let pjax = null;
+
+function initPjax() {
+    if (typeof Pjax === 'undefined') {
+        console.warn('Pjax is not loaded yet, retrying...');
+        setTimeout(initPjax, 100);
+        return;
+    }
+
+    pjax = new Pjax({
+        elements: 'a:not([target="_blank"])',
+        selectors: ["title","#body-wrap","#site-config","meta[name=\"description\"]",".js-pjax","meta[property^=\"og:\"]","#config-diff",".rs_show",".rs_hide"],
+        cacheBust: false,
+        analytics: true,
+        scrollRestoration: false
+    })
+
+    // 将 pjax 实例挂载到全局
+    window.pjax = pjax;
+
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
+
+    document.addEventListener('pjax:complete', () => {
+        window.refreshFn()
+
+        document.querySelectorAll('script[data-pjax]').forEach(item => {
+            const newScript = document.createElement('script')
+            const content = item.text || item.textContent || item.innerHTML || ""
+            Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+            newScript.appendChild(document.createTextNode(content))
+            item.parentNode.replaceChild(newScript, item)
+        })
+
+        GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+    })
+
+    document.addEventListener('pjax:error', (e) => {
+        if (e.request.status === 404) {
+            pjax.loadUrl('/404.html')
+        }
+    })
+}
+
+// 初始化 Pjax
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPjax);
+} else {
+    initPjax();
+}</script><!-- google adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" onerror="document.querySelectorAll('.google-ads-warp').forEach(i =&gt; i.style.display='none')"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="solitude fas fa-xmark"></i></button></nav><div class="search-wrap"><div class="search-box"><input class="search-box-input" id="search-input" type="text" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off" placeholder="输入关键词快速查找"></div><div id="search-results"><div id="search-hits"></div></div><div id="search-pagination"></div><div id="search-tips"></div></div></div><div id="search-mask"></div></div><script src="/js/search/local.js?v=3.0.21"></script></body></html>
+        <script>
+            const posts = ["2026/07/02/SpiderDemo第六题/","2026/07/02/SpiderDemo第五题-柳暗花明又一墙/","2026/07/02/SpiderDemo第四题- WASM挑战/","2026/07/02/SpiderDemo第三题-protobuf混淆解析挑战/","2026/07/01/马上爬试题练习第19题/","2026/07/01/马上爬试题练习第18题/","2026/07/01/马上爬试题练习第17题/","2026/07/01/马上爬试题练习第16题/","2026/07/01/马上爬试题练习第15题/","2026/07/01/马上爬试题练习第14题/","2026/07/01/马上爬试题练习第13题/","2026/07/01/马上爬试题练习第11题/","2026/06/30/马上爬试题练习第10题/","2026/06/29/软件分享-everthing/","2026/06/28/马上爬试题练习7-9题/","2026/06/28/马上爬试题练习1-6题/","2026/02/28/SpiderDemo第二题-加解密调整/","2026/02/28/SpiderDemo第一题-请求头检查/","2026/02/12/极验滑块第4代逆向分析/","2026/02/12/Hexo+Qexo搭建有后台的静态博客/","2026/02/09/Docker搭建兰空图床/","2024/12/26/emby/","2024/12/07/RustDesk/","2024/12/06/postgresql03/","2024/12/05/postgresql02/","2024/12/04/postgresql01/","2024/11/26/hexo01/"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>
