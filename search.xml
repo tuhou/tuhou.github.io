@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>SpiderDemo第十一题-第一代验证码</title>
+      <link href="/2026/07/02/SpiderDemo%E7%AC%AC%E5%8D%81%E4%B8%80%E9%A2%98-%E7%AC%AC%E4%B8%80%E4%BB%A3%E9%AA%8C%E8%AF%81%E7%A0%81/"/>
+      <url>/2026/07/02/SpiderDemo%E7%AC%AC%E5%8D%81%E4%B8%80%E9%A2%98-%E7%AC%AC%E4%B8%80%E4%BB%A3%E9%AA%8C%E8%AF%81%E7%A0%81/</url>
+      
+        <content type="html"><![CDATA[<p>T11 第一代验证码</p><h4 id="一：抓包分析"><a href="#一：抓包分析" class="headerlink" title="一：抓包分析"></a>一：抓包分析</h4><p>除去第一页，后续的每一页翻页都会先生成一个验证码，输入正确验证码才能获得下一页数据</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260508232839110.png" alt="image-20260508232839110"></p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260508232910924.png" alt="image-20260508232910924"></p><p>请求参数为</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;captcha_input&quot;:&quot;6TST&quot;,</span><br><span class="line">    &quot;page_num&quot;:4,</span><br><span class="line">    &quot;challenge_type&quot;:&quot;cap1_challenge&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>分析完成，直接ddddocr吧</p><h4 id="二：ocr识别"><a href="#二：ocr识别" class="headerlink" title="二：ocr识别"></a>二：ocr识别</h4><p>直接使用ocr识别，不管你是换背景图还是什么都是不行的，例如我直接识别4个字符只给我识别出2个</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260508233254019.png" alt="image-20260508233254019"></p><p>要对图片预先进行处理，先裁剪再放大，不知道裁剪多少直接给AI</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260508234107383.png" alt="image-20260508234107383"></p><p>此区域不固定，大一点小一点都行</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260508234358996.png" alt="image-20260508234358996"></p><p>根据这个切割值，识别的值有问题，应该是<code>JBXK</code>它识别为<code>IBXK</code>，微调一下切割值</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">def recognize_image(image_path, crop_box=(50, 21, 98, 38), scale_factor=2):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    处理验证码图片并识别</span><br><span class="line">    Args:</span><br><span class="line">        image_path: 原始图片路径</span><br><span class="line">        crop_box: 裁剪区域 (left, upper, right, lower)</span><br><span class="line">        scale_factor: 放大倍数</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    # 1. 打开并处理图片</span><br><span class="line">    img = Image.open(image_path)</span><br><span class="line"></span><br><span class="line">    # 裁剪指定区域</span><br><span class="line">    cropped_img = img.crop(crop_box)</span><br><span class="line"></span><br><span class="line">    # 放大图片</span><br><span class="line">    width, height = cropped_img.size</span><br><span class="line">    resized_img = cropped_img.resize(</span><br><span class="line">        (width * scale_factor, height * scale_factor),</span><br><span class="line">        Image.Resampling.LANCZOS  # 使用正确的重采样方法</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    # 可选：保存处理后的图片用于调试</span><br><span class="line">    resized_img.save(&quot;processed_captcha.png&quot;)</span><br><span class="line"></span><br><span class="line">    # 2. 初始化ddddocr识别器</span><br><span class="line">    ocr = ddddocr.DdddOcr()</span><br><span class="line"></span><br><span class="line">    # 3. 将PIL图像转换为字节数据</span><br><span class="line">    import io</span><br><span class="line">    img_byte_arr = io.BytesIO()</span><br><span class="line">    resized_img.save(img_byte_arr, format=&#x27;PNG&#x27;)</span><br><span class="line">    img_byte_arr = img_byte_arr.getvalue()</span><br><span class="line"></span><br><span class="line">    # 4. 执行识别</span><br><span class="line">    result = ocr.classification(img_byte_arr)</span><br><span class="line">    return result</span><br></pre></td></tr></table></figure><p>识别一定有误差，请求错误多重试几次就好</p><h4 id="三：编码与验证"><a href="#三：编码与验证" class="headerlink" title="三：编码与验证"></a>三：编码与验证</h4><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260509000556997.png" alt="image-20260509000556997"></p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/20260702/image-20260509000608061.png" alt="image-20260509000608061"></p><p>更多内容也在公众号更新：码字的秃猴</p><p><img src="https://jsd.cdn.zzko.cn/gh/tuhouxixi/picx-images-hosting@master/stable/tuhou.png" alt="tuhou"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> JS逆向 </category>
+          
+          <category> SpiderDemo </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 逆向 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>SpiderDemo第十题-字体SVG挑战</title>
       <link href="/2026/07/02/SpiderDemo%E7%AC%AC%E5%8D%81%E9%A2%98-%E5%AD%97%E4%BD%93SVG%E6%8C%91%E6%88%98/"/>
       <url>/2026/07/02/SpiderDemo%E7%AC%AC%E5%8D%81%E9%A2%98-%E5%AD%97%E4%BD%93SVG%E6%8C%91%E6%88%98/</url>
